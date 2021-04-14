@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
-public class primero {
+public class regitroUser {
 
 	private JFrame frmRegistro;
 	private JTextField textField;
@@ -32,7 +32,7 @@ public class primero {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					primero window = new primero();
+					regitroUser window = new regitroUser();
 					window.frmRegistro.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class primero {
 	/**
 	 * Create the application.
 	 */
-	public primero() {
+	public regitroUser() {
 		initialize();
 	}
 
