@@ -1,4 +1,4 @@
-package prueba;
+package interlentisimo;
 
 import java.awt.EventQueue;
 
@@ -128,3 +128,4 @@ public class menu {
 		frame.getContentPane().add(btnNewButton_1_1);
 	}
 }
+
