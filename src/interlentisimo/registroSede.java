@@ -25,7 +25,7 @@ public class registroSede {
 	private JFrame frmRegistroSedes;
 	private JTextField nombre_sede;
 	private JTextField direccion_sede;
-	private JTextField id_sede;
+	private JTextField id_sede, ciudad_sede;
 	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
@@ -91,7 +91,19 @@ public class registroSede {
 		id_sede = new JTextField();
 		id_sede.setBounds(116, 186, 132, 20);
 		frmRegistroSedes.getContentPane().add(id_sede);
+		
 		id_sede.setColumns(10);
+		JLabel lblNewLabel_4 = new JLabel("Ciudad:\r\n");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(34, 237, 80, 14);
+		frmRegistroSedes.getContentPane().add(lblNewLabel_4);
+		
+		ciudad_sede = new JTextField();
+		ciudad_sede.setBounds(116, 237, 132, 20);
+		frmRegistroSedes.getContentPane().add(ciudad_sede);
+		ciudad_sede.setColumns(10);
+		
+		
 		
 		JButton btnNewButton = new JButton("Registrar");
 		btnNewButton.setBackground(new Color(255, 69, 0));

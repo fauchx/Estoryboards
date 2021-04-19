@@ -17,6 +17,7 @@ public class SedeInfoMod {
 	private JFrame frmInformacinUsuario;
 	private JTextField direccion_sede;
 	private JTextField nombre_sede;
+	private JTextField ciudad_sede;
 
 	/**
 	 * Launch the application.
@@ -78,10 +79,20 @@ public class SedeInfoMod {
 		lblNewLabel_1.setBounds(18, 30, 57, 14);
 		panel_1.add(lblNewLabel_1);
 		
+		JLabel lblNewLabel_3 = new JLabel("Ciudad:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(18, 55, 57, 14);
+		panel_1.add(lblNewLabel_3);
+		
 		nombre_sede = new JTextField();
 		nombre_sede.setColumns(10);
 		nombre_sede.setBounds(111, 29, 175, 20);
 		panel_1.add(nombre_sede);
+		
+		ciudad_sede = new JTextField();
+		ciudad_sede.setColumns(10);
+		ciudad_sede.setBounds(111, 55, 175, 20);
+		panel_1.add(ciudad_sede);
 		
 		JLabel lblNewLabel_2 = new JLabel("Direcci\u00F3n :");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));

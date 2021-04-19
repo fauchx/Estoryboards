@@ -21,6 +21,7 @@ public class userInfoMod {
 	private JTextField textField_2;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField tfIdSede;
 
 	/**
 	 * Launch the application.
@@ -65,7 +66,7 @@ public class userInfoMod {
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(215, 137, 354, 355);
+		panel_1.setBounds(215, 137, 354, 370);
 		frmInformacinUsuario.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -137,13 +138,19 @@ public class userInfoMod {
 		JButton btnNewButton = new JButton("ACTUALIZAR");
 		btnNewButton.setBackground(new Color(255, 69, 0));
 		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBounds(120, 306, 114, 23);
+		btnNewButton.setBounds(120, 341, 114, 23);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Estado :");
+		lblNewLabel_1_2.setBounds(31, 254, 128, 17);
+		panel_1.add(lblNewLabel_1_2);
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JComboBox<String> estadoUser = new JComboBox<String>();
 		estadoUser.setBounds(171, 253, 153, 22);
@@ -152,10 +159,19 @@ public class userInfoMod {
 		estadoUser.addItem("Inactivo");
 		panel_1.add(estadoUser);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Estado :");
-		lblNewLabel_1_2.setBounds(31, 254, 128, 17);
-		panel_1.add(lblNewLabel_1_2);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		//Sede
+		
+		JLabel lblIdSede = new JLabel("ID de Sede :");
+		lblIdSede.setBounds(31, 291, 128, 17);
+		panel_1.add(lblIdSede);
+		lblIdSede.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		tfIdSede = new JTextField();
+		tfIdSede.setColumns(10);
+		tfIdSede.setBounds(171, 291, 153, 20);
+		panel_1.add(tfIdSede);
+		
+		//Btn VOlVER
 		
 		JButton btnNewButton_1_1 = new JButton("VOLVER");
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));

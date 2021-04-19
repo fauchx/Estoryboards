@@ -17,13 +17,14 @@ import java.awt.FlowLayout;
 public class regitroUser {
 
 	private JFrame frmRegistro;
-	private JTextField textField;
-	private JTextField textField_3;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
+	private JTextField tfNombres;
+	private JTextField tfApellidos;
+	private JTextField tfId;
+	private JTextField tfAdress;
+	private JTextField tfTelefono;
+	private JTextField tfEmail;
+	private JTextField tfPassword;
+	private JTextField tfIdSede;
 
 	/**
 	 * Launch the application.
@@ -63,80 +64,95 @@ public class regitroUser {
 		panel.setBounds(249, 52, 296, 34);
 		frmRegistro.getContentPane().add(panel);
 		
-		JLabel lblNewLabel = new JLabel("Registro de empleados");
-		lblNewLabel.setForeground(new Color(255, 69, 0));
-		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-		panel.add(lblNewLabel);
+		JLabel lblTitle = new JLabel("Registro de empleados");
+		lblTitle.setForeground(new Color(255, 69, 0));
+		lblTitle.setFont(new Font("SansSerif", Font.BOLD, 18));
+		panel.add(lblTitle);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(220, 137, 354, 374);
+		panel_1.setBounds(220, 100, 354, 390);
 		frmRegistro.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Apellidos :");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(31, 55, 60, 17);
-		panel_1.add(lblNewLabel_1);
+		//NOMBRES
 		
-		textField = new JTextField();
-		textField.setBounds(169, 19, 153, 20);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		JLabel lblNombres = new JLabel("Nombres :");
+		lblNombres.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombres.setBounds(31, 19, 64, 17);
+		panel_1.add(lblNombres);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Nombres :");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(31, 20, 64, 17);
-		panel_1.add(lblNewLabel_1_1);
+		tfNombres = new JTextField();
+		tfNombres.setBounds(169, 19, 153, 20);
+		panel_1.add(tfNombres);
+		tfNombres.setColumns(10);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("No de Identificaci\u00F3n :");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(31, 91, 128, 17);
-		panel_1.add(lblNewLabel_1_2);
+		//APELLIDOS
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(169, 55, 153, 20);
-		panel_1.add(textField_3);
+		JLabel lblApellidos = new JLabel("Apellidos :");
+		lblApellidos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblApellidos.setBounds(31, 55, 60, 17);
+		panel_1.add(lblApellidos);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(169, 91, 153, 20);
-		panel_1.add(textField_1);
+		tfApellidos = new JTextField();
+		tfApellidos.setColumns(10);
+		tfApellidos.setBounds(169, 55, 153, 20);
+		panel_1.add(tfApellidos);
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("Direcci\u00F3n :");
-		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1.setBounds(31, 127, 65, 17);
-		panel_1.add(lblNewLabel_1_2_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(169, 127, 153, 20);
-		panel_1.add(textField_2);
+		//ID
 		
-		JLabel lblNewLabel_1_2_1_1 = new JLabel("Tel\u00E9fono :");
-		lblNewLabel_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1_1.setBounds(31, 163, 64, 17);
-		panel_1.add(lblNewLabel_1_2_1_1);
+		JLabel lblId = new JLabel("No de Identificaci\u00F3n :");
+		lblId.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblId.setBounds(31, 91, 128, 17);
+		panel_1.add(lblId);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(169, 163, 153, 20);
-		panel_1.add(textField_4);
+		tfId = new JTextField();
+		tfId.setColumns(10);
+		tfId.setBounds(169, 91, 153, 20);
+		panel_1.add(tfId);
 		
-		JLabel lblNewLabel_1_2_1_1_1 = new JLabel("Email :");
-		lblNewLabel_1_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1_1_1.setBounds(31, 199, 45, 17);
-		panel_1.add(lblNewLabel_1_2_1_1_1);
+		//DIRECCION
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(169, 199, 153, 20);
-		panel_1.add(textField_5);
+		JLabel lblAdress = new JLabel("Direcci\u00F3n :");
+		lblAdress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAdress.setBounds(31, 127, 65, 17);
+		panel_1.add(lblAdress);
 		
-		JLabel lblNewLabel_1_2_1_1_1_1 = new JLabel("Cargo :");
-		lblNewLabel_1_2_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1_1_1_1.setBounds(31, 236, 51, 17);
-		panel_1.add(lblNewLabel_1_2_1_1_1_1);
+		tfAdress = new JTextField();
+		tfAdress.setColumns(10);
+		tfAdress.setBounds(169, 127, 153, 20);
+		panel_1.add(tfAdress);
+		
+		//TELEFONO
+		
+		JLabel lblTelefono = new JLabel("Tel\u00E9fono :");
+		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelefono.setBounds(31, 163, 64, 17);
+		panel_1.add(lblTelefono);
+		
+		tfTelefono = new JTextField();
+		tfTelefono.setColumns(10);
+		tfTelefono.setBounds(169, 163, 153, 20);
+		panel_1.add(tfTelefono);
+		
+		//EMAIL
+		
+		JLabel lblEmail = new JLabel("Email :");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail.setBounds(31, 199, 45, 17);
+		panel_1.add(lblEmail);
+		
+		tfEmail= new JTextField();
+		tfEmail.setColumns(10);
+		tfEmail.setBounds(169, 199, 153, 20);
+		panel_1.add(tfEmail);
+		
+		//CARGO
+		
+		JLabel lblcargo = new JLabel("Cargo :");
+		lblcargo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblcargo.setBounds(31, 236, 51, 17);
+		panel_1.add(lblcargo);
 		
 		JComboBox<String> tipoCargo = new JComboBox<String>();
 		tipoCargo.setBounds(169, 235, 153, 22);
@@ -148,21 +164,34 @@ public class regitroUser {
 		tipoCargo.addItem("Auxiliar de operación");
 		panel_1.add(tipoCargo);
 		
+		//PASSWORD
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(169, 273, 153, 20);
-		panel_1.add(textField_6);
+		JLabel lblPassword = new JLabel("Contrase\u00F1a :");
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPassword.setBounds(31, 273, 79, 17);
+		panel_1.add(lblPassword);
 		
-		JLabel lblNewLabel_1_2_1_2 = new JLabel("Contrase\u00F1a :");
-		lblNewLabel_1_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1_2.setBounds(31, 273, 79, 17);
-		panel_1.add(lblNewLabel_1_2_1_2);
+		tfPassword = new JTextField();
+		tfPassword.setColumns(10);
+		tfPassword.setBounds(169, 273, 153, 20);
+		panel_1.add(tfPassword);
+		
+		//SEDE 
+		
+		JLabel lblSede = new JLabel("ID de Sede :");
+		lblSede.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSede.setBounds(31, 310, 79, 17);
+		panel_1.add(lblSede);
+		
+		tfIdSede = new JTextField();
+		tfIdSede.setColumns(10);
+		tfIdSede.setBounds(169, 310, 153, 20);
+		panel_1.add(tfIdSede);
 		
 		JButton btnNewButton = new JButton("REGISTRAR");
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBackground(new Color(255, 69, 0));
-		btnNewButton.setBounds(122, 340, 114, 23);
+		btnNewButton.setBounds(122, 360, 114, 23);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
