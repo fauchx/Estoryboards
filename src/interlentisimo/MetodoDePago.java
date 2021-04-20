@@ -1,4 +1,4 @@
-package windowexample;
+package interlentisimo;
 
 import java.awt.EventQueue;
 
