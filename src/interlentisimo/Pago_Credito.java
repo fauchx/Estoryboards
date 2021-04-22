@@ -9,6 +9,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 
 public class Pago_Credito {
 
@@ -118,5 +119,16 @@ public class Pago_Credito {
 		textField_4.setBounds(394, 289, 118, 20);
 		frmPagoConTarjeta.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
+		
+		JButton btnNewButton_1_1 = new JButton("VOLVER");
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_1.setBounds(470, 11, 95, 36);
+		frmPagoConTarjeta.getContentPane().add(btnNewButton_1_1);
+		
+		JButton okButton = new JButton("OK");
+		okButton.setBackground(new Color(255, 69, 0));
+		okButton.setForeground(new Color(255, 255, 255));
+		okButton.setBounds(470, 315, 95, 36);
+		frmPagoConTarjeta.getContentPane().add(okButton);
 	}
 }

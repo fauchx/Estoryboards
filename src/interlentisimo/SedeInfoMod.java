@@ -119,5 +119,10 @@ public class SedeInfoMod {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		JButton btnNewButton_1_1 = new JButton("VOLVER");
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_1.setBounds(50, 250, 95, 36);
+		frmInformacinUsuario.getContentPane().add(btnNewButton_1_1);
 	}
 }

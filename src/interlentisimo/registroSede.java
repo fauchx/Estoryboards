@@ -127,6 +127,11 @@ public class registroSede {
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
 		lblNewLabel.setForeground(new Color(255, 69, 0));
 		
+		JButton btnNewButton_1_1 = new JButton("VOLVER");
+		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton_1_1.setBounds(38, 270, 95, 36);
+		frmRegistroSedes.getContentPane().add(btnNewButton_1_1);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(22, 56, 359, 187);
 		frmRegistroSedes.getContentPane().add(panel_1);

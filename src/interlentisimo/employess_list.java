@@ -86,12 +86,11 @@ public class employess_list {
 		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
 		
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.setBounds(666, 501, 89, 23);
-		btnNewButton.setBackground(new Color(255, 69, 0));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		JButton btnNewButton = new JButton("VOLVER");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBounds(38, 461, 95, 36);
 		frame.getContentPane().add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("Informaci\u00F3n de los usuarios");
