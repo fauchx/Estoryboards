@@ -132,7 +132,7 @@ public class userInfoMod {
 		tipoCargo.addItem("Operador de oficina");
 		tipoCargo.addItem("Contador");
 		tipoCargo.addItem("Gerente");
-		tipoCargo.addItem("Auxiliar de operación");
+		tipoCargo.addItem("Auxiliar de operaciÃ³n");
 		panel_1.add(tipoCargo);
 		
 		JButton btnNewButton = new JButton("ACTUALIZAR");

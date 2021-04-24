@@ -29,6 +29,7 @@ public class regitroUser {
 	/**
 	 * Launch the application.
 	 */
+        /*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,25 +42,28 @@ public class regitroUser {
 			}
 		});
 	}
+        */
 
 	/**
 	 * Create the application.
 	 */
-	public regitroUser() {
-		initialize();
+	public regitroUser(JFrame parent) {
+		initialize(parent);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(JFrame parent) {
 		frmRegistro = new JFrame();
 		frmRegistro.setTitle("Registro");
 		frmRegistro.setResizable(false);
 		frmRegistro.setBounds(0, 0, 800, 600);
 		frmRegistro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistro.getContentPane().setLayout(null);
-		
+        frmRegistro.setVisible(true);
+        frmRegistro.setLocationRelativeTo(parent);
+                
 		JPanel panel = new JPanel();
 		panel.setBounds(249, 52, 296, 34);
 		frmRegistro.getContentPane().add(panel);
@@ -161,7 +165,7 @@ public class regitroUser {
 		tipoCargo.addItem("Operador de oficina");
 		tipoCargo.addItem("Contador");
 		tipoCargo.addItem("Gerente");
-		tipoCargo.addItem("Auxiliar de operación");
+		tipoCargo.addItem("Auxiliar de operaciï¿½n");
 		panel_1.add(tipoCargo);
 		
 		//PASSWORD
@@ -219,4 +223,6 @@ public class regitroUser {
 		btnNewButton_1_1.setBounds(53, 469, 95, 36);
 		frmRegistro.getContentPane().add(btnNewButton_1_1);
 	}
+
+
 }
