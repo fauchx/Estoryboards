@@ -18,8 +18,7 @@ import javax.swing.ImageIcon;
 
 public class menu {
 
-	JFrame frame;
-	private login log;
+	 JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -29,7 +28,7 @@ public class menu {
 			public void run() {
 				try {
 					menu window = new menu();
-					window.frame.setVisible(true);
+					window.frame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -126,15 +125,15 @@ public class menu {
 		gbc_btnNewButton_3.gridy = 1;
 		panel_1.add(btnNewButton_3, gbc_btnNewButton_3);
 		
-		login log = new login();
+		//login log = new login();
 		JButton btnNewButton_1_1 = new JButton("Cerrar sesi\u00F3n");
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_1.setBounds(640, 11, 120, 36);
 		frame.getContentPane().add(btnNewButton_1_1);
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-				log.frame.setVisible(true);
+				//frame.setVisible(false);
+				//log.frame.setVisible(true);
 			}
 		});
 	}

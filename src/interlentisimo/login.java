@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Font;
@@ -21,6 +22,7 @@ public class login {
 	private JTextField txtusuariologin;
 	private JPasswordField txtcontralogin;
 	private ControlBase control;
+	menu menu;
 
 	/**
 	 * Launch the application.
@@ -102,8 +104,14 @@ public class login {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText());
-					frame.setVisible(false);
+					if(control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText())) {
+						frame.setVisible(false);
+						menu menu= new menu();
+						menu.frame.setVisible(true);
+					}else {
+						JOptionPane.showMessageDialog(null, "NO SE PUDO INICIAR SESION");
+					}
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
