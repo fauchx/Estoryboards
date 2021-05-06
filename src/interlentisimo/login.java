@@ -7,15 +7,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 
 public class login {
 
-	private JFrame frame;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	JFrame frame;
+	private JTextField txtusuariologin;
+	private JPasswordField txtcontralogin;
+	private ControlBase control;
 
 	/**
 	 * Launch the application.
@@ -68,14 +73,14 @@ public class login {
 		panel_2.add(panel_1);
 		panel_1.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(156, 24, 135, 20);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		txtusuariologin = new JTextField();
+		txtusuariologin.setBounds(156, 24, 135, 20);
+		panel_1.add(txtusuariologin);
+		txtusuariologin.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(156, 55, 135, 20);
-		panel_1.add(passwordField);
+		txtcontralogin = new JPasswordField();
+		txtcontralogin.setBounds(156, 55, 135, 20);
+		panel_1.add(txtcontralogin);
 		
 		JLabel lblNewLabel_1 = new JLabel("No de Identificaci\u00F3n :");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -93,5 +98,18 @@ public class login {
 		btnNewButton.setBounds(121, 283, 102, 23);
 		panel_2.add(btnNewButton);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		ControlBase control = new ControlBase();
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText());
+					frame.setVisible(false);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 	}
 }
