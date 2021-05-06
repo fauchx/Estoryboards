@@ -14,7 +14,7 @@ import java.awt.SystemColor;
 
 public class sedesMenu {
 
-	private JFrame frmSedes;
+	 JFrame frmSedes;
 
 	/**
 	 * Launch the application.

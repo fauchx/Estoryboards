@@ -19,7 +19,8 @@ import javax.swing.ImageIcon;
 public class menu {
 
 	 JFrame frame;
-
+	 sedesMenu sedem;
+	 usersMenu userm;
 	/**
 	 * Launch the application.
 	 */
@@ -82,7 +83,6 @@ public class menu {
 		magEmpBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/userBTN.png")));
 		magEmpBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_magEmpBtn = new GridBagConstraints();
-		//magEmpBtn.setPreferredSize(new Dimension(200,100));
 		gbc_magEmpBtn.insets = new Insets(5, 5, 5, 5);//Espacio de separacion entre el objeto
 		gbc_magEmpBtn.fill = GridBagConstraints.BOTH;
 		gbc_magEmpBtn.gridx = 0;
@@ -93,6 +93,9 @@ public class menu {
 		btnNewButton_1.setIcon(new ImageIcon(menu.class.getResource("/icons/sedeBTN.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false); 
+				sedesMenu sedem = new sedesMenu();
+				sedem.frmSedes.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
