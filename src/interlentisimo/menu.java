@@ -89,51 +89,51 @@ public class menu {
 		gbc_magEmpBtn.gridy = 0;
 		panel_1.add(magEmpBtn, gbc_magEmpBtn);
 		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(menu.class.getResource("/icons/sedeBTN.png")));
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton sedesBtn = new JButton("");
+		sedesBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/sedeBTN.png")));
+		sedesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false); 
 				sedesMenu sedem = new sedesMenu();
 				sedem.frmSedes.setVisible(true);
 			}
 		});
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(5, 0, 5, 5);
-		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton_1.gridx = 1;
-		gbc_btnNewButton_1.gridy = 0;
-		panel_1.add(btnNewButton_1, gbc_btnNewButton_1);
+		GridBagConstraints gbc_sedesBtn = new GridBagConstraints();
+		gbc_sedesBtn.insets = new Insets(5, 0, 5, 5);
+		gbc_sedesBtn.fill = GridBagConstraints.BOTH;
+		gbc_sedesBtn.gridx = 1;
+		gbc_sedesBtn.gridy = 0;
+		panel_1.add(sedesBtn, gbc_sedesBtn);
 		
-		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.setIcon(new ImageIcon(menu.class.getResource("/icons/packageBTN.png")));
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton paqueteBtn = new JButton("");
+		paqueteBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/packageBTN.png")));
+		paqueteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 5, 5, 5);
-		gbc_btnNewButton_2.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton_2.gridx = 0;
-		gbc_btnNewButton_2.gridy = 1;
-		panel_1.add(btnNewButton_2, gbc_btnNewButton_2);
+		GridBagConstraints gbc_paqueteBtn = new GridBagConstraints();
+		gbc_paqueteBtn.insets = new Insets(0, 5, 5, 5);
+		gbc_paqueteBtn.fill = GridBagConstraints.BOTH;
+		gbc_paqueteBtn.gridx = 0;
+		gbc_paqueteBtn.gridy = 1;
+		panel_1.add(paqueteBtn, gbc_paqueteBtn);
 		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setIcon(new ImageIcon(menu.class.getResource("/icons/infoBTN.png")));
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_3.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton_3.gridx = 1;
-		gbc_btnNewButton_3.gridy = 1;
-		panel_1.add(btnNewButton_3, gbc_btnNewButton_3);
+		JButton informeBtn = new JButton("");
+		informeBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/infoBTN.png")));
+		GridBagConstraints gbc_informeBtn = new GridBagConstraints();
+		gbc_informeBtn.insets = new Insets(0, 0, 5, 5);
+		gbc_informeBtn.fill = GridBagConstraints.BOTH;
+		gbc_informeBtn.gridx = 1;
+		gbc_informeBtn.gridy = 1;
+		panel_1.add(informeBtn, gbc_informeBtn);
 		
 		//login log = new login();
-		JButton btnNewButton_1_1 = new JButton("Cerrar sesi\u00F3n");
-		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1_1.setBounds(640, 11, 120, 36);
-		frame.getContentPane().add(btnNewButton_1_1);
-		btnNewButton_1_1.addActionListener(new ActionListener() {
+		JButton logoutBtn = new JButton("Cerrar sesi\u00F3n");
+		logoutBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		logoutBtn.setBounds(640, 11, 120, 36);
+		frame.getContentPane().add(logoutBtn);
+		logoutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//frame.setVisible(false);
 				//log.frame.setVisible(true);

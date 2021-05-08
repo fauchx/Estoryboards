@@ -13,7 +13,7 @@ public class ControlBase {
 	private Connection conexion = null;
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
-	private String comprobarlogin;
+	private String comprobarlogin , consultaCargo;
 	
 	public void conectarme() {
 		try {
@@ -35,15 +35,39 @@ public class ControlBase {
 			result = p.executeQuery();
 			while(result.next()) {
 				id = result.getString("identificación_u");
-				contraseña = result.getString("contraseña_u");	
+				contraseña = result.getString("contraseña_u");
 				return true;
 			  }		
 			
-		}finally {
+		} finally {
 	        if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
 	        if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 	    }
 		return false;
+	}
+	
+	public String getCargo(String id) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificación_u =?");
+			pst.setString(1, id);
+			result = pst.executeQuery();
+			String cargo = null;
+			while(result.next()){
+				cargo = result.getString("cargo_u");
+			}
+			return cargo;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		
 	}
 	
 	public void crud(String sql) {

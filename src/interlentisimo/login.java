@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JPasswordField;
@@ -105,11 +106,18 @@ public class login {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText())) {
+						
+						//prueba muestra de cargo
+						String cargoUser = control.getCargo(txtusuariologin.getText().toString());
+						System.out.println(cargoUser);
+						//prueba muestra de cargo
+						
 						frame.setVisible(false);
 						menu menu= new menu();
 						menu.frame.setVisible(true);
 					}else {
 						JOptionPane.showMessageDialog(null, "NO SE PUDO INICIAR SESION");
+						/*setear campos en vacios al final */
 					}
 					
 				} catch (SQLException e1) {
