@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
+//joputa
 public class ControlBase {
 	JFrame frame;
 	private Connection conexion = null;
