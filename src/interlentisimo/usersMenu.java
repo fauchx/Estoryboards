@@ -14,35 +14,36 @@ import java.awt.SystemColor;
 
 public class usersMenu {
 
-	private JFrame frame;
+	public JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					usersMenu window = new usersMenu();
+					usersMenu window = new usersMenu(idUser);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
-	public usersMenu() {
-		initialize();
+	public usersMenu(String idUser) {
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String idUser) {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
 		frame.setBounds(100, 100, 800, 600);
@@ -90,6 +91,11 @@ public class usersMenu {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				menu menuf = new menu(idUser);
+				menuf.configMenu(idUser, frame);
+				//menuf.frame.setLocationRelativeTo(frame);
+				//menuf.frame.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);
