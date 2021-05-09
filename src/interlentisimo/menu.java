@@ -19,26 +19,9 @@ import javax.swing.ImageIcon;
 public class menu {
 
 	 JFrame frame;
-	 JButton magEmpBtn, sedesBtn, paqueteBtn, informeBtn;//cambio
+	 JButton magEmpBtn, sedesBtn, paqueteBtn, informeBtn;
 	 sedesMenu sedem;
 	 usersMenu userm;
-	/**
-	 * Launch the application.
-	 */
-	 /*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					menu window = new menu();
-					window.frame.setVisible(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
 
 	/**
 	 * Create the application.
