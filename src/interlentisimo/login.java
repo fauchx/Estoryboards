@@ -1,7 +1,14 @@
+/*
+ * Login
+ * La clase permite la diligencia de un formulario tipo login, verificando la existencia del usuario
+ * y contraseña ingresados, en la base de datos, en el caso de no estár muestra un mensaje que indica 
+ * que hubo un error en los datos ingresados.
+ * 09/05/2021
+ * Copyright Izquierdo José, Moreno Brian, Urrutia Fabián
+ */
+
 package interlentisimo;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,12 +19,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 
-public class login {
+/**
+ * La prueba
+ * 
+ * @version 0.1 09/05/2021
+ * @author Brian Moreno, Fabian Urrutia
+ *
+ */
+public class login 
+{	
 
 	JFrame frame;
 	private JTextField txtusuariologin;
@@ -26,36 +40,23 @@ public class login {
 	menu menu;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					login window = new login();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public login() {
+	public login() 
+	{
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() 
+	{
 		frame = new JFrame();
 		frame.setBounds(0, 0, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(219, 114, 345, 333);
@@ -102,25 +103,33 @@ public class login {
 		panel_2.add(btnNewButton);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		ControlBase control = new ControlBase();
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if(control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText())) {
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{
+					if(control.buscarusuario(txtusuariologin.getText(),
+											 txtcontralogin.getText())) 
+					{
 						
-						//prueba muestra de cargo
 						String cargoUser = control.getCargo(txtusuariologin.getText().toString());
-						System.out.println(cargoUser);
-						//prueba muestra de cargo
-						
 						frame.setVisible(false);
-						menu menu= new menu();
-						menu.frame.setVisible(true);
-					}else {
+						menu menuf = new menu(cargoUser);
+						menuf.configMenu(cargoUser,frame);
+						
+					} 
+					else 
+					{
+						txtusuariologin.setText("");
+						txtcontralogin.setText("");
 						JOptionPane.showMessageDialog(null, "NO SE PUDO INICIAR SESION");
 						/*setear campos en vacios al final */
 					}
 					
-				} catch (SQLException e1) {
+				} 
+				catch (SQLException e1) 
+				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

@@ -14,55 +14,59 @@ import java.awt.SystemColor;
 
 public class sedesMenu {
 
-	 JFrame frmSedes;
+	 JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
+	 /*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					sedesMenu window = new sedesMenu();
-					window.frmSedes.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	*/
 	/**
 	 * Create the application.
 	 */
-	public sedesMenu() {
-		initialize();
+	public sedesMenu(String idUser) {
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frmSedes = new JFrame();
-		frmSedes.setTitle("Sedes");
-		frmSedes.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
-		frmSedes.setBounds(100, 100, 800, 600);
-		frmSedes.setResizable(false);
-		frmSedes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSedes.getContentPane().setLayout(null);
+	private void initialize(String idUser) {
+		frame = new JFrame();
+		frame.setTitle("Sedes");
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
+		frame.setBounds(100, 100, 800, 600);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("VOLVER");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				menu menuf = new menu(idUser);
+				menuf.configMenu(idUser, frame);
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);
-		frmSedes.getContentPane().add(btnNewButton_1);
+		frame.getContentPane().add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(149, 103, 496, 301);
-		frmSedes.getContentPane().add(panel_2);
+		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		JPanel panel = new JPanel();
