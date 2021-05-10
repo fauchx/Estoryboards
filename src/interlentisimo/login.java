@@ -24,7 +24,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 /**
- * La 
+ * La prueba
  * 
  * @version 0.1 09/05/2021
  * @author Brian Moreno, Fabian Urrutia
