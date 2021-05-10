@@ -14,8 +14,9 @@ import java.awt.SystemColor;
 
 public class usersMenu {
 
-	private JFrame frame;
-
+	 JFrame frame;
+	 menu menu;
+	 regitroUser registro;
 	/**
 	 * Launch the application.
 	 */
@@ -80,6 +81,14 @@ public class usersMenu {
 		btnConsultarUsuarios.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnNewButton = new JButton("Crear Usuario");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				regitroUser registro = new regitroUser();
+				registro.frmRegistro.setVisible(true);
+				registro.frmRegistro.setLocationRelativeTo(null);
+			}
+		});
 		btnNewButton.setBackground(new Color(255, 69, 0));
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBounds(129, 97, 158, 75);
@@ -90,13 +99,14 @@ public class usersMenu {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				menu menu = new menu();
+				menu.frame.setVisible(true);
+				menu.frame.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);
 		frame.getContentPane().add(btnNewButton_1);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 	}
 }

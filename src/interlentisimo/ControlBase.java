@@ -70,14 +70,22 @@ public class ControlBase {
 		
 	}
 	
-	public void crud(String sql) {
+public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
-			p = conexion.prepareStatement(sql);
+			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"','"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"')";                                      
+			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
+			return true;
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		return false;
 	}
 }

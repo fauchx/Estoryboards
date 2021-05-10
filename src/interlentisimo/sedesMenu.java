@@ -15,7 +15,7 @@ import java.awt.SystemColor;
 public class sedesMenu {
 
 	 JFrame frmSedes;
-
+	 menu menu;
 	/**
 	 * Launch the application.
 	 */
@@ -55,6 +55,10 @@ public class sedesMenu {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmSedes.setVisible(false);
+				menu menu = new menu();
+				menu.frame.setVisible(true);
+				menu.frame.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);

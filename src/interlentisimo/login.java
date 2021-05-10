@@ -107,10 +107,8 @@ public class login {
 				try {
 					if(control.buscarusuario(txtusuariologin.getText(), txtcontralogin.getText())) {
 						
-						//prueba muestra de cargo
 						String cargoUser = control.getCargo(txtusuariologin.getText().toString());
 						System.out.println(cargoUser);
-						//prueba muestra de cargo
 						
 						frame.setVisible(false);
 						menu menu= new menu();

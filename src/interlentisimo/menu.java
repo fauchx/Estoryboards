@@ -21,6 +21,7 @@ public class menu {
 	 JFrame frame;
 	 sedesMenu sedem;
 	 usersMenu userm;
+	 login logeo;
 	/**
 	 * Launch the application.
 	 */
@@ -76,14 +77,18 @@ public class menu {
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton magEmpBtn = new JButton("");
-		magEmpBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		magEmpBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/userBTN.png")));
 		magEmpBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_magEmpBtn = new GridBagConstraints();
-		gbc_magEmpBtn.insets = new Insets(5, 5, 5, 5);//Espacio de separacion entre el objeto
+		magEmpBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				usersMenu userm = new usersMenu();
+				userm.frame.setVisible(true);
+				userm.frame.setLocationRelativeTo(null);
+			}
+		});
+		gbc_magEmpBtn.insets = new Insets(5, 5, 5, 5);
 		gbc_magEmpBtn.fill = GridBagConstraints.BOTH;
 		gbc_magEmpBtn.gridx = 0;
 		gbc_magEmpBtn.gridy = 0;
@@ -96,6 +101,7 @@ public class menu {
 				frame.setVisible(false); 
 				sedesMenu sedem = new sedesMenu();
 				sedem.frmSedes.setVisible(true);
+				sedem.frmSedes.setLocationRelativeTo(null);
 			}
 		});
 		GridBagConstraints gbc_sedesBtn = new GridBagConstraints();
@@ -135,8 +141,10 @@ public class menu {
 		frame.getContentPane().add(logoutBtn);
 		logoutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//frame.setVisible(false);
-				//log.frame.setVisible(true);
+				frame.setVisible(false);
+				login logeo = new login();
+				logeo.frame.setVisible(true);
+				logeo.frame.setLocationRelativeTo(null);
 			}
 		});
 	}
