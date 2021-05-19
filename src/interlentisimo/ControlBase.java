@@ -70,6 +70,49 @@ public class ControlBase {
 		
 	}
 	
+	public boolean idSedeExist(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT * FROM sede WHERE identificador_sede = ?",
+					ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.CONCUR_UPDATABLE);
+			pst.setString(1, idIngresado);
+			result = pst.executeQuery();
+			boolean idExiste = result.first();
+			return idExiste;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
+	
+	public void insertarSede(String nombreIngresado, String direccionIngresada, String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("INSERT INTO sede (identificador_sede, nombre_sede, estado_sede, direccion_sede) VALUES (?,?,'Inactiva',?)");
+			pst.setString(1, idIngresado);
+			pst.setString(2, nombreIngresado);
+			pst.setString(3, direccionIngresada);
+			pst.executeUpdate();
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
+	
 	public void crud(String sql) {
 		PreparedStatement p = null;
 		conectarme();

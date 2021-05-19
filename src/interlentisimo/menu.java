@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
@@ -148,8 +149,8 @@ public class menu {
 		});
 	}
 	
-	public void configMenu(String id, JFrame frame) {
-		switch(id) 
+	public void configMenu(String cargoUser, JFrame frame) {
+		switch(cargoUser) 
 		{
 			case "Gerente":
 				this.paqueteBtn.setEnabled(false);
