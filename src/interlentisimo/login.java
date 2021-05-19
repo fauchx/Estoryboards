@@ -115,6 +115,7 @@ public class login
 						
 						String cargoUser = control.getCargo(txtusuariologin.getText().toString());
 						frame.setVisible(false);
+						//menu menuf = new menu(txtusuariologin.getText().toString());
 						menu menuf = new menu(cargoUser);
 						menuf.configMenu(cargoUser,frame);
 						

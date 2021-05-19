@@ -106,6 +106,10 @@ public class sedesMenu {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false); 
+				registroSede pkg = new registroSede(idUser);
+				pkg.frmRegistroSedes.setLocationRelativeTo(frame);
+				pkg.frmRegistroSedes.setVisible(true);
 			}
 		});
 	}
