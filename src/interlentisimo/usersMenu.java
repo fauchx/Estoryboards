@@ -14,36 +14,42 @@ import java.awt.SystemColor;
 
 public class usersMenu {
 
+<<<<<<< HEAD
 	 JFrame frame;
 	 menu menu;
 	 regitroUser registro;
+=======
+	public JFrame frame;
+
+>>>>>>> ab610eda804e9950bacd1638ff4cc8d4ee7c94a3
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					usersMenu window = new usersMenu();
+					usersMenu window = new usersMenu(idUser);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
-	public usersMenu() {
-		initialize();
+	public usersMenu(String idUser) {
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String idUser) {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
 		frame.setBounds(100, 100, 800, 600);
@@ -100,9 +106,16 @@ public class usersMenu {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
+<<<<<<< HEAD
 				menu menu = new menu();
 				menu.frame.setVisible(true);
 				menu.frame.setLocationRelativeTo(null);
+=======
+				menu menuf = new menu(idUser);
+				menuf.configMenu(idUser, frame);
+				//menuf.frame.setLocationRelativeTo(frame);
+				//menuf.frame.setVisible(true);
+>>>>>>> ab610eda804e9950bacd1638ff4cc8d4ee7c94a3
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);
