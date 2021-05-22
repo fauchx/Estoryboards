@@ -109,6 +109,7 @@ public class menu {
 		paqueteBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/packageBTN.png")));
 		paqueteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		
@@ -118,7 +119,7 @@ public class menu {
 		gbc_paqueteBtn.gridx = 0;
 		gbc_paqueteBtn.gridy = 1;
 		panel_1.add(paqueteBtn, gbc_paqueteBtn);
-		
+		 
 		JButton informeBtn = new JButton("");
 		informeBtn.setIcon(new ImageIcon(menu.class.getResource("/icons/infoBTN.png")));
 		GridBagConstraints gbc_informeBtn = new GridBagConstraints();
