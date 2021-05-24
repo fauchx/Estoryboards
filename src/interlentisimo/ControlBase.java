@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-//joputa
 public class ControlBase {
 	JFrame frame;
 	private Connection conexion = null;
@@ -69,15 +68,66 @@ public class ControlBase {
 		}
 		
 	}
+
+	public boolean idSedeExist(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT * FROM sede WHERE identificador_sede = ?",
+					ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.CONCUR_UPDATABLE);
+			pst.setString(1, idIngresado);
+			result = pst.executeQuery();
+			boolean idExiste = result.first();
+			return idExiste;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
 	
-	public void crud(String sql) {
+	public void insertarSede(String nombreIngresado, String direccionIngresada, String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("INSERT INTO sede (identificador_sede, nombre_sede, estado_sede, direccion_sede) VALUES (?,?,'Inactiva',?)");
+			pst.setString(1, idIngresado);
+			pst.setString(2, nombreIngresado);
+			pst.setString(3, direccionIngresada);
+			pst.executeUpdate();
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
+	
+	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
-			p = conexion.prepareStatement(sql);
+			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"','"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"')";                                      
+			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
+			return true;
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		return false;
 	}
 }

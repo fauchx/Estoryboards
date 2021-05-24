@@ -10,13 +10,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 
 public class registroPaquete {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textField;
 	private JTextField textField_3;
 	private JTextField textField_1;
@@ -32,34 +34,19 @@ public class registroPaquete {
 	private JTextField txtPeso;
 	private JTextField textField_6;
 	private JTextField textField_12;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					registroPaquete window = new registroPaquete();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private String cargoUser;
 
 	/**
 	 * Create the application.
 	 */
-	public registroPaquete() {
-		initialize();
+	public registroPaquete(String idUser) {
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String idUser) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -282,9 +269,26 @@ public class registroPaquete {
 		textField_12.setBounds(182, 111, 143, 20);
 		infoDestinatario_1.add(textField_12);
 		
-		JButton btnNewButton_1_1 = new JButton("VOLVER");
-		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1_1.setBounds(30, 493, 95, 36);
-		frame.getContentPane().add(btnNewButton_1_1);
+		JButton volverBtn = new JButton("VOLVER");
+		volverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		volverBtn.setBounds(30, 493, 95, 36);
+		volverBtn.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed (ActionEvent e)
+			{
+				frame.setVisible(false);
+				ControlBase control = new ControlBase();
+				try {
+					cargoUser = control.getCargo(idUser);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				menu menuf = new menu(idUser);
+				menuf.configMenu(cargoUser, frame);
+				menuf.frame.setLocationRelativeTo(frame);
+			}
+		});
+		frame.getContentPane().add(volverBtn);
 	}
 }

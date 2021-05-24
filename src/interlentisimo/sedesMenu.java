@@ -9,60 +9,58 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
 public class sedesMenu {
 
-	 JFrame frmSedes;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					sedesMenu window = new sedesMenu();
-					window.frmSedes.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	 JFrame frame;
+	 JButton btnAcUsuario, btnConsultarUsuarios, crearSedeBtn;
+	 private String cargoUser;
 
 	/**
 	 * Create the application.
 	 */
-	public sedesMenu() {
-		initialize();
+	public sedesMenu(String idUser) {
+		ControlBase control = new ControlBase();
+		try {
+			cargoUser = control.getCargo(idUser);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frmSedes = new JFrame();
-		frmSedes.setTitle("Sedes");
-		frmSedes.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
-		frmSedes.setBounds(100, 100, 800, 600);
-		frmSedes.setResizable(false);
-		frmSedes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSedes.getContentPane().setLayout(null);
+	private void initialize(String idUser) {
+		frame = new JFrame();
+		frame.setTitle("Sedes");
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
+		frame.setBounds(100, 100, 800, 600);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("VOLVER");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				menu menuf = new menu(idUser);
+				menuf.configMenu(cargoUser, frame);
+				menuf.frame.setLocationRelativeTo(frame);
 			}
 		});
 		btnNewButton_1.setBounds(48, 481, 95, 36);
-		frmSedes.getContentPane().add(btnNewButton_1);
+		frame.getContentPane().add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(149, 103, 496, 301);
-		frmSedes.getContentPane().add(panel_2);
+		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -80,29 +78,43 @@ public class sedesMenu {
 		panel_1.setBackground(SystemColor.menu);
 		panel_1.setLayout(null);
 		
-		JButton btnAcUsuario = new JButton("Actualizar Sede");
+		btnAcUsuario = new JButton("Actualizar Sede");
 		btnAcUsuario.setBackground(new Color(255, 69, 0));
 		btnAcUsuario.setForeground(new Color(255, 255, 255));
 		btnAcUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAcUsuario.setBounds(213, 11, 193, 75);
 		panel_1.add(btnAcUsuario);
 		
-		JButton btnConsultarUsuarios = new JButton("Consultar Sedes");
+		btnConsultarUsuarios = new JButton("Consultar Sedes");
 		btnConsultarUsuarios.setForeground(new Color(255, 255, 255));
 		btnConsultarUsuarios.setBackground(new Color(255, 69, 0));
 		btnConsultarUsuarios.setBounds(10, 11, 193, 75);
 		panel_1.add(btnConsultarUsuarios);
 		btnConsultarUsuarios.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JButton btnNewButton = new JButton("Crear Sede");
-		btnNewButton.setBackground(new Color(255, 69, 0));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBounds(129, 97, 158, 75);
-		panel_1.add(btnNewButton);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.addActionListener(new ActionListener() {
+		crearSedeBtn = new JButton("Crear Sede");
+		crearSedeBtn.setBackground(new Color(255, 69, 0));
+		crearSedeBtn.setForeground(new Color(255, 255, 255));
+		crearSedeBtn.setBounds(129, 97, 158, 75);
+		panel_1.add(crearSedeBtn);
+		crearSedeBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
+		crearSedeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false); 
+				registroSede pkg = new registroSede(idUser);
+				pkg.frmRegistroSedes.setLocationRelativeTo(frame);
+				pkg.frmRegistroSedes.setVisible(true);
 			}
 		});
+		
+		if(cargoUser.equals("Secretaria")) 
+		{
+			System.out.println(cargoUser);
+			this.crearSedeBtn.setEnabled(false);
+			this.btnAcUsuario.setEnabled(false);
+			
+		}
+
 	}
+	
 }

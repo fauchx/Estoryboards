@@ -10,13 +10,14 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
 public class regitroUser {
 
-	private JFrame frmRegistro;
+	JFrame frmRegistro;
 	private JTextField tfNombres;
 	private JTextField tfApellidos;
 	private JTextField tfId;
@@ -25,36 +26,22 @@ public class regitroUser {
 	private JTextField tfEmail;
 	private JTextField tfPassword;
 	private JTextField tfIdSede;
+	usersMenu menu_u;
+	ControlBase control;
 
-	/**
-	 * Launch the application.
-	 */
-        /*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					regitroUser window = new regitroUser();
-					window.frmRegistro.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-        */
+        
 
 	/**
 	 * Create the application.
 	 */
-	public regitroUser(JFrame parent) {
-		initialize(parent);
+	public regitroUser(String idUser) {
+		initialize(idUser);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(JFrame parent) {
+	private void initialize(String idUser) {
 		frmRegistro = new JFrame();
 		frmRegistro.setTitle("Registro");
 		frmRegistro.setResizable(false);
@@ -62,7 +49,7 @@ public class regitroUser {
 		frmRegistro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistro.getContentPane().setLayout(null);
         frmRegistro.setVisible(true);
-        frmRegistro.setLocationRelativeTo(parent);
+        frmRegistro.setLocationRelativeTo(null);
                 
 		JPanel panel = new JPanel();
 		panel.setBounds(249, 52, 296, 34);
@@ -165,7 +152,7 @@ public class regitroUser {
 		tipoCargo.addItem("Operador de oficina");
 		tipoCargo.addItem("Contador");
 		tipoCargo.addItem("Gerente");
-		tipoCargo.addItem("Auxiliar de operaciï¿½n");
+		tipoCargo.addItem("AuxOperación");
 		panel_1.add(tipoCargo);
 		
 		//PASSWORD
@@ -192,36 +179,61 @@ public class regitroUser {
 		tfIdSede.setBounds(169, 310, 153, 20);
 		panel_1.add(tfIdSede);
 		
-		JButton btnNewButton = new JButton("REGISTRAR");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(255, 69, 0));
-		btnNewButton.setBounds(122, 360, 114, 23);
-		panel_1.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(584, 444, 174, 52);
 		frmRegistro.getContentPane().add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
+		JButton btnNewButton = new JButton("REGISTRAR");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setBackground(new Color(255, 69, 0));
+		btnNewButton.setBounds(122, 360, 114, 23);
+		panel_1.add(btnNewButton);
+		ControlBase control = new ControlBase();
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+  if(control.CrearUser(tfNombres.getText(), tfApellidos.getText(), tfId.getText(), tfAdress.getText(), tfTelefono.getText(), tfEmail.getText(), (String)tipoCargo.getSelectedItem(), tfPassword.getText(), tfIdSede.getText())) {
+	    JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
 		panel_2.add(lblNewLabel_2);
 		lblNewLabel_2.setForeground(new Color(0, 128, 0));
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 14));
+		tfNombres.setText("");
+		tfApellidos.setText("");
+		tfTelefono.setText("");
+		tfId.setText("");
+		tfAdress.setText("");
+		tfEmail.setText("");
+		tipoCargo.setSelectedItem("");
+		tfPassword.setText("");
+		tfIdSede.setText("");
 		
+  }else {
 		JLabel lblNewLabel_2_1 = new JLabel("\u2718 Error en el registro \u2718");
 		panel_2.add(lblNewLabel_2_1);
 		lblNewLabel_2_1.setForeground(new Color(255, 0, 0));
 		lblNewLabel_2_1.setFont(new Font("SansSerif", Font.BOLD, 14));
+  }
+				
+				
+				}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
 		
 		JButton btnNewButton_1_1 = new JButton("VOLVER");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmRegistro.setVisible(false);
+				usersMenu menu_u = new usersMenu(idUser);
+				menu_u.frame.setVisible(true);
+				menu_u.frame.setLocationRelativeTo(frmRegistro);
+			}
+		});
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_1.setBounds(53, 469, 95, 36);
 		frmRegistro.getContentPane().add(btnNewButton_1_1);
+		
 	}
 
 
