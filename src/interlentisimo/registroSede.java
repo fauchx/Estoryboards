@@ -231,10 +231,10 @@ public class registroSede
 		volverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		volverBtn.setBounds(38, 270, 95, 36);
 		volverBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				frmRegistroSedes.setVisible(false);
-				menu menuf = new menu(idUser);
-				menuf.configMenu(idUser, frmRegistroSedes);
+				sedesMenu sedemenu = new sedesMenu(idUser);
 			}
 		});
 		panelBottom.add(volverBtn);
