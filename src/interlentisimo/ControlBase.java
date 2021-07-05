@@ -112,6 +112,29 @@ public class ControlBase {
 		}
 	}
 	
+	public void modificarSede (String nombreIngresado, String direccionIngresada, String idIngresado, String estado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("UPDATE sede SET nombre_sede=?,estado_sede=?,direccion_sede=? WHERE identificador_sede=?");
+			pst.setString(1, nombreIngresado);
+			pst.setString(2, estado);
+			pst.setString(3, direccionIngresada);
+			pst.setString(4, idIngresado);
+			pst.executeUpdate();
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		
+	}
+	
+	
 	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede) {
 		PreparedStatement p = null;
 		conectarme();
@@ -129,5 +152,32 @@ public class ControlBase {
 		
 		}
 		return false;
+	}
+	
+	public String[] buscarSede(String id) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT nombre_sede, direccion_sede, estado_sede FROM sede WHERE identificador_sede = ?");
+			pst.setString(1, id);
+			result = pst.executeQuery();
+			String[] sedeInfo = new String[3];
+			while(result.next())
+			{
+				sedeInfo[0]=result.getString(1);
+				sedeInfo[1]=result.getString(2);
+				sedeInfo[2]=result.getString(3);
+			}
+			return sedeInfo;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
 	}
 }

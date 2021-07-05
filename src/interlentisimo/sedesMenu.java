@@ -44,6 +44,7 @@ public class sedesMenu {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 		JButton btnNewButton_1 = new JButton("VOLVER");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -84,6 +85,14 @@ public class sedesMenu {
 		btnAcUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAcUsuario.setBounds(213, 11, 193, 75);
 		panel_1.add(btnAcUsuario);
+		btnAcUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false); 
+				SedeInfoMod modSedeFr = new SedeInfoMod(idUser);
+				modSedeFr.frame.setLocationRelativeTo(frame);
+				modSedeFr.frame.setVisible(true);
+			}
+		});
 		
 		btnConsultarUsuarios = new JButton("Consultar Sedes");
 		btnConsultarUsuarios.setForeground(new Color(255, 255, 255));
@@ -109,7 +118,6 @@ public class sedesMenu {
 		
 		if(cargoUser.equals("Secretaria")) 
 		{
-			System.out.println(cargoUser);
 			this.crearSedeBtn.setEnabled(false);
 			this.btnAcUsuario.setEnabled(false);
 			
