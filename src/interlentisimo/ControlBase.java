@@ -108,7 +108,58 @@ public class ControlBase {
 		finally 
 		{
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
-		
+			
+		}
+	}
+	
+	public String consultarSede(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		String nombreSede = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT * FROM sede where identificador_sede=?");
+			pst.setString(1, idIngresado);
+			result = pst.executeQuery();
+			while(result.next()) {
+				nombreSede = result.getString("nombre_sede");
+			}
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Código de Error: " + sqle.getErrorCode() + "\n" +
+			  		   "SLQState: " + sqle.getSQLState() + "\n" +
+			  		   "Mensaje: " + sqle.getMessage() + "\n");
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+		}
+		return nombreSede;
+	}
+	
+	public void borrarSede(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("DELETE FROM sede where identificador_sede=?");
+			pst.setString(1, idIngresado);
+			pst.executeQuery();
+		} 
+		catch (SQLException sqle) 
+		{
+			System.out.println("Código de Error: " + sqle.getErrorCode() + "\n" +
+			  		   "SLQState: " + sqle.getSQLState() + "\n" +
+			  		   "Mensaje: " + sqle.getMessage() + "\n");
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		}
 	}
 	
@@ -142,7 +193,7 @@ public class ControlBase {
 			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"','"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
-			return true;
+			return true;	
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
