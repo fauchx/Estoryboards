@@ -202,6 +202,7 @@ public class SedeInfoMod {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 				sedesMenu sedemenu = new sedesMenu(idUser);
+				sedemenu.frame.setLocationRelativeTo(frame);
 			}
 		});
 		

@@ -40,7 +40,7 @@ public class sedesMenu {
 		frame = new JFrame();
 		frame.setTitle("Sedes");
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
-		frame.setBounds(100, 100, 800, 600);
+		frame.setSize(800, 600);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -59,14 +59,15 @@ public class sedesMenu {
 		btnNewButton_1.setBounds(48, 481, 95, 36);
 		frame.getContentPane().add(btnNewButton_1);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(149, 103, 496, 301);
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(149, 103, 496, 301);
+		mainPanel.setLayout(null);
+		frame.getContentPane().add(mainPanel);
+
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(117, 5, 261, 49);
-		panel_2.add(panel);
+		mainPanel.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Sedes");
 		panel.add(lblNewLabel);
@@ -75,7 +76,7 @@ public class sedesMenu {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(39, 89, 417, 201);
-		panel_2.add(panel_1);
+		mainPanel.add(panel_1);
 		panel_1.setBackground(SystemColor.menu);
 		panel_1.setLayout(null);
 		
@@ -100,6 +101,15 @@ public class sedesMenu {
 		btnConsultarUsuarios.setBounds(10, 11, 193, 75);
 		panel_1.add(btnConsultarUsuarios);
 		btnConsultarUsuarios.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnConsultarUsuarios.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				mainPanel.setVisible(false);
+				frame.add(new sedesList(idUser));
+				
+			}
+		});
 		
 		crearSedeBtn = new JButton("Crear Sede");
 		crearSedeBtn.setBackground(new Color(255, 69, 0));
