@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import Classes.TextPrompt;
@@ -241,6 +244,22 @@ public class registroSede
 		
 	}
 	
+	/**
+	 * Validar que todos los campos han sido llenados
+	 */
+	private boolean filledFields(ArrayList<String> listFields) 
+	{		
+		ListIterator<String> iteratorFields = listFields.listIterator();
+		while(iteratorFields.hasNext()) {
+			String field= iteratorFields.next();
+			if (field.length()==0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	/*
 	 * Este método verifica si los campos fueron correctamente diligenciados, de acuerdo al formato establecido.
 	 */
@@ -258,17 +277,15 @@ public class registroSede
 		String direccionIngresada = direccion_sede.getText();
 		String idIngresado = id_sede.getText();
 		
+		ArrayList <String>  fields = new ArrayList <String>();
+		fields.add(nombreIngresado);
+		fields.add(direccionIngresada);
+		fields.add(idIngresado);
 		
-		/**
-		 * Validar que todos los campos han sido llenados
-		 */
-		boolean emptyFieldError = false;
-		if ((nombreIngresado.length() == 0)
-				|| (direccionIngresada.length() == 0)
-				|| (idIngresado.length() == 0)) 
-		{
+		//Si algún campo se encuntr vacío activa el indicador de error
+		boolean emptyFieldError = !filledFields(fields);
+		if (emptyFieldError) {
 			emptyFieldErrorLbl.setVisible(true);
-			emptyFieldError = true;
 		}
 		
 		/**
