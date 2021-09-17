@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+ //fauchx el bicho
+//kk
 
 public class ControlBase {
 	JFrame frame;
