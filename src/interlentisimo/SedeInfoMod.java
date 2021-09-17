@@ -101,8 +101,8 @@ public class SedeInfoMod {
 			{
 				ControlBase control = new ControlBase();
 				try {
-					verification idConsult = new verification();
-					if (!idConsult.idSintax(id_sede.getText(), id_sede)) 
+					verification ver = new verification();
+					if (!ver.idSintax(id_sede.getText(), id_sede)) 
 					{
 						String[] sedeInfo = control.buscarSede(id_sede.getText());
 						nombre_sede.setText(sedeInfo[0]);
@@ -243,7 +243,7 @@ public class SedeInfoMod {
 		 * Validar que el formato de id es correcto y existe
 		 */
 		boolean idError = false;
-		idError= ver.idSintax(idIngresado, id_sede);
+		//idError= ver.idSintax(idIngresado, id_sede);
 		
 		/**
 		 * Validar nombre de solo letras, de minimo 8 caracteres

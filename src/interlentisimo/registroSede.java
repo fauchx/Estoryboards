@@ -27,18 +27,21 @@ import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import Classes.verification;
 
 
 public class registroSede 
 {
 
 	public JFrame frmRegistroSedes;
-	private JTextField nombre_sede;
-	private JTextField direccion_sede;
-	private JTextField id_sede;
+	private JTextField nombre_sede, direccion_sede, id_sede;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JLabel chequeoRegistroLbl, emptyFieldErrorLbl, nombreErrorLbl, direccionSintaxErrorLbl, direccionExistErrorLbl, idSedeSintaxErrorLbl, idSedeExistErrorLbl;
-	
+	private JLabel chequeoRegistroLbl, emptyFieldErrorLbl;
+	private verification ver = new verification();
+	private TextPrompt idPh, direccionPh, nombrePh;
+
+
+
 	/**
 	 * Create the application.
 	 */
@@ -102,16 +105,9 @@ public class registroSede
 		nombre_sede = new JTextField();
 		nombre_sede.setBounds(116, 70, 187, 20);
 		nombre_sede.setColumns(10);
+		nombrePh = new TextPrompt("ej: Sede Norte",nombre_sede);
+		nombrePh.changeAlpha(0.75f);
 		panelForm.add(nombre_sede);
-		
-		/*Labels de error en el campo*/
-		
-		nombreErrorLbl = new JLabel("<html>Usa 8 letras como mínimo para el nombre</html>");
-		nombreErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nombreErrorLbl.setForeground(Color.red);
-		nombreErrorLbl.setBounds(320, 55, 120, 45);
-		nombreErrorLbl.setVisible(false);
-		panelForm.add(nombreErrorLbl);
 		
 		/**
 		 * Campo Direccion de sede
@@ -124,27 +120,9 @@ public class registroSede
 		direccion_sede = new JTextField();
 		direccion_sede.setBounds(116, 128, 187, 20);
 		direccion_sede.setColumns(10);
-		TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
-		direcPlaceholder.changeAlpha(0.75f);
+		direccionPh = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
+		direccionPh.changeAlpha(0.75f);
 		panelForm.add(direccion_sede);
-		
-		/*Labels de error en el campo*/
-		
-		//Error: No es una dirección válida
-		direccionSintaxErrorLbl = new JLabel("<html>Dirección no válida</html>");
-		direccionSintaxErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		direccionSintaxErrorLbl.setForeground(Color.red);
-		direccionSintaxErrorLbl.setBounds(320, 116, 120, 45);
-		direccionSintaxErrorLbl.setVisible(false);
-		panelForm.add(direccionSintaxErrorLbl);
-		
-		//Error: La dirección ingresada ya se encuentra registrada en la base
-		direccionExistErrorLbl = new JLabel("<html>Dirección ya registrada</html>");
-		direccionExistErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		direccionExistErrorLbl.setForeground(Color.red);
-		direccionExistErrorLbl.setBounds(320, 116, 120, 45);
-		direccionExistErrorLbl.setVisible(false);
-		panelForm.add(direccionExistErrorLbl);
 		
 		/**
 		 * Campo identificador de sede
@@ -156,8 +134,8 @@ public class registroSede
 
 		id_sede = new JTextField();
 		id_sede.setBounds(116, 186, 187, 20);
-		TextPrompt idPlaceholder = new TextPrompt("ej. S001",id_sede);
-		idPlaceholder.changeAlpha(0.75f);
+		idPh = new TextPrompt("ej. S001",id_sede);
+		idPh.changeAlpha(0.75f);
 		panelForm.add(id_sede);
 		
 		JButton idInfo = new JButton();
@@ -172,24 +150,7 @@ public class registroSede
 		panelForm.add(idInfo);
 		
 		
-		/*Labels de error en el campo*/
-		
-		//Error: EL id ingresado no cumple con el formato
-		idSedeSintaxErrorLbl = new JLabel("<html>Identificador inválido</html>");
-		idSedeSintaxErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		idSedeSintaxErrorLbl.setForeground(Color.red);
-		idSedeSintaxErrorLbl.setBounds(320, 176, 120, 45);
-		idSedeSintaxErrorLbl.setVisible(false);
-		panelForm.add(idSedeSintaxErrorLbl);
-		
-		//Error: El identificador ya ha sido registrado
-		idSedeExistErrorLbl = new JLabel("<html>Identificador ya registrado</html>");
-		idSedeExistErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		idSedeExistErrorLbl.setForeground(Color.red);
-		idSedeExistErrorLbl.setBounds(320, 176, 120, 45);
-		idSedeExistErrorLbl.setVisible(false);
-		panelForm.add(idSedeExistErrorLbl);
-		
+
 		
 		/*JLabel Empty fields*/
 		emptyFieldErrorLbl = new JLabel("<html>Todos los campos deben de ser llenados</html>");
@@ -244,34 +205,17 @@ public class registroSede
 		
 	}
 	
-	/**
-	 * Validar que todos los campos han sido llenados
-	 */
-	private boolean filledFields(ArrayList<String> listFields) 
-	{		
-		ListIterator<String> iteratorFields = listFields.listIterator();
-		while(iteratorFields.hasNext()) {
-			String field= iteratorFields.next();
-			if (field.length()==0) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	
+		
 	/*
 	 * Este método verifica si los campos fueron correctamente diligenciados, de acuerdo al formato establecido.
 	 */
 	private void validarCampos() throws SQLException 
 	{
-		nombreErrorLbl.setVisible(false);
-		direccionSintaxErrorLbl.setVisible(false);
-		direccionExistErrorLbl.setVisible(false);
-		idSedeSintaxErrorLbl.setVisible(false);
-		idSedeExistErrorLbl.setVisible(false);
+
 		emptyFieldErrorLbl.setVisible(false);
 		chequeoRegistroLbl.setVisible(false);
+
+
 		
 		String nombreIngresado = nombre_sede.getText();
 		String direccionIngresada = direccion_sede.getText();
@@ -282,8 +226,10 @@ public class registroSede
 		fields.add(direccionIngresada);
 		fields.add(idIngresado);
 		
-		//Si algún campo se encuntr vacío activa el indicador de error
-		boolean emptyFieldError = !filledFields(fields);
+		
+
+		//Verifica que todos los campos hayan sido llenados
+		boolean emptyFieldError = !ver.filledFields(fields);
 		if (emptyFieldError) {
 			emptyFieldErrorLbl.setVisible(true);
 		}
@@ -292,10 +238,11 @@ public class registroSede
 		 * Validar nombre de solo letras, de minimo 8 caracteres
 		 */
 		boolean nombreError = false;
-		if(!(contieneSoloLetras(nombreIngresado)
-				&& (nombreIngresado.replace(" ", "").length()>=8))) 
+		if(!(ver.contieneSoloLetras(nombreIngresado)
+				&& (ver.minimoCaracteres(nombreIngresado, 8)))) 
 		{
-			nombreErrorLbl.setVisible(true);
+			nombre_sede.setText("");
+			nombrePh.setText("Usar 8 letras como mínimo");
 			nombreError = true;
 		}
 		
@@ -306,30 +253,21 @@ public class registroSede
 		boolean idError = false;
 		Pattern idPattern = Pattern.compile("^S"+"([0-9]{3,3})$");
 
-		if(idIngresado.length()>0) 
+		if(ver.idSintax(idPattern, idIngresado)) 
 		{
-			Matcher mather = idPattern.matcher(idIngresado);
-			
-			if(mather.find() == true) 
-				
+			ControlBase control = new ControlBase();
+			if(control.idSedeExist(idIngresado)) //Si la id de sede ya existe retorna true, por lo tanto no se puede registrar esa sede con el id ingresado
 			{
-				idSedeSintaxErrorLbl.setVisible(false);
-				ControlBase control = new ControlBase();
-				if(!control.idSedeExist(idIngresado)) 
-				{
-					idError=false;
-				} else 
-				{
-					idError=true;
-					idSedeExistErrorLbl.setVisible(true);
-				}
-				
-				
-			} else 
-			{
-				idSedeSintaxErrorLbl.setVisible(true);
 				idError=true;
+				id_sede.setText("");
+				idPh.setText("Id ya registrado");
 			}
+		}else 
+		{
+			idError=true;
+			id_sede.setText("");
+			idPh.setText("Sintaxis incorrecta");	
+
 		}
 		
 		
@@ -337,9 +275,7 @@ public class registroSede
 		 * Verificacion de existencia de algún error que no permita la correcta inserción en la base de datos
 		 */
 		
-		if(!(emptyFieldError == true
-				|| nombreError == true
-				|| idError == true)) 
+		if(!(emptyFieldError || nombreError || idError )) 
 		{
 			//Caso de que no exista ningun error- Se inserta en la base
 			System.out.println("No hay error");
@@ -347,26 +283,14 @@ public class registroSede
 			control.insertarSede(nombreIngresado, direccionIngresada, idIngresado);
 			chequeoRegistroLbl.setVisible(true);
 			nombre_sede.setText("");
+			nombrePh.setText("");
 			direccion_sede.setText("");
+			direccionPh.setText("");
 			id_sede.setText("");
+			idPh.setText("");
 			
 		}
 		
 	}
-	
-	private static boolean contieneSoloLetras(String cadena) 
-	{
-	    for (int x = 0; x < cadena.length(); x++) 
-	    {
-	        char c = cadena.charAt(x);
-	        // Si no está entre a y z, ni entre A y Z, ni es un espacio
-	        if (!((c >= 'a' && c <= 'z') 
-	        		|| (c >= 'A' && c <= 'Z') 
-	        		|| c == ' ')) 
-	        {
-	            return false;
-	        }
-	    }
-	    return true;
-	}
+
 }

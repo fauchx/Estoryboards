@@ -3,6 +3,8 @@ package Classes;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +33,8 @@ public class verification {
 		return false;
 	}
 	
+	
+	
 	public boolean contieneSoloLetras(String cadena) 
 	{
 	    for (int x = 0; x < cadena.length(); x++) 
@@ -47,43 +51,35 @@ public class verification {
 	    return true;
 	}
 	
-	public boolean idSintax(String idIngresado, JTextField idField) throws SQLException
+	/**
+	 * Validar que todos los campos han sido llenados
+	 */
+	public boolean filledFields(ArrayList<String> listFields) 
+	{		
+		ListIterator<String> iteratorFields = listFields.listIterator();
+		while(iteratorFields.hasNext()) {
+			String field= iteratorFields.next();
+			if (field.length()==0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/*
+	 *Validar que un string ingresado cumpla con la regla sintactica del 
+	 *patron ingresado 
+	 */
+	public boolean idSintax(Pattern patron,String text) throws SQLException
 	{
-		Pattern idPattern = Pattern.compile("^S"+"([0-9]{3,3})$");
-
-		if(idIngresado.length()>0) 
-		{
-			Matcher mather = idPattern.matcher(idIngresado);
+			Matcher mather = patron.matcher(text);
 			
-			if(mather.find() == true) 
-				
-			{
-				ControlBase control = new ControlBase();
-				if(control.idSedeExist(idIngresado)) 
-				{
-					return false;
-				} else 
-				{
-					
-					idField.setText("");
-					TextPrompt 	idNotExistsError = new TextPrompt("Id no registrado",idField, Show.FOCUS_LOST);
-					idNotExistsError.setShowPromptOnce(true);
-					idNotExistsError.setFont(new Font("Tahoma", Font.PLAIN, 13));
-					idNotExistsError.setForeground(Color.red);
-					return true;
-				}
-				
-				
-			} else 
-			{
-				idField.setText("");
-				TextPrompt 	idSintaxError = new TextPrompt("Formato de id inválido",idField, Show.FOCUS_LOST);
-				idSintaxError.setShowPromptOnce(true);
-				idSintaxError.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				idSintaxError.setForeground(Color.red);
+			if ((text.length()>0) && (mather.find() == true))
+			{				
 				return true;
 			}
-		} 
 		return false;
 	}
+	
+	
 }
