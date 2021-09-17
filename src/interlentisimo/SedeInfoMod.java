@@ -136,7 +136,7 @@ public class SedeInfoMod {
 		nombre_sede.setColumns(10);
 		nombre_sede.setBounds(111, 120, 175, 20);
 		panelForm.add(nombre_sede);
-		//		TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
+		//TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
 
 		
 		/**
