@@ -101,8 +101,8 @@ public class SedeInfoMod {
 			{
 				ControlBase control = new ControlBase();
 				try {
-					verification idConsult = new verification();
-					if (!idConsult.idSintax(id_sede.getText(), id_sede)) 
+					verification ver = new verification();
+					if (!ver.idSintax(id_sede.getText(), id_sede)) 
 					{
 						String[] sedeInfo = control.buscarSede(id_sede.getText());
 						nombre_sede.setText(sedeInfo[0]);
@@ -136,7 +136,7 @@ public class SedeInfoMod {
 		nombre_sede.setColumns(10);
 		nombre_sede.setBounds(111, 120, 175, 20);
 		panelForm.add(nombre_sede);
-		//		TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
+		//TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
 
 		
 		/**
@@ -243,7 +243,7 @@ public class SedeInfoMod {
 		 * Validar que el formato de id es correcto y existe
 		 */
 		boolean idError = false;
-		idError= ver.idSintax(idIngresado, id_sede);
+		//idError= ver.idSintax(idIngresado, id_sede);
 		
 		/**
 		 * Validar nombre de solo letras, de minimo 8 caracteres
