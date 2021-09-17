@@ -193,7 +193,8 @@ public class regitroUser {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-  if(control.CrearUser(tfNombres.getText(), tfApellidos.getText(), tfId.getText(), tfAdress.getText(), tfTelefono.getText(), tfEmail.getText(), (String)tipoCargo.getSelectedItem(), tfPassword.getText(), tfIdSede.getText())) {
+  if(control.CrearUser(tfNombres.getText(), tfApellidos.getText(), tfId.getText(), tfAdress.getText(), tfTelefono.getText(), tfEmail.getText(), 
+		  (String)tipoCargo.getSelectedItem(), tfPassword.getText(), tfIdSede.getText(),"Inactivo")) {
 	    JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
 		panel_2.add(lblNewLabel_2);
 		lblNewLabel_2.setForeground(new Color(0, 128, 0));

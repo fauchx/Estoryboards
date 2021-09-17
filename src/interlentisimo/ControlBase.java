@@ -189,11 +189,12 @@ public class ControlBase {
 	
 	
 	
-	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede) {
+	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
-			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"','"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"')";                                      
+			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"'"
+					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
 			return true;	
@@ -207,13 +208,15 @@ public class ControlBase {
 		}
 		return false;
 	}
-	public boolean ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u, String cargo, String id_Sede,String id) throws SQLException {
+	public boolean ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
+			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=? where identificación_u=?");
+			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,"
+					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificación_u=?");
 			pst.setString(1, nombre);
 			pst.setString(2, apellido);
 			pst.setString(3, direccion);
@@ -221,7 +224,8 @@ public class ControlBase {
 			pst.setString(5, email_u);
 			pst.setString(6, cargo);
 			pst.setString(7, id_Sede);
-			pst.setString(8, id);
+			pst.setString(8, estado);
+			pst.setString(9, id);
 			pst.executeUpdate();
 			return true;
 		}catch(Exception ex) {
@@ -239,10 +243,11 @@ public class ControlBase {
 		ResultSet result = null;
 		conectarme();
 		try {
-			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,email_u,cargo_u,identificador_sede from usuarios where identificación_u=?");
+			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,"
+					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificación_u=?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
-			String[] usuarioInfo = new String[7];
+			String[] usuarioInfo = new String[8];
 			while(result.next()) {
 				usuarioInfo[0] = result.getString(1);
 				usuarioInfo[1] = result.getString(2);
@@ -251,6 +256,7 @@ public class ControlBase {
 				usuarioInfo[4] = result.getString(5);
 				usuarioInfo[5] = result.getString(6);
 				usuarioInfo[6] = result.getString(7);
+				usuarioInfo[7] = result.getString(8);
 			}
 			return usuarioInfo;
 		}finally {

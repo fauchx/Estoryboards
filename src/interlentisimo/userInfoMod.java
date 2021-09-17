@@ -26,7 +26,7 @@ public class userInfoMod {
 	private JTextField tfIdSede;
 	private JTextField cedulaTxt;
 	private JButton buscarIdBtn;
-	private JComboBox<String> TipoCargos;
+	private JComboBox<String> TipoCargos, estadoUser;
 	ControlBase control;
 
 	/**
@@ -84,12 +84,13 @@ public class userInfoMod {
 					direcciontxt.setText(userInfo[2]);
 					telefonotxt.setText(userInfo[3]);
 					emailtxt.setText(userInfo[4]);
-					if(userInfo[5].equals("Gerente")) {
-						TipoCargos.setSelectedItem("Gerente");
-					}
-					System.out.println(userInfo[5]);
+					//if(userInfo[5].equals("Gerente")) {
+					TipoCargos.setSelectedItem(userInfo[5]);
+					//}
+					//System.out.println(userInfo[5]);
 					tfIdSede.setText(userInfo[6]);
-					System.out.println(userInfo[6]);
+					//System.out.println(userInfo[6]);
+					estadoUser.setSelectedItem(userInfo[7]);
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -175,7 +176,7 @@ public class userInfoMod {
 					ControlBase control = new ControlBase();
 					if(control.ModificarUsuario(nombretxt.getText(), apellidostxt.getText(), direcciontxt.getText()
 						,telefonotxt.getText(), emailtxt.getText(), (String)TipoCargos.getSelectedItem(),
-						tfIdSede.getText() ,cedulaTxt.getText() )) {
+						tfIdSede.getText() ,(String)estadoUser.getSelectedItem(),cedulaTxt.getText() )) {
 						JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
 						panel_1.add(lblNewLabel_2);
 						lblNewLabel_2.setForeground(new Color(0, 128, 0));
@@ -212,7 +213,7 @@ public class userInfoMod {
 		panel_1.add(lblNewLabel_1_2);
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JComboBox<String> estadoUser = new JComboBox<String>();
+		estadoUser = new JComboBox<String>();
 		estadoUser.setBounds(182, 303, 153, 22);
 		estadoUser.addItem("");
 		estadoUser.addItem("Activo");
