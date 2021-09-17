@@ -188,6 +188,7 @@ public class ControlBase {
 	}
 	
 	
+	
 	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede) {
 		PreparedStatement p = null;
 		conectarme();
@@ -206,7 +207,59 @@ public class ControlBase {
 		}
 		return false;
 	}
-	
+	public boolean ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u, String cargo, String id_Sede,String id) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=? where identificación_u=?");
+			pst.setString(1, nombre);
+			pst.setString(2, apellido);
+			pst.setString(3, direccion);
+			pst.setString(4, telefono);
+			pst.setString(5, email_u);
+			pst.setString(6, cargo);
+			pst.setString(7, id_Sede);
+			pst.setString(8, id);
+			pst.executeUpdate();
+			return true;
+		}catch(Exception ex) {
+			JOptionPane.showMessageDialog(null, ex);
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		return false;
+	}
+	public String[] buscarUsuario(String id) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,email_u,cargo_u,identificador_sede from usuarios where identificación_u=?");
+			pst.setString(1, id);
+			result = pst.executeQuery();
+			String[] usuarioInfo = new String[7];
+			while(result.next()) {
+				usuarioInfo[0] = result.getString(1);
+				usuarioInfo[1] = result.getString(2);
+				usuarioInfo[2] = result.getString(3);
+				usuarioInfo[3] = result.getString(4);
+				usuarioInfo[4] = result.getString(5);
+				usuarioInfo[5] = result.getString(6);
+				usuarioInfo[6] = result.getString(7);
+			}
+			return usuarioInfo;
+		}finally {
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+		
+	}
 	public String[] buscarSede(String id) throws SQLException 
 	{
 		PreparedStatement pst = null;

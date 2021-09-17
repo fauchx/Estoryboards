@@ -54,6 +54,15 @@ public class usersMenu {
 		panel_1.setLayout(null);
 		
 		JButton btnAcUsuario = new JButton("Actualizar Usuario");
+		btnAcUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				userInfoMod registro = new userInfoMod(idUser);
+				registro.frmInformacinUsuario.setVisible(true);
+				registro.frmInformacinUsuario.setLocationRelativeTo(null);
+			}
+		});
+
 		btnAcUsuario.setBackground(new Color(255, 69, 0));
 		btnAcUsuario.setForeground(new Color(255, 255, 255));
 		btnAcUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
