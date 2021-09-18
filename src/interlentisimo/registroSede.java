@@ -211,7 +211,7 @@ public class registroSede
 	 */
 	private void validarCampos() throws SQLException 
 	{
-
+		ControlBase control = new ControlBase();
 		emptyFieldErrorLbl.setVisible(false);
 		chequeoRegistroLbl.setVisible(false);
 
@@ -230,7 +230,8 @@ public class registroSede
 
 		//Verifica que todos los campos hayan sido llenados
 		boolean emptyFieldError = !ver.filledFields(fields);
-		if (emptyFieldError) {
+		if (emptyFieldError) 
+		{
 			emptyFieldErrorLbl.setVisible(true);
 		}
 		
@@ -255,7 +256,6 @@ public class registroSede
 
 		if(ver.idSintax(idPattern, idIngresado)) 
 		{
-			ControlBase control = new ControlBase();
 			if(control.idSedeExist(idIngresado)) //Si la id de sede ya existe retorna true, por lo tanto no se puede registrar esa sede con el id ingresado
 			{
 				idError=true;
@@ -278,8 +278,6 @@ public class registroSede
 		if(!(emptyFieldError || nombreError || idError )) 
 		{
 			//Caso de que no exista ningun error- Se inserta en la base
-			System.out.println("No hay error");
-			ControlBase control = new ControlBase();
 			control.insertarSede(nombreIngresado, direccionIngresada, idIngresado);
 			chequeoRegistroLbl.setVisible(true);
 			nombre_sede.setText("");
