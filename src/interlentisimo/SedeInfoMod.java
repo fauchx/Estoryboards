@@ -22,6 +22,9 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import Classes.TextPrompt;
 
 public class SedeInfoMod {
 
@@ -31,6 +34,7 @@ public class SedeInfoMod {
 	private JComboBox<String> estadoSede;
 	private JPanel panelForm, panelBtns;
 	private JLabel emptyFieldErrorLbl;
+	private TextPrompt idPh, direccionPh, nombrePh;
 
 	/**
 	 * Create the application.
@@ -87,6 +91,8 @@ public class SedeInfoMod {
 		id_sede = new JTextField();
 		id_sede.setColumns(10);
 		id_sede.setBounds(111, 75, 175, 20);
+		idPh = new TextPrompt("",id_sede);
+		idPh.changeAlpha(0.75f);
 		panelForm.add(id_sede);
 		
 		buscarIdBtn = new JButton("Buscar");
@@ -102,7 +108,7 @@ public class SedeInfoMod {
 				ControlBase control = new ControlBase();
 				try {
 					verification ver = new verification();
-					if (!ver.idSintax(id_sede.getText(), id_sede)) 
+					if (control.idSedeExist(id_sede.getText()))
 					{
 						String[] sedeInfo = control.buscarSede(id_sede.getText());
 						nombre_sede.setText(sedeInfo[0]);
@@ -116,7 +122,12 @@ public class SedeInfoMod {
 						{
 							estadoSede.setSelectedItem("Inactiva");
 						}
-					}					
+					}else 
+					{
+						id_sede.setText("");
+						idPh=new TextPrompt("Sede no existe",id_sede);
+						idPh.changeAlpha(0.75f);
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -135,9 +146,9 @@ public class SedeInfoMod {
 		nombre_sede = new JTextField();
 		nombre_sede.setColumns(10);
 		nombre_sede.setBounds(111, 120, 175, 20);
+		nombrePh = new TextPrompt("",nombre_sede);
+		nombrePh.changeAlpha(0.75f);
 		panelForm.add(nombre_sede);
-		//TextPrompt direcPlaceholder = new TextPrompt("ej. CL 1 # 2 - 3",direccion_sede);
-
 		
 		/**
 		 * Campo de direccion de sede
@@ -150,6 +161,8 @@ public class SedeInfoMod {
 		direccion_sede = new JTextField();
 		direccion_sede.setColumns(10);
 		direccion_sede.setBounds(111, 165, 213, 20);
+		direccionPh = new TextPrompt("",direccion_sede);
+		direccionPh.changeAlpha(0.75f);
 		panelForm.add(direccion_sede);
 		
 		/**
@@ -206,8 +219,6 @@ public class SedeInfoMod {
 			}
 		});
 		
-		/*Labels de error en el campo*/
-		
 		/*JLabel Empty fields*/
 		emptyFieldErrorLbl = new JLabel("<html>Todos los campos deben de ser llenados</html>");
 		emptyFieldErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -220,60 +231,78 @@ public class SedeInfoMod {
 	
 	private void validarCampos() throws SQLException 
 	{
+		emptyFieldErrorLbl.setVisible(false);
 		verification ver = new verification();
+		ControlBase control = new ControlBase();
 		
 		String idIngresado = id_sede.getText();
 		String nombreIngresado = nombre_sede.getText();
 		String direccionIngresada = direccion_sede.getText();
 		String estadoSeleccionado = String.valueOf(estadoSede.getSelectedItem());
 		
+		ArrayList <String> fields = new ArrayList <String>();
+		fields.add(idIngresado);
+		fields.add(nombreIngresado);
+		fields.add(direccionIngresada);
+		
 		/**
 		 * Validar que todos los campos han sido llenados
 		 */
-		boolean emptyFieldError = false;
-		if ((nombreIngresado.length() == 0)
-				|| (direccionIngresada.length() == 0)
-				|| (idIngresado.length() == 0)) 
+		boolean emptyFieldError = !ver.filledFields(fields);
+		if (emptyFieldError)
 		{
 			emptyFieldErrorLbl.setVisible(true);
-			emptyFieldError = true;
 		}
+		
+	
 
 		/**
 		 * Validar que el formato de id es correcto y existe
 		 */
 		boolean idError = false;
-		//idError= ver.idSintax(idIngresado, id_sede);
+		if(ver.idSintax(ver.FORMATO_SEDE, idIngresado)) 
+		{
+			if (!control.idSedeExist(idIngresado)) {
+				id_sede.setText("");
+				idPh.setText("Sede no existe");
+				idPh.changeAlpha(0.75f);
+				idError = true;
+			}
+		}else 
+		{
+			id_sede.setText("");
+			idPh.setText("Sintaxis incorrecta");
+			idPh.changeAlpha(0.75f);
+			idError = true;
+		}
 		
 		/**
 		 * Validar nombre de solo letras, de minimo 8 caracteres
 		 */
-		boolean nombreError = false;
+		boolean nombreError = false; 
+		int n=3;
 		if(!(ver.contieneSoloLetras(nombreIngresado)
-				&& (nombreIngresado.replace(" ", "").length()>=8))) 
+				&& (ver.minimoCaracteres(nombreIngresado, n)))) 
 		{
-			///nombreErrorLbl.setVisible(true);
-			nombreError = true;
 			nombre_sede.setText("");
-			TextPrompt 	nombreSintaxError = new TextPrompt("Solo letras, mayor a 8 caracteres.",nombre_sede,Show.FOCUS_LOST);
-			nombreSintaxError.setShowPromptOnce(true);
-			nombreSintaxError.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			nombreSintaxError.setForeground(Color.red);
-			
+			nombrePh.setText("Usar "+n+" letras como mínimo");
+			nombreError = true;
 		}
 		
-		if(!(emptyFieldError == true
-				|| nombreError == true
-				|| idError == true)) 
+		
+		if(!(emptyFieldError || nombreError || idError)) 
 		{
-			//Caso de que no exista ningun error- Se inserta en la base
-			ControlBase control = new ControlBase();
+			//Caso de que no exista ningun error- Se modifica en la base
 			control.modificarSede(nombreIngresado, direccionIngresada, idIngresado,estadoSeleccionado);
 			JOptionPane.showMessageDialog(null, "Sede modificada correctamente");
 			nombre_sede.setText("");
+			nombrePh.setText("");
 			direccion_sede.setText("");
+			direccionPh.setText("");
 			id_sede.setText("");
-			
+			idPh.setText("");
+		}else {
+			System.out.println("error "+emptyFieldError+" "+nombreError+" "+idError);;
 		}
 		
 		
