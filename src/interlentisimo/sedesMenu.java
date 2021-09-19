@@ -105,8 +105,9 @@ public class sedesMenu {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				mainPanel.setVisible(false);
+				frame.setVisible(false);
 				sedesList listado = new sedesList(idUser);;
+				listado.setLocationRelativeTo(frame);
 				
 			}
 		});

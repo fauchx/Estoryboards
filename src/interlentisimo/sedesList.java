@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
 
 import Classes.TextPrompt;
 import Classes.TextPrompt.Show;
@@ -24,6 +26,9 @@ import java.awt.Graphics;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 
 public class sedesList extends JFrame
@@ -37,6 +42,7 @@ public class sedesList extends JFrame
 	private JComboBox<String> categoriaJCB;
 	private JPanel consolePanel,consoleListPanel,tablePanel, btnPanel;
 	private JTable tabla;
+	private JScrollPane scrollPane;
 	private JPanel mainPanel;
 
 	/**
@@ -171,7 +177,8 @@ public class sedesList extends JFrame
 		
 		tabla = new JTable();
 		tablePanel.add(tabla);
-		tablePanel.add(new JScrollPane(tabla),BorderLayout.CENTER);
+		scrollPane = new JScrollPane(tabla);
+		tablePanel.add(scrollPane,BorderLayout.CENTER);
 		
 		
 		/*
@@ -180,10 +187,10 @@ public class sedesList extends JFrame
 		
 		btnPanel = new JPanel();
 		btnPanel.setBounds(0, 550, 200, 50);
-		btnPanel.setBackground(Color.blue);
+		//btnPanel.setBackground(Color.blue);
 		btnPanel.setLayout(new FlowLayout());
 		btnPanel.setVisible(true);
-		mainPanel.add(btnPanel);
+		tablePanel.add(btnPanel,BorderLayout.SOUTH);
 		
 		JButton volverBtn = new JButton("VOLVER");
 		volverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -195,7 +202,19 @@ public class sedesList extends JFrame
 				sedesMenu sedemenu = new sedesMenu(idUser);
 			}
 		});
-		tablePanel.add(volverBtn,BorderLayout.SOUTH);
+		btnPanel.add(volverBtn);
+		/*
+		JButton descargarBtn = new JButton("Descargar");
+		descargarBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		descargarBtn.setSize(95, 36);
+		descargarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				setVisible(false);
+				sedesMenu sedemenu = new sedesMenu(idUser);
+			}
+		});
+		btnPanel.add(descargarBtn);*/
 	}
 	
 	private void listarCategorias(String categoria) 
@@ -203,13 +222,20 @@ public class sedesList extends JFrame
 		ControlBase control = new ControlBase();
 		try 
 		{
-			tabla.setModel(control.getDatos(categoria));
+			DefaultTableModel modeloBaseDatos = control.getDatos(categoria);
+			tabla.setModel(modeloBaseDatos);
+			int cantidadColumnas = modeloBaseDatos.getColumnCount();
+			int i=0;
+			while(i<cantidadColumnas) 
+			{
+				tabla.getColumnModel().getColumn(i).setPreferredWidth(100);
+				i++;
+			}
 		}catch(Exception e) 
 		{
 			e.printStackTrace();
 		}
 	}
-	
 
 	
 }
