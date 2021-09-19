@@ -8,13 +8,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
  //fauchx el bicho
 //kk
+import javax.swing.table.DefaultTableModel;
+
+import com.sun.net.httpserver.Authenticator.Result;
 
 public class ControlBase {
 	JFrame frame;
 	private Connection conexion = null;
+	private final String SQL_SELECT_SEDE = "select * from sede";
+	private final String SQL_SELECT_USERS = "select * from usuarios";
+	private final String SQL_SELECT_ORDERS = "select * from ordenes";
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
 	private String comprobarlogin , consultaCargo;
+	private DefaultTableModel DT;
 	
 	public void conectarme() {
 		try {
@@ -112,6 +119,107 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 			
 		}
+	}
+	
+	private DefaultTableModel setTitulos(String categoria) 
+	{
+		DT = new DefaultTableModel();
+		switch(categoria) 
+		{
+		case "Usuarios":
+			DT.addColumn("Nombres");
+			DT.addColumn("Apellidos");
+			DT.addColumn("Id");
+			DT.addColumn("Dirección");
+			DT.addColumn("Teléfono");
+			DT.addColumn("Email");
+			DT.addColumn("Cargo");
+			DT.addColumn("Contraseña");
+			DT.addColumn("Sede");
+			DT.addColumn("Estado");
+			break;
+		case "Sedes":
+			DT.addColumn("Id");
+			DT.addColumn("Nombre");
+			DT.addColumn("Estado");
+			DT.addColumn("Dirección");
+			break;
+		case "Órdenes":
+			//FALTA AGREGAR NOMBRES DE COLUMNAS
+			break;
+		}
+		return DT;
+	}
+	
+	
+	public DefaultTableModel getDatos(String categoria) 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		try 
+		{
+			setTitulos(categoria);
+			conectarme();
+			switch(categoria) 
+			{
+			case "Usuarios":
+				pst = conexion.prepareStatement(SQL_SELECT_USERS);
+				break;
+			case "Sedes":
+				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
+				break;
+			case "Órdenes":
+				//falta poner
+				break;
+			}
+			result = pst.executeQuery();
+			Object [] fila;
+			switch(categoria) 
+			{
+			case "Usuarios":
+				fila = new Object[10];
+				while(result.next()) 
+				{
+					fila[0]=result.getString(1);
+					fila[1]=result.getString(2);
+					fila[2]=result.getString(3);
+					fila[3]=result.getString(4);
+					fila[4]=result.getString(5);
+					fila[5]=result.getString(6);
+					fila[6]=result.getString(7);
+					fila[7]=result.getString(8);
+					fila[8]=result.getString(9);
+					fila[9]=result.getString(10);
+					DT.addRow(fila);
+				}
+				break;
+			case "Sedes":
+				fila = new Object[4];
+				while(result.next()) 
+				{
+					fila[0]=result.getString(1);
+					fila[1]=result.getString(2);
+					fila[2]=result.getString(3);
+					fila[3]=result.getString(4);
+					DT.addRow(fila);
+				}
+				break;
+			case "Órdenes":
+				//FALTA AGREGAR NOMBRES DE COLUMNAS
+				break;
+			}
+			
+		}catch (Exception e)
+		{
+			System.out.println("Error al listar");
+			e.printStackTrace();
+		}finally 
+		{
+			result = null;
+			pst = null;
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+		return DT;
 	}
 	
 	public String consultarSede(String idIngresado) throws SQLException 
