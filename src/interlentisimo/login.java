@@ -116,6 +116,7 @@ public class login
 						frame.setVisible(false);
 						menu menuf = new menu(idUser);
 						menuf.configMenu(cargoUser,frame);
+						menuf.frame.setLocationRelativeTo(frame);
 						
 					} 
 					else 

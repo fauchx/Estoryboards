@@ -16,7 +16,7 @@ import java.awt.SystemColor;
 public class sedesMenu {
 
 	 JFrame frame;
-	 JButton btnAcUsuario, btnConsultarUsuarios, crearSedeBtn;
+	 JButton btnAcUsuario, btnConsultarSedes, crearSedeBtn;
 	 private String cargoUser;
 
 	/**
@@ -95,18 +95,19 @@ public class sedesMenu {
 			}
 		});
 		
-		btnConsultarUsuarios = new JButton("Consultar Sedes");
-		btnConsultarUsuarios.setForeground(new Color(255, 255, 255));
-		btnConsultarUsuarios.setBackground(new Color(255, 69, 0));
-		btnConsultarUsuarios.setBounds(10, 11, 193, 75);
-		panel_1.add(btnConsultarUsuarios);
-		btnConsultarUsuarios.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnConsultarUsuarios.addActionListener(new ActionListener() 
+		btnConsultarSedes = new JButton("Consultar Sedes");
+		btnConsultarSedes.setForeground(new Color(255, 255, 255));
+		btnConsultarSedes.setBackground(new Color(255, 69, 0));
+		btnConsultarSedes.setBounds(10, 11, 193, 75);
+		panel_1.add(btnConsultarSedes);
+		btnConsultarSedes.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnConsultarSedes.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				mainPanel.setVisible(false);
-				frame.add(new sedesList(idUser));
+				frame.setVisible(false);
+				sedesList listado = new sedesList(idUser);
+				listado.setLocationRelativeTo(frame);
 				
 			}
 		});
