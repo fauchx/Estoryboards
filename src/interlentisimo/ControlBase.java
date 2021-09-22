@@ -100,7 +100,28 @@ public class ControlBase {
 		
 		}
 	}
-	
+	public boolean idUsuarioExist(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT identificación_u FROM usuarios WHERE identificación_u = ?",
+					ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.CONCUR_UPDATABLE);
+			pst.setString(1, idIngresado);
+			result = pst.executeQuery();
+			boolean idExiste = result.first();
+			return idExiste;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
 	public void insertarSede(String nombreIngresado, String direccionIngresada, String idIngresado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -316,7 +337,7 @@ public class ControlBase {
 		}
 		return false;
 	}
-	public boolean ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
+	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -335,7 +356,7 @@ public class ControlBase {
 			pst.setString(8, estado);
 			pst.setString(9, id);
 			pst.executeUpdate();
-			return true;
+			
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
@@ -344,7 +365,7 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		
 		}
-		return false;
+		
 	}
 	public String[] buscarUsuario(String id) throws SQLException {
 		PreparedStatement pst = null;
