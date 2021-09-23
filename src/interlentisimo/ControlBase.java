@@ -318,7 +318,7 @@ public class ControlBase {
 	
 	
 	
-	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
+	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
@@ -326,7 +326,7 @@ public class ControlBase {
 					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
-			return true;	
+				
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
@@ -335,8 +335,8 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		
 		}
-		return false;
 	}
+	
 	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;

@@ -265,6 +265,7 @@ public class userInfoMod {
 	private void validarcampos() throws SQLException  {
 		ControlBase control = new ControlBase();
 		verification ver = new verification();
+		emptyFieldErrorLbl.setVisible(false);
 		
 		String nombreingresado = nombretxt.getText();
 		String apellidoingresado = apellidostxt.getText();
@@ -293,29 +294,30 @@ public class userInfoMod {
 			emptyFieldErrorLbl.setVisible(true);
 		}
 		
-		boolean idError = false;
+		
+		boolean sedeError = false;
 		if(ver.idSintax(ver.FORMATO_SEDE, sedeingresada)) 
 		{
 			if (!control.idSedeExist(sedeingresada)) {
 				tfIdSede.setText("");
 				TextPrompt sedeph =  new TextPrompt("Sede no existente",tfIdSede);
-				idError = true;
+				sedeError = true;
 			}
 		}else 
 		{
 			tfIdSede.setText("");
 			sedeph.setText("Sintaxis incorrecta");
-			idError = true;
+			sedeError = true;
 		}
 		
 		boolean emailError = false;
 		if(!ver.emailSintax(ver.FORMATO_EMAIL, emailingresado)) {
 			emailtxt.setText("");
 			TextPrompt emailph = new TextPrompt("Email mal escrito",emailtxt);
-			idError = true;
+			emailError = true;
 		}
-	
-		if(!(emptyFieldError || idError || emailError)) {
+		
+		if(!(emptyFieldError || sedeError || emailError)) {
 			control.ModificarUsuario(nombreingresado, apellidoingresado, direccioningresada,telefonoingresado
 			,emailingresado, cargoingresado,sedeingresada,estadoingresado,cedulaingresada);
 		    JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");

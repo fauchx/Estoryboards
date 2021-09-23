@@ -16,6 +16,7 @@ import interlentisimo.ControlBase;
 public class verification {
 	public static Pattern FORMATO_SEDE= Pattern.compile("^S"+"([0-9]{3,3})$");
 	public static Pattern FORMATO_EMAIL = Pattern.compile("^(.+)@(.+)$");
+	public static Pattern FORMATO_CONTRASEÑA = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
 	
 	public verification() 
 	{
@@ -92,5 +93,12 @@ public class verification {
 	return false;
 	}
 	
-	
+	public boolean passwSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
 }
