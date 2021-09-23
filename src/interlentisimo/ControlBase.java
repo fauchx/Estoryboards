@@ -31,6 +31,23 @@ public class ControlBase {
 			+ "on D.identificacion_d = E.id_destinatario "
 			+ "join remitente as R "
 			+ "on R.identificacion_r=E.id_remitente";
+	private final String SQL_SELECT_SEDE_ID = "select * from sede where identificador_sede=?";
+	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificación_u=?";
+	private final String SQL_SELECT_SHIPMENT_ID = "select E.id_envio, "
+			+ "R.identificacion_r, "
+			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
+			+ "R.telefono_r, "
+			+ "R.direccion_r, "
+			+ "D.identificacion_d,"
+			+ "D.nombres_d || D.apellidos_d as nombre_destinatario, "
+			+ "D.telefono_d, "
+			+ "D.direccion_d "
+			+ "from destinatario as D "
+			+ "join envio as E "
+			+ "on D.identificacion_d = E.id_destinatario "
+			+ "join remitente as R "
+			+ "on R.identificacion_r=E.id_remitente"
+			+ "where E.id_envio =?";
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
 	private String comprobarlogin , consultaCargo;
@@ -194,15 +211,12 @@ public class ControlBase {
 		return DT;
 	}
 	
+
 	
-	public DefaultTableModel getDatos(String categoria) 
+	private PreparedStatement setQuery(PreparedStatement pst,String categoria)
 	{
-		PreparedStatement pst = null;
-		ResultSet result = null;
-		try 
+		try
 		{
-			setTitulos(categoria);
-			conectarme();
 			switch(categoria) 
 			{
 			case "Usuarios":
@@ -213,8 +227,57 @@ public class ControlBase {
 				break;
 			case "Órdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
-				//falta poner
 				break;
+			}
+			return pst;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return pst;
+	}
+	
+	private PreparedStatement setQuery (PreparedStatement pst,String categoria, String identificador)
+	{
+		try
+		{
+			switch(categoria) 
+			{
+			case "Usuarios":
+				pst = conexion.prepareStatement(SQL_SELECT_USERS_ID);
+				pst.setString(1, identificador);
+				break;
+			case "Sedes":
+				pst = conexion.prepareStatement(SQL_SELECT_SEDE_ID);
+				pst.setString(1, identificador);
+				break;
+			case "Órdenes":
+				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT_ID);
+				pst.setString(1, identificador);
+				break;
+			}
+			return pst;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return pst;
+	}
+	
+	public DefaultTableModel getDatos(String categoria,String identificador) 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		try 
+		{
+			setTitulos(categoria);
+			conectarme();
+			if (identificador.equals(""))
+			{
+				pst=setQuery(pst, categoria);
+			} else
+			{
+				pst=setQuery(pst, categoria, identificador);
 			}
 			result = pst.executeQuery();
 			Object [] fila;

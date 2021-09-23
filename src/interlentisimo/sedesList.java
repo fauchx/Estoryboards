@@ -92,7 +92,7 @@ public class sedesList extends JFrame
 		 * Panel de consola para especificaci[on de la tabla
 		 */
 		consolePanel = new JPanel();
-		consolePanel.setBounds(0,70,300,35);
+		consolePanel.setBounds(0,70,400,35);
 		//consolePanel.setBackground(Color.BLUE);
 		consolePanel.setLayout(new FlowLayout());
 		mainPanel.add(consolePanel);
@@ -101,10 +101,18 @@ public class sedesList extends JFrame
 		 * Campo identificador de sede
 		 */
 		
-		JLabel idLbl = new JLabel("Identificador:");
-		idLbl.setSize(95, 14);
+		JLabel idLbl = new JLabel("Categoria:",JLabel.CENTER);
+		idLbl.setSize(50, 14);
 		idLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		consolePanel.add(idLbl);
+		
+		/*JComboBox para la seleccion de la categoria a ser listada */
+		categoriaJCB = new JComboBox<String>();
+		categoriaJCB.setBounds(111, 210, 153, 22);
+		categoriaJCB.addItem("Usuarios");
+		categoriaJCB.addItem("Sedes");
+		categoriaJCB.addItem("Órdenes");
+		consolePanel.add(categoriaJCB);
 		
 		id = new JTextField();
 		id.setColumns(10);
@@ -113,52 +121,17 @@ public class sedesList extends JFrame
 		idPh.changeAlpha(0.75f);
 		consolePanel.add(id);
 		
-		/**
-		 * Boton de Consulta de un identificador particular
-		 */
+		// Boton de Consulta de un identificador particular
 		buscarIdBtn = new JButton("Consultar");
 		buscarIdBtn.setSize(80,22);
 		buscarIdBtn.setBackground(new Color(255, 69, 0));
 		buscarIdBtn.setForeground(new Color(255, 255, 255));
 		buscarIdBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		consolePanel.add(buscarIdBtn);
-		
-		/**
-		 * Consola de seleccion de listado
-		 */
-		/**
-		 * Panel de especificacion de categoria a listar (usuarios,sedes, paquetes)
-		 */
-		consoleListPanel = new JPanel();
-		consoleListPanel.setBounds(300,70,300,35);
-		//consoleListPanel.setBackground(Color.red);
-		consoleListPanel.setLayout(new FlowLayout());
-		mainPanel.add(consoleListPanel);
-		
-		JLabel categoriaLbl = new JLabel("Categoria:");
-		categoriaLbl.setSize(95, 14);
-		categoriaLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		consoleListPanel.add(categoriaLbl);
-		
-		/*JComboBox para la seleccion de la categoria a ser listada */
-		categoriaJCB = new JComboBox<String>();
-		categoriaJCB.setBounds(111, 210, 153, 22);
-		categoriaJCB.addItem("Usuarios");
-		categoriaJCB.addItem("Sedes");
-		categoriaJCB.addItem("Órdenes");
-		consoleListPanel.add(categoriaJCB);
-		
-		/*Boton de listado de categorias*/
-		listarBtn = new JButton("Listar");
-		listarBtn.setSize(80,22);
-		listarBtn.setBackground(new Color(255, 69, 0));
-		listarBtn.setForeground(new Color(255, 255, 255));
-		listarBtn.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		listarBtn.addActionListener(new ActionListener() {
+		buscarIdBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String categoriaSeleccionada = (String) categoriaJCB.getSelectedItem();
-				try {
-					listarCategorias(categoriaSeleccionada);						
+				try {	
+					listarCategorias(categoriaSeleccionada,id.getText());						
 				}catch(Exception e1){
 					e1.printStackTrace();
 				}
@@ -166,7 +139,8 @@ public class sedesList extends JFrame
 			}
 			
 		});
-		consoleListPanel.add(listarBtn);
+		consolePanel.add(buscarIdBtn);
+		
 		
 		/*
 		 * JPanel para el jtable
@@ -220,12 +194,14 @@ public class sedesList extends JFrame
 		btnPanel.add(descargarBtn);*/
 	}
 	
-	private void listarCategorias(String categoria) 
+	private void listarCategorias(String categoria, String identificador) 
 	{
 		ControlBase control = new ControlBase();
 		try 
 		{
-			DefaultTableModel modeloBaseDatos = control.getDatos(categoria);
+			DefaultTableModel modeloBaseDatos;
+			modeloBaseDatos= control.getDatos(categoria,identificador);
+			//DefaultTableModel modeloBaseDatos = control.getDatos(categoria);
 			tabla.setModel(modeloBaseDatos);
 			int cantidadColumnas = modeloBaseDatos.getColumnCount();
 			int i=0;
