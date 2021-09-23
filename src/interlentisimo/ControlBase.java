@@ -17,7 +17,20 @@ public class ControlBase {
 	private Connection conexion = null;
 	private final String SQL_SELECT_SEDE = "select * from sede";
 	private final String SQL_SELECT_USERS = "select * from usuarios";
-	private final String SQL_SELECT_ORDERS = "select * from ordenes";
+	private final String SQL_SELECT_SHIPMENT = "select E.id_envio, "
+			+ "R.identificacion_r, "
+			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
+			+ "R.telefono_r, "
+			+ "R.direccion_r, "
+			+ "D.identificacion_d,"
+			+ "D.nombres_d || D.apellidos_d as nombre_destinatario, "
+			+ "D.telefono_d, "
+			+ "D.direccion_d "
+			+ "from destinatario as D "
+			+ "join envio as E "
+			+ "on D.identificacion_d = E.id_destinatario "
+			+ "join remitente as R "
+			+ "on R.identificacion_r=E.id_remitente";
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
 	private String comprobarlogin , consultaCargo;
@@ -167,6 +180,15 @@ public class ControlBase {
 			break;
 		case "Órdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
+			DT.addColumn("ID_envío");
+			DT.addColumn("ID_Remitente");
+			DT.addColumn("Remitente");
+			DT.addColumn("Teléfono R");
+			DT.addColumn("Dirección_R");
+			DT.addColumn("ID_Destinatario");
+			DT.addColumn("Destinatario");
+			DT.addColumn("Teléfono D");
+			DT.addColumn("Dirección D");
 			break;
 		}
 		return DT;
@@ -190,6 +212,7 @@ public class ControlBase {
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
 				break;
 			case "Órdenes":
+				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
 				//falta poner
 				break;
 			}
@@ -227,6 +250,19 @@ public class ControlBase {
 				break;
 			case "Órdenes":
 				//FALTA AGREGAR NOMBRES DE COLUMNAS
+				fila = new Object[9];
+				while(result.next()) 
+				{
+					fila[0]=result.getString(1);
+					fila[1]=result.getString(2);
+					fila[2]=result.getString(3);
+					fila[3]=result.getString(4);
+					fila[4]=result.getString(5);
+					fila[5]=result.getString(6);
+					fila[6]=result.getString(7);
+					fila[7]=result.getString(8);
+					fila[8]=result.getString(9);
+				}
 				break;
 			}
 			

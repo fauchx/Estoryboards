@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
+import Classes.TextPrompt;
 
 public class sedesList extends JFrame
 {
@@ -37,7 +38,7 @@ public class sedesList extends JFrame
 	private JTextField id;
 	private final String SQL_SELECT_SEDE = "select * from sede";
 	private final String SQL_SELECT_USERS = "select * from usuarios";
-	private final String SQL_SELECT_ORDERS = "select * from ordenes";
+
 	private JButton volverBtn, buscarIdBtn,listarBtn;
 	private JComboBox<String> categoriaJCB;
 	private JPanel consolePanel,consoleListPanel,tablePanel, btnPanel;
@@ -73,14 +74,14 @@ public class sedesList extends JFrame
 		mainPanel.setVisible(true);
 		this.add(mainPanel);
 		
-		JLabel tituloLbl = new JLabel("Consulta de sedes");
+		JLabel tituloLbl = new JLabel("Consultas",JLabel.CENTER);
 		tituloLbl.setFont(new Font("SansSerif", Font.BOLD, 18));
 		tituloLbl.setForeground(new Color(255, 69, 0));
 		tituloLbl.setSize(205, 15);
 		tituloLbl.setLocation((mainPanel.getWidth()/2-tituloLbl.getWidth()/2), 10);
 		mainPanel.add(tituloLbl);
 		
-		JLabel infoLbl = new JLabel("Inserte el id de la sede a modificar",JLabel.CENTER);
+		JLabel infoLbl = new JLabel("Busque el id o liste por categoría ",JLabel.CENTER);
 		infoLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
 		infoLbl.setForeground(new Color(255, 69, 0));
 		infoLbl.setSize(205, 15);
@@ -108,6 +109,8 @@ public class sedesList extends JFrame
 		id = new JTextField();
 		id.setColumns(10);
 		id.setSize(175, 20);
+		TextPrompt idPh = new TextPrompt("Identificador",id,Show.ALWAYS);
+		idPh.changeAlpha(0.75f);
 		consolePanel.add(id);
 		
 		/**
