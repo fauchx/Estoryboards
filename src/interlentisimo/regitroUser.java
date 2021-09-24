@@ -260,7 +260,6 @@ public class regitroUser {
 		fields.add(cargoingresado);
 		fields.add(sedeingresada);
 		fields.add(cedulaingresada);
-		System.out.println(fields);
 //--------------------------------------------------
 		boolean emptyFieldError = !ver.filledFields(fields);
 		if (emptyFieldError)
