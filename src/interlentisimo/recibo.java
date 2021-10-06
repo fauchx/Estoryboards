@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 
 public class recibo {
 
-	private JFrame frmVerificacin;
+	JFrame frmVerificacin;
 
 	/**
 	 * Create the application.
