@@ -109,7 +109,7 @@ public class login
 				try 
 				{
 					if(control.buscarusuario(txtusuariologin.getText(),
-											 txtcontralogin.getText())) 
+											 txtcontralogin.getText()) && control.getEstado(txtusuariologin.getText()) == "Activo") 
 					{
 						String idUser = txtusuariologin.getText();
 						String cargoUser = control.getCargo(txtusuariologin.getText().toString());

@@ -45,11 +45,13 @@ public class sedesList extends JFrame
 	private JTable tabla;
 	private JScrollPane scrollPane;
 	private JPanel mainPanel;
+	
+	private String from;
 
 	/**
 	 * Create the application.
 	 */
-	public sedesList(String idUser) {
+	public sedesList(String idUser, String remitente) {
 		setSize(800,600);
 		setTitle("Listados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,6 +59,7 @@ public class sedesList extends JFrame
 		setResizable(false);
 		setVisible(true);
 		initialize(idUser);
+		from = remitente;
 	}
 
 	/**
@@ -176,7 +179,15 @@ public class sedesList extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				setVisible(false);
-				sedesMenu sedemenu = new sedesMenu(idUser);
+				
+				if(from.equals("users")) {
+					usersMenu menu_u = new usersMenu(idUser);
+				}
+				else if(from.equals("sedes")) {
+					sedesMenu sedemenu = new sedesMenu(idUser);
+				}
+				
+				
 			}
 		});
 		btnPanel.add(volverBtn);
