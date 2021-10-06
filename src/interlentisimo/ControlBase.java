@@ -436,6 +436,7 @@ public class ControlBase {
 		}
 	}
 	
+	
 	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;
