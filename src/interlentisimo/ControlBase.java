@@ -415,6 +415,133 @@ public class ControlBase {
 		
 	}
 	
+	public String selectSubtotal(int idEnvio) {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		String subtotal;
+		try {
+			pst = conexion.prepareStatement("select subtotal from precio where id_envio = ?");
+			pst.setInt(1, idEnvio);
+			result = pst.executeQuery();
+			while(result.next()) {
+				subtotal = result.getString(1);
+				return subtotal;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String selectPreciototal(int idEnvio) {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		String subtotal;
+		try {
+			pst = conexion.prepareStatement("select precio_total from precio where id_envio = ?");
+			pst.setInt(1, idEnvio);
+			result = pst.executeQuery();
+			while(result.next()) {
+				subtotal = result.getString(1);
+				return subtotal;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void CrearRemitente(String nombre,String apellido,String id,String direccion,String telefono,String email) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("INSERT INTO remitente VALUES (?,?,?,?,?,?)");
+			pst.setString(1, id);
+			pst.setString(2, telefono);
+			pst.setString(3, direccion);
+			pst.setString(4, nombre);
+			pst.setString(5, apellido);
+			pst.setString(6, email);
+			pst.executeUpdate();
+		}finally {
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+	}
+	
+	public String crearEnvio(String id_desti, String id_remit) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("INSERT INTO envio(id_destinatario,id_remitente) VALUES (?,?) returning id_envio");
+			pst.setString(1, id_desti);
+			pst.setString(2, id_remit);
+			result = pst.executeQuery();
+			while(result.next()) {
+				String id_envio = result.getString(1);
+				System.out.print(id_envio);
+				return id_envio;
+			}
+			
+		}finally {
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+		return null;
+	}
+	
+	
+	
+	public void crearPaquete(int id_envio, float peso, float volumen) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen) VALUES (?,?,?)");
+			pst.setInt(1, id_envio);
+			pst.setFloat(2, peso);
+			pst.setFloat(3, volumen);
+			pst.executeUpdate();
+		}finally {
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+	}
+		
+	public void crearPrecio(float preciototal, float subtotal, float seguro, int id_envio) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("INSERT INTO precio(precio_total,subtotal,seguro,id_envio) VALUES (?,?,?,?)");
+			pst.setFloat(1, preciototal);
+			pst.setFloat(2, subtotal);
+			pst.setFloat(3, seguro);
+			pst.setInt(4, id_envio);
+			pst.executeUpdate();
+		}finally {
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+	}
+	 
+	public void CrearDestinatario(String nombre,String apellido,String id,String direccion,String telefono,String email) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try {
+			pst = conexion.prepareStatement("INSERT INTO destinatario VALUES (?,?,?,?,?,?)");
+			pst.setString(1, id);
+			pst.setString(2, telefono);
+			pst.setString(3, direccion);
+			pst.setString(4, nombre);
+			pst.setString(5, apellido);
+			pst.setString(6, email);
+			pst.executeUpdate();
+		}finally {
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		}
+	}
 	
 	
 	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
