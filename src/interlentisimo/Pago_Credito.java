@@ -26,7 +26,7 @@ import javax.swing.JButton;
 
 public class Pago_Credito {
 
-	private JFrame frmPagoConTarjeta;
+	JFrame frmPagoConTarjeta;
 	private JTextField tfcard_num;
 	private JTextField tfcard_name;
 	private JTextField tfexp_datem;
@@ -38,30 +38,17 @@ public class Pago_Credito {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Pago_Credito window = new Pago_Credito();
-					window.frmPagoConTarjeta.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
-	public Pago_Credito() {
-		initialize();
+	public Pago_Credito(int idEnvio) {
+		initialize(idEnvio);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(int idEnvio) {
 		frmPagoConTarjeta = new JFrame();
 		frmPagoConTarjeta.setTitle("Pago con tarjeta\r\n");
 		frmPagoConTarjeta.setBounds(100, 100, 600, 400);
