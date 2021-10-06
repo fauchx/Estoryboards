@@ -25,6 +25,8 @@ public class facturaPdf
 	private String[] infoDest;
 	private String[][] infoPaq;
 	private String[] infoCosto;
+	private String[][] paq= {{"528","232"},
+							{"674","584"}};
 	/*
 	 * facturaPdf - constructor
 	 * @param idfactura id de la factura generada
@@ -32,13 +34,24 @@ public class facturaPdf
 	 * @param infoDest datos del destinatario (id*,nombre*,teléfono*, dirección*,email*)
 	 * @param infoPaq datos del paquete enviado (peso*,volumen*)
 	 * @param infoCosto datos  de costos finales (subtotal,seguro, iva)
+	 * String idfactura,String[] infoRemi, String[] infoDest, String[][] infoPaq,String[] infoCosto
 	 */
-	public facturaPdf(String idfactura,String[] infoRemi, String[] infoDest, String[][] infoPaq,String[] infoCosto) 
+	public facturaPdf(String [] datos) 
 	{
+		/*
 		this.idfactura=idfactura;
 		this.infoRemi=infoRemi;
 		this.infoDest=infoDest;
 		this.infoPaq=infoPaq;
+		this.infoCosto=infoCosto;
+		*/
+		this.idfactura=datos[0];
+		String [] infoRemi = {datos[1],datos[2],datos[3],datos[4],datos[5]};
+		this.infoRemi= infoRemi;
+		String [] infoDest = {datos[6],datos[7],datos[8],datos[9],datos[10]};
+		this.infoDest=infoDest;
+		this.infoPaq=paq;
+		String [] infoCosto= {datos[11],datos[12]};
 		this.infoCosto=infoCosto;
 		
 		try {
@@ -87,7 +100,7 @@ public class facturaPdf
         documento.add(titulo);
         
         //id de la factura
-        Paragraph id = new Paragraph("Factura No."+idfactura);
+        Paragraph id = new Paragraph("Envio No."+idfactura);
         id.setAlignment(Element.ALIGN_CENTER);
         documento.add(id);
         
