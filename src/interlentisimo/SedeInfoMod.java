@@ -231,7 +231,7 @@ public class SedeInfoMod {
 	
 	private void validarCampos() throws SQLException 
 	{
-		emptyFieldErrorLbl.setVisible(false);
+		
 		verification ver = new verification();
 		ControlBase control = new ControlBase();
 		

@@ -8,11 +8,18 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import Classes.TextPrompt;
+import Classes.verification;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.Color;
 
 public class userInfoMod {
@@ -28,6 +35,9 @@ public class userInfoMod {
 	private JButton buscarIdBtn;
 	private JComboBox<String> TipoCargos, estadoUser;
 	ControlBase control;
+	verification ver;
+	private TextPrompt idPh,sedeph;
+	private JLabel emptyFieldErrorLbl;
 
 	/**
 	 * Launch the application.
@@ -62,7 +72,7 @@ public class userInfoMod {
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(196, 74, 439, 436);
+		panel_1.setBounds(196, 74, 439, 476);
 		frmInformacinUsuario.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -78,20 +88,30 @@ public class userInfoMod {
 			{
 				ControlBase control = new ControlBase();
 				try {
-					String[] userInfo = control.buscarUsuario(cedulaTxt.getText());
-					nombretxt.setText(userInfo[0]);
-					apellidostxt.setText(userInfo[1]);
-					direcciontxt.setText(userInfo[2]);
-					telefonotxt.setText(userInfo[3]);
-					emailtxt.setText(userInfo[4]);
-					//if(userInfo[5].equals("Gerente")) {
-					TipoCargos.setSelectedItem(userInfo[5]);
-					//}
-					//System.out.println(userInfo[5]);
-					tfIdSede.setText(userInfo[6]);
-					//System.out.println(userInfo[6]);
-					estadoUser.setSelectedItem(userInfo[7]);
-
+					if(control.idUsuarioExist(cedulaTxt.getText())) {
+				
+						String[] userInfo = control.buscarUsuario(cedulaTxt.getText());
+						System.out.println(userInfo[7]);
+						nombretxt.setText(userInfo[0]);
+						apellidostxt.setText(userInfo[1]);
+						direcciontxt.setText(userInfo[2]);
+						telefonotxt.setText(userInfo[3]);
+						emailtxt.setText(userInfo[4]);
+						TipoCargos.setSelectedItem(userInfo[5]);
+						tfIdSede.setText(userInfo[6]);
+						if(userInfo[7].equals("Activo")) {
+							System.out.println("es igual a activo");
+							estadoUser.setSelectedItem("Activo");
+						}
+						else {
+							System.out.println("tetranutra");
+							estadoUser.setSelectedItem("Inactivo");
+						}
+					}
+					else {
+						cedulaTxt.setText("");
+						TextPrompt idPh =  new TextPrompt("Identificación no existente",cedulaTxt);
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -162,43 +182,18 @@ public class userInfoMod {
 		TipoCargos.addItem("Operador de oficina");
 		TipoCargos.addItem("Contador");
 		TipoCargos.addItem("Gerente");
-		TipoCargos.addItem("Auxiliar de operación");
+		TipoCargos.addItem("AuxOperación");
 		panel_1.add(TipoCargos);
 		
 		JButton btnNewButton = new JButton("ACTUALIZAR");
 		btnNewButton.setBackground(new Color(255, 69, 0));
 		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBounds(161, 402, 114, 23);
+		btnNewButton.setBounds(159, 442, 114, 23);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ControlBase control = new ControlBase();
-					if(control.ModificarUsuario(nombretxt.getText(), apellidostxt.getText(), direcciontxt.getText()
-						,telefonotxt.getText(), emailtxt.getText(), (String)TipoCargos.getSelectedItem(),
-						tfIdSede.getText() ,(String)estadoUser.getSelectedItem(),cedulaTxt.getText() )) {
-						JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
-						panel_1.add(lblNewLabel_2);
-						lblNewLabel_2.setForeground(new Color(0, 128, 0));
-						lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 14));
-						nombretxt.setText("");
-						apellidostxt.setText("");
-						direcciontxt.setText("");
-						telefonotxt.setText("");
-						emailtxt.setText("");
-						TipoCargos.setToolTipText("");
-						tfIdSede.setText("");
-						cedulaTxt.setText("");
-					}
-					else {
-						JLabel lblNewLabel_2_1 = new JLabel("\u2718 Error en el registro \u2718");
-						panel_1.add(lblNewLabel_2_1);
-						lblNewLabel_2_1.setForeground(new Color(255, 0, 0));
-						lblNewLabel_2_1.setFont(new Font("SansSerif", Font.BOLD, 14));
-					}
-						
-						
-						
+					validarcampos();	
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -256,11 +251,88 @@ public class userInfoMod {
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_1_1.setBounds(38, 461, 95, 36);
 		frmInformacinUsuario.getContentPane().add(btnNewButton_1_1);
+		
+		emptyFieldErrorLbl = new JLabel("<html>Todos los campos deben de ser llenados</html>");
+		emptyFieldErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emptyFieldErrorLbl.setForeground(Color.red);
+		emptyFieldErrorLbl.setBounds(69, 389, 300, 30);
+		emptyFieldErrorLbl.setVisible(false);
+		panel_1.add(emptyFieldErrorLbl);
 	}
 	
+		
 	
 	private void validarcampos() throws SQLException  {
+		ControlBase control = new ControlBase();
+		verification ver = new verification();
+		emptyFieldErrorLbl.setVisible(false);
 		
+		String nombreingresado = nombretxt.getText();
+		String apellidoingresado = apellidostxt.getText();
+		String direccioningresada = direcciontxt.getText();
+		String telefonoingresado = telefonotxt.getText();
+		String emailingresado = emailtxt.getText();
+		String cargoingresado = (String)TipoCargos.getSelectedItem();
+		String sedeingresada = tfIdSede.getText();
+		String estadoingresado = (String)estadoUser.getSelectedItem();
+		String cedulaingresada = cedulaTxt.getText();
+		
+		ArrayList <String> fields = new ArrayList <String>();
+		fields.add(nombreingresado);
+		fields.add(apellidoingresado);
+		fields.add(direccioningresada);
+		fields.add(telefonoingresado);
+		fields.add(emailingresado);
+		fields.add(cargoingresado);
+		fields.add(sedeingresada);
+		fields.add(estadoingresado);
+		fields.add(cedulaingresada);
+		
+		boolean emptyFieldError = !ver.filledFields(fields);
+		if (emptyFieldError)
+		{
+			emptyFieldErrorLbl.setVisible(true);
+		}
+		
+		
+		boolean sedeError = false;
+		if(ver.idSintax(ver.FORMATO_SEDE, sedeingresada)) 
+		{
+			if (!control.idSedeExist(sedeingresada)) {
+				tfIdSede.setText("");
+				TextPrompt sedeph =  new TextPrompt("Sede no existente",tfIdSede);
+				sedeError = true;
+			}
+		}else 
+		{
+			tfIdSede.setText("");
+			sedeph.setText("Sintaxis incorrecta");
+			sedeError = true;
+		}
+		
+		boolean emailError = false;
+		if(!ver.emailSintax(ver.FORMATO_EMAIL, emailingresado)) {
+			emailtxt.setText("");
+			TextPrompt emailph = new TextPrompt("Email mal escrito",emailtxt);
+			emailError = true;
+		}
+		
+		if(!(emptyFieldError || sedeError || emailError)) {
+			control.ModificarUsuario(nombreingresado, apellidoingresado, direccioningresada,telefonoingresado
+			,emailingresado, cargoingresado,sedeingresada,estadoingresado,cedulaingresada);
+		    JOptionPane.showMessageDialog(null, "Usuario modificado correctamente");
+			nombretxt.setText("");
+			apellidostxt.setText("");
+			direcciontxt.setText("");
+			telefonotxt.setText("");
+			emailtxt.setText("");
+			TipoCargos.setToolTipText("");
+			tfIdSede.setText("");
+			cedulaTxt.setText("");
+			estadoUser.setToolTipText("");
+		}
+		
+			
 		
 	}
 }

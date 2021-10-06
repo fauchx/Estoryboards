@@ -17,7 +17,37 @@ public class ControlBase {
 	private Connection conexion = null;
 	private final String SQL_SELECT_SEDE = "select * from sede";
 	private final String SQL_SELECT_USERS = "select * from usuarios";
-	private final String SQL_SELECT_ORDERS = "select * from ordenes";
+	private final String SQL_SELECT_SHIPMENT = "select E.id_envio, "
+			+ "R.identificacion_r, "
+			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
+			+ "R.telefono_r, "
+			+ "R.direccion_r, "
+			+ "D.identificacion_d,"
+			+ "D.nombres_d || D.apellidos_d as nombre_destinatario, "
+			+ "D.telefono_d, "
+			+ "D.direccion_d "
+			+ "from destinatario as D "
+			+ "join envio as E "
+			+ "on D.identificacion_d = E.id_destinatario "
+			+ "join remitente as R "
+			+ "on R.identificacion_r=E.id_remitente";
+	private final String SQL_SELECT_SEDE_ID = "select * from sede where identificador_sede=?";
+	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificación_u=?";
+	private final String SQL_SELECT_SHIPMENT_ID = "select E.id_envio, "
+			+ "R.identificacion_r, "
+			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
+			+ "R.telefono_r, "
+			+ "R.direccion_r, "
+			+ "D.identificacion_d,"
+			+ "D.nombres_d || D.apellidos_d as nombre_destinatario, "
+			+ "D.telefono_d, "
+			+ "D.direccion_d "
+			+ "from destinatario as D "
+			+ "join envio as E "
+			+ "on D.identificacion_d = E.id_destinatario "
+			+ "join remitente as R "
+			+ "on R.identificacion_r=E.id_remitente"
+			+ "where E.id_envio =?";
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
 	private String comprobarlogin , consultaCargo;
@@ -100,7 +130,28 @@ public class ControlBase {
 		
 		}
 	}
-	
+	public boolean idUsuarioExist(String idIngresado) throws SQLException 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("SELECT identificación_u FROM usuarios WHERE identificación_u = ?",
+					ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.CONCUR_UPDATABLE);
+			pst.setString(1, idIngresado);
+			result = pst.executeQuery();
+			boolean idExiste = result.first();
+			return idExiste;
+		}
+		finally 
+		{
+			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
 	public void insertarSede(String nombreIngresado, String direccionIngresada, String idIngresado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -146,20 +197,26 @@ public class ControlBase {
 			break;
 		case "Órdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
+			DT.addColumn("ID_envío");
+			DT.addColumn("ID_Remitente");
+			DT.addColumn("Remitente");
+			DT.addColumn("Teléfono R");
+			DT.addColumn("Dirección_R");
+			DT.addColumn("ID_Destinatario");
+			DT.addColumn("Destinatario");
+			DT.addColumn("Teléfono D");
+			DT.addColumn("Dirección D");
 			break;
 		}
 		return DT;
 	}
 	
+
 	
-	public DefaultTableModel getDatos(String categoria) 
+	private PreparedStatement setQuery(PreparedStatement pst,String categoria)
 	{
-		PreparedStatement pst = null;
-		ResultSet result = null;
-		try 
+		try
 		{
-			setTitulos(categoria);
-			conectarme();
 			switch(categoria) 
 			{
 			case "Usuarios":
@@ -169,8 +226,58 @@ public class ControlBase {
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
 				break;
 			case "Órdenes":
-				//falta poner
+				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
 				break;
+			}
+			return pst;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return pst;
+	}
+	
+	private PreparedStatement setQuery (PreparedStatement pst,String categoria, String identificador)
+	{
+		try
+		{
+			switch(categoria) 
+			{
+			case "Usuarios":
+				pst = conexion.prepareStatement(SQL_SELECT_USERS_ID);
+				pst.setString(1, identificador);
+				break;
+			case "Sedes":
+				pst = conexion.prepareStatement(SQL_SELECT_SEDE_ID);
+				pst.setString(1, identificador);
+				break;
+			case "Órdenes":
+				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT_ID);
+				pst.setString(1, identificador);
+				break;
+			}
+			return pst;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return pst;
+	}
+	
+	public DefaultTableModel getDatos(String categoria,String identificador) 
+	{
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		try 
+		{
+			setTitulos(categoria);
+			conectarme();
+			if (identificador.equals(""))
+			{
+				pst=setQuery(pst, categoria);
+			} else
+			{
+				pst=setQuery(pst, categoria, identificador);
 			}
 			result = pst.executeQuery();
 			Object [] fila;
@@ -206,6 +313,19 @@ public class ControlBase {
 				break;
 			case "Órdenes":
 				//FALTA AGREGAR NOMBRES DE COLUMNAS
+				fila = new Object[9];
+				while(result.next()) 
+				{
+					fila[0]=result.getString(1);
+					fila[1]=result.getString(2);
+					fila[2]=result.getString(3);
+					fila[3]=result.getString(4);
+					fila[4]=result.getString(5);
+					fila[5]=result.getString(6);
+					fila[6]=result.getString(7);
+					fila[7]=result.getString(8);
+					fila[8]=result.getString(9);
+				}
 				break;
 			}
 			
@@ -297,7 +417,7 @@ public class ControlBase {
 	
 	
 	
-	public boolean CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
+	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseña, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
@@ -305,7 +425,7 @@ public class ControlBase {
 					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contraseña+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
-			return true;	
+				
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
@@ -314,9 +434,10 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		
 		}
-		return false;
 	}
-	public boolean ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
+	
+	
+	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -335,7 +456,7 @@ public class ControlBase {
 			pst.setString(8, estado);
 			pst.setString(9, id);
 			pst.executeUpdate();
-			return true;
+			
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex);
 		}
@@ -344,7 +465,7 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		
 		}
-		return false;
+		
 	}
 	public String[] buscarUsuario(String id) throws SQLException {
 		PreparedStatement pst = null;

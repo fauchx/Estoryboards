@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +37,7 @@ public class registroPaquete {
 	private JTextField textField_6;
 	private JTextField textField_12;
 	private String cargoUser;
+	
 
 	/**
 	 * Create the application.
@@ -129,6 +132,27 @@ public class registroPaquete {
 		frame.getContentPane().add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+			String[] tempInfRem = new String[5];
+			String[] tempInfDest = new String[5];
+			
+			//Información del remitente
+			tempInfRem[0] = textField.getText();
+			tempInfRem[1] = textField_3.getText();
+			tempInfRem[2] = textField_1.getText();
+			tempInfRem[3] = textField_2.getText();
+			tempInfRem[4] = textField_4.getText();
+			
+			//Información del destinatario
+			tempInfDest[0] = textField_7.getText();
+			tempInfDest[1] = textField_8.getText();
+			tempInfDest[2] = textField_9.getText();
+			tempInfDest[3] = textField_10.getText();
+			tempInfDest[4] = textField_11.getText();
+			
+			//JOptionPane.showMessageDialog(null, tempInfDest[0] + " " + tempInfDest[1] + " " +
+			//									tempInfDest[2] + " " + tempInfDest[3] + " " + tempInfDest[4]);
+			
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -228,12 +252,12 @@ public class registroPaquete {
 		JLabel lblNewLabel_1_2_1_2 = new JLabel("Ciudad de origen :");
 		lblNewLabel_1_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_1_2_1_2.setBounds(365, 50, 124, 17);
-		infoDestinatario_1.add(lblNewLabel_1_2_1_2);
+		//infoDestinatario_1.add(lblNewLabel_1_2_1_2);
 		
 		JLabel lblNewLabel_1_2_1_3 = new JLabel("Ciudad de destino :");
 		lblNewLabel_1_2_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel_1_2_1_3.setBounds(365, 81, 124, 17);
-		infoDestinatario_1.add(lblNewLabel_1_2_1_3);
+		//infoDestinatario_1.add(lblNewLabel_1_2_1_3);
 		
 		txtPeso = new JTextField();
 		txtPeso.setColumns(10);

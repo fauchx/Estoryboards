@@ -7,10 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import Classes.TextPrompt;
+import Classes.verification;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -26,10 +31,13 @@ public class regitroUser {
 	private JTextField tfEmail;
 	private JTextField tfPassword;
 	private JTextField tfIdSede;
+	private JPanel panel_2,panel_1;
 	usersMenu menu_u;
 	ControlBase control;
-
-        
+	private JComboBox<String> tipoCargo;
+	verification ver;
+	private JLabel emptyFieldErrorLbl,lblNewLabel_2;
+    private TextPrompt sedeph,emailph,telefonoph,contraseñaph;
 
 	/**
 	 * Create the application.
@@ -61,7 +69,7 @@ public class regitroUser {
 		panel.add(lblTitle);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(220, 100, 354, 390);
+		panel_1.setBounds(220, 100, 354, 460);
 		frmRegistro.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -145,7 +153,8 @@ public class regitroUser {
 		lblcargo.setBounds(31, 236, 51, 17);
 		panel_1.add(lblcargo);
 		
-		JComboBox<String> tipoCargo = new JComboBox<String>();
+		tipoCargo = new JComboBox<String>();
+		
 		tipoCargo.setBounds(169, 235, 153, 22);
 		tipoCargo.addItem("");
 		tipoCargo.addItem("Secretaria");
@@ -183,45 +192,29 @@ public class regitroUser {
 		panel_2.setBounds(584, 444, 174, 52);
 		frmRegistro.getContentPane().add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
+		panel_2.add(lblNewLabel_2);
+		lblNewLabel_2.setForeground(new Color(0, 128, 0));
+		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblNewLabel_2.setVisible(false);
 		
 		JButton btnNewButton = new JButton("REGISTRAR");
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBackground(new Color(255, 69, 0));
-		btnNewButton.setBounds(122, 360, 114, 23);
+		btnNewButton.setBounds(113, 391, 114, 23);
 		panel_1.add(btnNewButton);
-		ControlBase control = new ControlBase();
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-  if(control.CrearUser(tfNombres.getText(), tfApellidos.getText(), tfId.getText(), tfAdress.getText(), tfTelefono.getText(), tfEmail.getText(), 
-		  (String)tipoCargo.getSelectedItem(), tfPassword.getText(), tfIdSede.getText(),"Inactivo")) {
-	    JLabel lblNewLabel_2 = new JLabel("\u2714 Registro Efectivo \u2714");
-		panel_2.add(lblNewLabel_2);
-		lblNewLabel_2.setForeground(new Color(0, 128, 0));
-		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 14));
-		tfNombres.setText("");
-		tfApellidos.setText("");
-		tfTelefono.setText("");
-		tfId.setText("");
-		tfAdress.setText("");
-		tfEmail.setText("");
-		tipoCargo.setSelectedItem("");
-		tfPassword.setText("");
-		tfIdSede.setText("");
-		
-  }else {
-		JLabel lblNewLabel_2_1 = new JLabel("\u2718 Error en el registro \u2718");
-		panel_2.add(lblNewLabel_2_1);
-		lblNewLabel_2_1.setForeground(new Color(255, 0, 0));
-		lblNewLabel_2_1.setFont(new Font("SansSerif", Font.BOLD, 14));
-  }
-				
-				
+					try {
+						validarcampos();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}			
 				}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
-		
+				
 		JButton btnNewButton_1_1 = new JButton("VOLVER");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -235,7 +228,106 @@ public class regitroUser {
 		btnNewButton_1_1.setBounds(53, 469, 95, 36);
 		frmRegistro.getContentPane().add(btnNewButton_1_1);
 		
+		emptyFieldErrorLbl = new JLabel("<html>Todos los campos deben de ser llenados</html>");
+		emptyFieldErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emptyFieldErrorLbl.setForeground(Color.red);
+		emptyFieldErrorLbl.setBounds(31, 346, 300, 34);
+		emptyFieldErrorLbl.setVisible(false);
+		panel_1.add(emptyFieldErrorLbl);
 	}
+	
+	private void validarcampos() throws SQLException
+	{
+		ControlBase control = new ControlBase();
+		verification ver = new verification();
+//-----------------------------------------
+		String nombreingresado = tfNombres.getText();
+		String apellidoingresado = tfApellidos.getText();
+		String cedulaingresada = tfId.getText();
+		String direccioningresada = tfAdress.getText();
+		String telefonoingresado = tfTelefono.getText();
+		String emailingresado = tfEmail.getText();
+		String cargoingresado = (String)tipoCargo.getSelectedItem();
+		String contraseñaingresada = tfPassword.getText();
+		String sedeingresada = tfIdSede.getText();
+//---------------------------------------------		
+		ArrayList <String> fields = new ArrayList <String>();
+		fields.add(nombreingresado);
+		fields.add(apellidoingresado);
+		fields.add(direccioningresada);
+		fields.add(telefonoingresado);
+		fields.add(emailingresado);
+		fields.add(cargoingresado);
+		fields.add(sedeingresada);
+		fields.add(cedulaingresada);
+//--------------------------------------------------
+		boolean emptyFieldError = !ver.filledFields(fields);
+		if (emptyFieldError)
+		{
+			emptyFieldErrorLbl.setVisible(true);
+		}
+		
+//--------------------------------------------
+		boolean emailError = false;
+		if(!ver.emailSintax(ver.FORMATO_EMAIL, emailingresado)) {
+			tfEmail.setText("");
+			TextPrompt emailph = new TextPrompt("Email mal escrito",tfEmail);
+			emailError = true;
+		}
+//----------------------------------------------
+		boolean tlError = false;
+		if(!ver.minimoCaracteres(telefonoingresado, 10)){
+			tfTelefono.setText("");
+			TextPrompt telefonoph = new TextPrompt("Falta el telefono",tfTelefono);
+			tlError = true;
+		}
+//----------------------------------------------
+		boolean contraseñaError = false;
+			if(!ver.passwSintax(ver.FORMATO_CONTRASEÑA, contraseñaingresada)) {
+				tfPassword.setText("");
+				TextPrompt contraseñaph = new TextPrompt("mala sintaxis",tfPassword);
+				contraseñaError = true;
+			}
+		
+//--------------------------------------------
 
-
+		boolean sedeError = false;
+		if(ver.idSintax(ver.FORMATO_SEDE, sedeingresada)) 
+		{
+			if (!control.idSedeExist(sedeingresada)) {
+				tfIdSede.setText("");
+				TextPrompt sedeph =  new TextPrompt("Sede no existente",tfIdSede);
+				sedeError = true;
+			}
+		}else 
+		{
+			tfIdSede.setText("");
+			TextPrompt sedeph = new TextPrompt("Sintaxis incorrecta",tfIdSede);
+			sedeError = true;
+		}
+//----------------------------------------------
+		boolean idError = false;
+		if(!ver.minimoCaracteres(cedulaingresada, 8)) {
+			tfId.setText("");
+			TextPrompt idph = new TextPrompt("documento insuficiente",tfId);
+			idError = true;
+		}
+		if(!(emptyFieldError || emailError || tlError || contraseñaError || sedeError || idError)) {
+				control.CrearUser(nombreingresado, apellidoingresado, cedulaingresada, 
+				direccioningresada, telefonoingresado, emailingresado, 
+				cargoingresado, contraseñaingresada,sedeingresada,"Activo");	    
+				tfNombres.setText("");
+				tfApellidos.setText("");
+				tfTelefono.setText("");
+				tfId.setText("");
+				tfAdress.setText("");
+				tfEmail.setText("");
+				tipoCargo.setSelectedItem("");
+				tfPassword.setText("");
+				tfIdSede.setText("");
+				lblNewLabel_2.setVisible(true);
+		  }		
+	}
 }
+
+

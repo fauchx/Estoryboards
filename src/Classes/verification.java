@@ -14,7 +14,14 @@ import Classes.TextPrompt.Show;
 import interlentisimo.ControlBase;
 
 public class verification {
+
 	public final Pattern FORMATO_SEDE= Pattern.compile("^S"+"([0-9]{3,3})$");
+	public static Pattern FORMATO_EMAIL = Pattern.compile("^(.+)@(.+)$");
+	public static Pattern FORMATO_CONTRASEÑA = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+	public static Pattern FORMATO_TARJETA = Pattern.compile("^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$");
+	public static Pattern FORMATO_FECHA= Pattern.compile("^([0-9]{2,2})$");
+	public static Pattern FORMATO_CVV= Pattern.compile("^([0-9]{3,4})$");
+
 	
 	public verification() 
 	{
@@ -82,5 +89,48 @@ public class verification {
 		return false;
 	}
 	
+	public boolean emailSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
 	
+	public boolean passwSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
+	
+	public boolean cardSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
+	
+	public boolean dateSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
+	
+	public boolean cvvSintax(Pattern patron, String text) throws SQLException{
+		Matcher mather = patron.matcher(text);
+		if ((text.length()>0) && (mather.find() == true))
+		{				
+			return true;
+		}
+	return false;
+	}
 }
