@@ -34,7 +34,7 @@ public class ControlBase {
 			+ "join remitente as R "
 			+ "on R.identificacion_r=E.id_remitente";
 	private final String SQL_SELECT_SEDE_ID = "select * from sede where identificador_sede=?";
-	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaci贸n_u=?";
+	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaci髇_u=?";
 	private final String SQL_SELECT_SHIPMENT_ID = "select E.id_envio, "
 			+ "R.identificacion_r, "
 			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
@@ -73,17 +73,17 @@ public class ControlBase {
 	 * @return
 	 * @throws SQLException
 	 */
-	public  boolean buscarusuario(String id, String contrase帽a) throws SQLException {
+	public  boolean buscarusuario(String id, String contrase馻) throws SQLException {
 		PreparedStatement p = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			comprobarlogin = "SELECT identificaci贸n_u,contrase帽a_u from usuarios where identificaci贸n_u = '"+id+"' and contrase帽a_u = '"+contrase帽a+"'";
+			comprobarlogin = "SELECT identificaci髇_u,contrase馻_u from usuarios where identificaci髇_u = '"+id+"' and contrase馻_u = '"+contrase馻+"'";
 			p = conexion.prepareStatement(comprobarlogin);
 			result = p.executeQuery();
 			while(result.next()) {
-				id = result.getString("identificaci贸n_u");
-				contrase帽a = result.getString("contrase帽a_u");
+				id = result.getString("identificaci髇_u");
+				contrase馻 = result.getString("contrase馻_u");
 				return true;
 			  }		
 			
@@ -107,7 +107,7 @@ public class ControlBase {
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaci贸n_u =?");
+			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaci髇_u =?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String cargo = null;
@@ -170,10 +170,10 @@ public class ControlBase {
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT identificaci贸n_u FROM usuarios WHERE identificaci贸n_u = ?",
+			pst = conexion.prepareStatement("SELECT identificaci髇_u FROM usuarios WHERE identificaci髇_u = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, 
                     ResultSet.CONCUR_UPDATABLE);
-			pst.setString(1, idIngresado);
+			pst.setString(1, idUsuarioExist);
 			result = pst.executeQuery();
 			boolean idExiste = result.first();
 			return idExiste;
@@ -229,11 +229,11 @@ public class ControlBase {
 			DT.addColumn("Nombres");
 			DT.addColumn("Apellidos");
 			DT.addColumn("Id");
-			DT.addColumn("Direcci贸n");
-			DT.addColumn("Tel茅fono");
+			DT.addColumn("Direcci髇");
+			DT.addColumn("Tel閒ono");
 			DT.addColumn("Email");
 			DT.addColumn("Cargo");
-			DT.addColumn("Contrase帽a");
+			DT.addColumn("Contrase馻");
 			DT.addColumn("Sede");
 			DT.addColumn("Estado");
 			break;
@@ -241,19 +241,19 @@ public class ControlBase {
 			DT.addColumn("Id");
 			DT.addColumn("Nombre");
 			DT.addColumn("Estado");
-			DT.addColumn("Direcci贸n");
+			DT.addColumn("Direcci髇");
 			break;
 		case "脫rdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
-			DT.addColumn("ID_env铆o");
+			DT.addColumn("ID_env韔");
 			DT.addColumn("ID_Remitente");
 			DT.addColumn("Remitente");
-			DT.addColumn("Tel茅fono R");
-			DT.addColumn("Direcci贸n_R");
+			DT.addColumn("Tel閒ono R");
+			DT.addColumn("Direcci髇_R");
 			DT.addColumn("ID_Destinatario");
 			DT.addColumn("Destinatario");
-			DT.addColumn("Tel茅fono D");
-			DT.addColumn("Direcci贸n D");
+			DT.addColumn("Tel閒ono D");
+			DT.addColumn("Direcci髇 D");
 			break;
 		}
 		return DT;
@@ -518,7 +518,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("C贸digo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C骴igo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -542,7 +542,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("C贸digo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C骴igo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -839,12 +839,12 @@ public class ControlBase {
 	 * @param id_Sede
 	 * @param estado
 	 */
-	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contrase帽a, String id_Sede, String estado) {
+	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contrase馻, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
 			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"'"
-					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contrase帽a+"','"+id_Sede+"','"+estado+"')";                                      
+					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contrase馻+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
 				
@@ -881,7 +881,7 @@ public class ControlBase {
 		try 
 		{
 			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,"
-					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaci贸n_u=?");
+					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaci髇_u=?");
 			pst.setString(1, nombre);
 			pst.setString(2, apellido);
 			pst.setString(3, direccion);
@@ -917,7 +917,7 @@ public class ControlBase {
 		conectarme();
 		try {
 			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,"
-					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaci贸n_u=?");
+					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaci髇_u=?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String[] usuarioInfo = new String[8];
