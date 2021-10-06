@@ -243,7 +243,7 @@ public class ControlBase {
 			DT.addColumn("Estado");
 			DT.addColumn("Dirección");
 			break;
-		case "Ã“rdenes":
+		case "Órdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
 			DT.addColumn("ID_envío");
 			DT.addColumn("ID_Remitente");
@@ -362,7 +362,7 @@ public class ControlBase {
 			case "Sedes":
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
 				break;
-			case "Ã“rdenes":
+			case "Órdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
 				break;
 			}
@@ -396,7 +396,7 @@ public class ControlBase {
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE_ID);
 				pst.setString(1, identificador);
 				break;
-			case "Ã“rdenes":
+			case "Órdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT_ID);
 				pst.setString(1, identificador);
 				break;
@@ -463,7 +463,7 @@ public class ControlBase {
 					DT.addRow(fila);
 				}
 				break;
-			case "Ã“rdenes":
+			case "Órdenes":
 				//FALTA AGREGAR NOMBRES DE COLUMNAS
 				fila = new Object[9];
 				while(result.next()) 
@@ -477,6 +477,7 @@ public class ControlBase {
 					fila[6]=result.getString(7);
 					fila[7]=result.getString(8);
 					fila[8]=result.getString(9);
+					DT.addRow(fila);
 				}
 				break;
 			}
