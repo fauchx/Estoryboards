@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -25,18 +27,14 @@ public class facturaPdf
 	private String[] infoDest;
 	private String[][] infoPaq;
 	private String[] infoCosto;
-	private String[][] paq= {{"528","232"},
-							{"674","584"}};
-	/*
-	 * facturaPdf - constructor
-	 * @param idfactura id de la factura generada
-	 * @param infoRemi datos del remitente (id*,nombre*,teléfono*, dirección,email* )
-	 * @param infoDest datos del destinatario (id*,nombre*,teléfono*, dirección*,email*)
-	 * @param infoPaq datos del paquete enviado (peso*,volumen*)
-	 * @param infoCosto datos  de costos finales (subtotal,seguro, iva)
-	 * String idfactura,String[] infoRemi, String[] infoDest, String[][] infoPaq,String[] infoCosto
+
+	/**
+	 * Clase facturaPdf define el modelo de la factura, así como la generación de facturas respecto a
+	 * un envío en particular
+	 * @param datos	vector de strings con el id del envío, información del remitente, información del destinatario y costos 
+	 * @param datosPaqs	lista de vectores de strings con la información de cada paquete asociado a un envío
 	 */
-	public facturaPdf(String [] datos) 
+	public facturaPdf(String [] datos, ArrayList <String[]>datosPaqs) 
 	{
 		/*
 		this.idfactura=idfactura;
@@ -46,11 +44,20 @@ public class facturaPdf
 		this.infoCosto=infoCosto;
 		*/
 		this.idfactura=datos[0];
+		
 		String [] infoRemi = {datos[1],datos[2],datos[3],datos[4],datos[5]};
 		this.infoRemi= infoRemi;
+		
 		String [] infoDest = {datos[6],datos[7],datos[8],datos[9],datos[10]};
 		this.infoDest=infoDest;
-		this.infoPaq=paq;
+		
+		int cantidadPaqs = datosPaqs.size();
+		this.infoPaq=new String[cantidadPaqs][2];
+		for(int i = 0;i<cantidadPaqs; i++) 
+		{
+				infoPaq[i]=datosPaqs.get(i);
+		}
+		
 		String [] infoCosto= {datos[11],datos[12]};
 		this.infoCosto=infoCosto;
 		
@@ -148,8 +155,8 @@ public class facturaPdf
         //datos costos totales
         String strCosto = "v-----COSTOS-----v \n\n"+
 				"Subtotal:"+infoCosto[0]+"\n"+
-				"Iva:" + infoCosto[1]+"\n"+
-				"Seguro:" + infoCosto[2]+"\n"+
+				"Seguro:" + infoCosto[1]+"\n"+
+				"Iva:" + (Integer.parseInt(infoCosto[0])*0.19) +"\n"+
 				"TOTAL:" + (Float.parseFloat(infoCosto[0])+ Float.parseFloat(infoCosto[1]))+"\n";
         Paragraph infoCostoPg = new Paragraph(strCosto);
         infoCostoPg.setAlignment(Element.ALIGN_LEFT);

@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
  //fauchx el bicho
@@ -235,7 +237,88 @@ public class ControlBase {
 		return DT;
 	}
 	
-
+	/**
+	 * getDatosFactura 
+	 * @param idEnvio recibe el id del envío del cual se generará la factura
+	 * @return datos los datos consultados en la base
+	 * @throws SQLException
+	 */ 
+	public String[] getDatosFactura(String idEnvio) throws SQLException 
+	{
+		int idE = Integer.parseInt(idEnvio);
+		String [] datos= new String[13];;
+		try {
+			PreparedStatement pst = null;
+			ResultSet result = null;
+			conectarme();
+			String queryConsulta = "select E.id_envio, R.identificacion_r, R.nombres_r || R.apellidos_r as nombre_r, R.telefono_r,R.direccion_R,R.email_r, "
+					+ "D.identificacion_d,D.nombres_d || D.apellidos_d as nombre_d, D.telefono_d,D.direccion_d,D.email_d, "
+					+ "P.subtotal,P.seguro "
+					+ "from envio as E "
+					+ "join remitente as R "
+					+ "on E.id_remitente=R.identificacion_r "
+					+ "join destinatario as D "
+					+ "on E.id_destinatario=D.identificacion_d "
+					+ "join precio as P "
+					+ "on P.id_envio= E.id_envio "
+					+ "where E.id_envio=?";
+			pst = conexion.prepareStatement(queryConsulta);
+			pst.setInt(1, idE);
+			result = pst.executeQuery();
+			while(result.next()) {
+				datos[0]=result.getString(1);
+				datos[1]=result.getString(2);
+				datos[2]=result.getString(3);
+				datos[3]=result.getString(4);
+				datos[4]=result.getString(5);
+				datos[5]=result.getString(6);
+				datos[6]=result.getString(7);
+				datos[7]=result.getString(8);
+				datos[8]=result.getString(9);
+				datos[9]=result.getString(10);
+				datos[10]=result.getString(11);
+				datos[11]=result.getString(12);
+				datos[12]=result.getString(13);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return datos;
+	}
+	
+	/**
+	 * getDatosPaqs Este método lista todos los paquetes asociados a un id de un envío 
+	 * @param idEnvio identificador del envío 
+	 * @return paquetes Retorna una lista de vectores de Strings
+	 */
+	
+	public ArrayList <String[]> getDatosPaqs(String idEnvio) 
+	{
+		int idE = Integer.parseInt(idEnvio);
+		String [] datos= new String[2];;
+		ArrayList <String[]> paquetes = new ArrayList <String[]>(); 
+ 		try {
+			PreparedStatement pst = null;
+			ResultSet result = null;
+			conectarme();
+			String queryConsulta = "select peso,volumen from paquetes where id_envio=?";
+			pst = conexion.prepareStatement(queryConsulta);
+			pst.setInt(1, idE);
+			result = pst.executeQuery();
+			while(result.next()) {
+				datos[0]=result.getString(1);
+				datos[1]=result.getString(2);
+				paquetes.add(datos);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return paquetes;
+	}
+	
+	
 	
 	private PreparedStatement setQuery(PreparedStatement pst,String categoria)
 	{
