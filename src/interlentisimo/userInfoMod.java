@@ -317,6 +317,13 @@ public class userInfoMod {
 			emailError = true;
 		}
 		
+		boolean tlError = false;
+		if(!ver.minimoCaracteres(telefonoingresado, 10)){
+			telefonotxt.setText("");
+			TextPrompt telefonoph = new TextPrompt("Falta el telefono",telefonotxt);
+			tlError = true;
+		}
+		
 		if(!(emptyFieldError || sedeError || emailError)) {
 			control.ModificarUsuario(nombreingresado, apellidoingresado, direccioningresada,telefonoingresado
 			,emailingresado, cargoingresado,sedeingresada,estadoingresado,cedulaingresada);

@@ -186,6 +186,7 @@ public class impuestoPaquete {
 		btnNewButton_1.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmCheckout.setVisible(false);
 				MetodoDePago pago = new MetodoDePago(idEnvio);
 				pago.frmSeleccionMetodoDe.setVisible(true);
 				pago.frmSeleccionMetodoDe.setLocationRelativeTo(null);

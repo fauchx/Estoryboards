@@ -19,20 +19,12 @@ public class pagoEfectivo extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			pagoEfectivo dialog = new pagoEfectivo();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	/**
 	 * Create the dialog.
 	 */
-	public pagoEfectivo() {
+	public pagoEfectivo(int idEnvio) {
 		setTitle("Pago en efectivo");
 		setBounds(100, 100, 350, 240);
 		getContentPane().setLayout(new BorderLayout());

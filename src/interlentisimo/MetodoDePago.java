@@ -46,9 +46,9 @@ public class MetodoDePago {
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Pago_Credito pago = new Pago_Credito(idEnvio);
-				pago.frmPagoConTarjeta.setVisible(true);
-				pago.frmPagoConTarjeta.setLocationRelativeTo(null);
+			//	pagoEfectivo pago = new pagoEfectivo(idEnvio);
+			//	pago.frmPagoConTarjeta.setVisible(true);
+			//	pago.frmPagoConTarjeta.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton.setBounds(70, 112, 89, 23);
@@ -58,6 +58,16 @@ public class MetodoDePago {
 		btnCreditodebito.setForeground(Color.WHITE);
 		btnCreditodebito.setBackground(new Color(255, 69, 0));
 		btnCreditodebito.setBounds(262, 112, 135, 23);
+		btnCreditodebito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frmSeleccionMetodoDe.setVisible(false);
+				Pago_Credito pago = new Pago_Credito(idEnvio);
+				pago.frmPagoConTarjeta.setVisible(true);
+				pago.frmPagoConTarjeta.setLocationRelativeTo(null);
+			}
+			
+		});
 		frmSeleccionMetodoDe.getContentPane().add(btnCreditodebito);
 	}
 }

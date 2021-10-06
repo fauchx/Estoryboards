@@ -37,6 +37,7 @@ public class usersMenu {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(213, 89, 357, 44);
@@ -62,7 +63,7 @@ public class usersMenu {
 				registro.frmInformacinUsuario.setLocationRelativeTo(null);
 			}
 		});
-
+		
 		btnAcUsuario.setBackground(new Color(255, 69, 0));
 		btnAcUsuario.setForeground(new Color(255, 255, 255));
 		btnAcUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -75,6 +76,16 @@ public class usersMenu {
 		btnConsultarUsuarios.setBounds(10, 11, 193, 75);
 		panel_1.add(btnConsultarUsuarios);
 		btnConsultarUsuarios.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnConsultarUsuarios.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				frame.setVisible(false);
+				sedesList listado = new sedesList(idUser, "users");
+				listado.setLocationRelativeTo(frame);
+				
+			}
+		});
 		
 		JButton btnNewButton = new JButton("Crear Usuario");
 		btnNewButton.addActionListener(new ActionListener() {
