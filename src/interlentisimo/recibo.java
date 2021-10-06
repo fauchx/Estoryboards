@@ -9,6 +9,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class recibo {
@@ -27,7 +28,7 @@ public class recibo {
 	 */
 	private void initialize(String idEnvio) {
 		frmVerificacin = new JFrame();
-		frmVerificacin.setTitle("Verificaci\u00F3n");
+		frmVerificacin.setTitle("Checkout");
 		frmVerificacin.setBounds(100, 100, 350, 240);
 		frmVerificacin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVerificacin.getContentPane().setLayout(null);
@@ -45,6 +46,7 @@ public class recibo {
 				ControlBase control = new ControlBase();
 				try {
 					String [] datos=control.getDatosFactura(idEnvio);
+					ArrayList <String[]> datosPaqs = control.getDatosPaqs(idEnvio);
 					facturaPdf recibo = new facturaPdf(datos);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
