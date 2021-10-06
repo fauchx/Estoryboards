@@ -232,7 +232,7 @@ public class Pago_Credito {
 				tfsec_code.setText("");
 				tfid_num.setText("");
 				JOptionPane.showMessageDialog(null, "Registro efectivo");
-				//lblNewLabel_2.setVisible(true);
+				
 		  }
 		
 			
