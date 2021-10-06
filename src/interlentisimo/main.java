@@ -7,6 +7,7 @@
 
 package interlentisimo;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 
 /**
@@ -27,7 +28,6 @@ public class main
 					{
 						login window = new login();
 						window.frame.setVisible(true);
-						
 					} catch (Exception e) 
 					{
 						e.printStackTrace();
