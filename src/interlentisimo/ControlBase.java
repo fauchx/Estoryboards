@@ -34,7 +34,7 @@ public class ControlBase {
 			+ "join remitente as R "
 			+ "on R.identificacion_r=E.id_remitente";
 	private final String SQL_SELECT_SEDE_ID = "select * from sede where identificador_sede=?";
-	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaciÛn_u=?";
+	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaci√≥n_u=?";
 	private final String SQL_SELECT_SHIPMENT_ID = "select E.id_envio, "
 			+ "R.identificacion_r, "
 			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
@@ -65,17 +65,25 @@ public class ControlBase {
 	}
 	}
 	
-	public  boolean buscarusuario(String id, String contraseÒa) throws SQLException {
+	/**
+	 * buscarusuario consulta de verificacion de datos para el login
+	 * @author David Izquierdo
+	 * @param id
+	 * @param contrase√±a
+	 * @return
+	 * @throws SQLException
+	 */
+	public  boolean buscarusuario(String id, String contrase√±a) throws SQLException {
 		PreparedStatement p = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			comprobarlogin = "SELECT identificaciÛn_u,contraseÒa_u from usuarios where identificaciÛn_u = '"+id+"' and contraseÒa_u = '"+contraseÒa+"'";
+			comprobarlogin = "SELECT identificaci√≥n_u,contrase√±a_u from usuarios where identificaci√≥n_u = '"+id+"' and contrase√±a_u = '"+contrase√±a+"'";
 			p = conexion.prepareStatement(comprobarlogin);
 			result = p.executeQuery();
 			while(result.next()) {
-				id = result.getString("identificaciÛn_u");
-				contraseÒa = result.getString("contraseÒa_u");
+				id = result.getString("identificaci√≥n_u");
+				contrase√±a = result.getString("contrase√±a_u");
 				return true;
 			  }		
 			
@@ -86,13 +94,20 @@ public class ControlBase {
 		return false;
 	}
 	
+	/**
+	 * getCargo consulta el cargo de un usuario
+	 * @author Brian Moreno
+	 * @param id id del usuario
+	 * @return	cargo
+	 * @throws SQLException
+	 */
 	public String getCargo(String id) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaciÛn_u =?");
+			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaci√≥n_u =?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String cargo = null;
@@ -110,30 +125,14 @@ public class ControlBase {
 		
 	}
 
-//	public String getEstado(String id) throws SQLException {
-//		PreparedStatement pst = null;
-//		ResultSet result = null;
-//		conectarme();
-//		try 
-//		{
-//			pst = conexion.prepareStatement("SELECT estado_u FROM usuarios WHERE identificaciÛn_u =?");
-//			pst.setString(1, id);
-//			result = pst.executeQuery();
-//			String estado = null;
-//			while(result.next()){
-//				estado = result.getString("estado_u");
-//			}
-//			return estado;
-//		}
-//		finally 
-//		{
-//			if (result != null) try { result.close(); } catch (SQLException logOrIgnore) {}
-//			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
-//		
-//		}
-//		
-//	}
-	
+
+	/**
+	 * idSedeExist verifica si una sede existe respecto a un id
+	 * @author Brian Moreno
+	 * @param idIngresado
+	 * @return	boolean
+	 * @throws SQLException
+	 */
 	public boolean idSedeExist(String idIngresado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -156,14 +155,22 @@ public class ControlBase {
 		
 		}
 	}
-	public boolean idUsuarioExist(String idIngresado) throws SQLException 
+	
+	/**
+	 * idUsuarioExist verifica que un usuario ecista
+	 * @author David Izquierdo
+	 * @param idIngresado
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean idUsuarioExist(String idUsuarioExist) throws SQLException 
 	{
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT identificaciÛn_u FROM usuarios WHERE identificaciÛn_u = ?",
+			pst = conexion.prepareStatement("SELECT identificaci√≥n_u FROM usuarios WHERE identificaci√≥n_u = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, 
                     ResultSet.CONCUR_UPDATABLE);
 			pst.setString(1, idIngresado);
@@ -178,6 +185,15 @@ public class ControlBase {
 		
 		}
 	}
+	
+	/**
+	 * insertarSede registra una nueva sede en la base
+	 * @author Brian Moreno
+	 * @param nombreIngresado
+	 * @param direccionIngresada
+	 * @param idIngresado
+	 * @throws SQLException
+	 */
 	public void insertarSede(String nombreIngresado, String direccionIngresada, String idIngresado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -198,6 +214,12 @@ public class ControlBase {
 		}
 	}
 	
+	/**
+	 * setTitulos define los titulos para las columnas de las tablas de listado
+	 * @author Brian Moreno
+	 * @param categoria categoria de lo que se quiere listar
+	 * @return DeafaultTableModel
+	 */
 	private DefaultTableModel setTitulos(String categoria) 
 	{
 		DT = new DefaultTableModel();
@@ -207,11 +229,11 @@ public class ControlBase {
 			DT.addColumn("Nombres");
 			DT.addColumn("Apellidos");
 			DT.addColumn("Id");
-			DT.addColumn("DirecciÛn");
-			DT.addColumn("TelÈfono");
+			DT.addColumn("Direcci√≥n");
+			DT.addColumn("Tel√©fono");
 			DT.addColumn("Email");
 			DT.addColumn("Cargo");
-			DT.addColumn("ContraseÒa");
+			DT.addColumn("Contrase√±a");
 			DT.addColumn("Sede");
 			DT.addColumn("Estado");
 			break;
@@ -219,27 +241,28 @@ public class ControlBase {
 			DT.addColumn("Id");
 			DT.addColumn("Nombre");
 			DT.addColumn("Estado");
-			DT.addColumn("DirecciÛn");
+			DT.addColumn("Direcci√≥n");
 			break;
-		case "”rdenes":
+		case "√ìrdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
-			DT.addColumn("ID_envÌo");
+			DT.addColumn("ID_env√≠o");
 			DT.addColumn("ID_Remitente");
 			DT.addColumn("Remitente");
-			DT.addColumn("TelÈfono R");
-			DT.addColumn("DirecciÛn_R");
+			DT.addColumn("Tel√©fono R");
+			DT.addColumn("Direcci√≥n_R");
 			DT.addColumn("ID_Destinatario");
 			DT.addColumn("Destinatario");
-			DT.addColumn("TelÈfono D");
-			DT.addColumn("DirecciÛn D");
+			DT.addColumn("Tel√©fono D");
+			DT.addColumn("Direcci√≥n D");
 			break;
 		}
 		return DT;
 	}
 	
 	/**
-	 * getDatosFactura 
-	 * @param idEnvio recibe el id del envÌo del cual se generar· la factura
+	 * getDatosFactura
+	 * @author Brian Moreno 
+	 * @param idEnvio recibe el id del env√≠o del cual se generar√° la factura
 	 * @return datos los datos consultados en la base
 	 * @throws SQLException
 	 */ 
@@ -288,8 +311,9 @@ public class ControlBase {
 	}
 	
 	/**
-	 * getDatosPaqs Este mÈtodo lista todos los paquetes asociados a un id de un envÌo 
-	 * @param idEnvio identificador del envÌo 
+	 * getDatosPaqs Este m√©todo lista todos los paquetes asociados a un id de un env√≠o 
+	 * @author Brian Moreno
+	 * @param idEnvio identificador del env√≠o 
 	 * @return paquetes Retorna una lista de vectores de Strings
 	 */
 	
@@ -319,7 +343,13 @@ public class ControlBase {
 	}
 	
 	
-	
+	/**
+	 * setQuery define el query de consulta para los listados de diferentes categorias
+	 * @author Brian Moreno
+	 * @param pst
+	 * @param categoria
+	 * @return preparedStatement
+	 */
 	private PreparedStatement setQuery(PreparedStatement pst,String categoria)
 	{
 		try
@@ -332,7 +362,7 @@ public class ControlBase {
 			case "Sedes":
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
 				break;
 			}
@@ -344,6 +374,14 @@ public class ControlBase {
 		return pst;
 	}
 	
+	/**
+	 * setQuery
+	 * @author Brian Moreno
+	 * @param pst
+	 * @param categoria
+	 * @param identificador
+	 * @return
+	 */
 	private PreparedStatement setQuery (PreparedStatement pst,String categoria, String identificador)
 	{
 		try
@@ -358,7 +396,7 @@ public class ControlBase {
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE_ID);
 				pst.setString(1, identificador);
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT_ID);
 				pst.setString(1, identificador);
 				break;
@@ -371,6 +409,13 @@ public class ControlBase {
 		return pst;
 	}
 	
+	/**
+	 * getDatos hace la consulta de para el listado de una categroia y los agrega un modelo de tabla
+	 * @author Brian Moreno
+	 * @param categoria
+	 * @param identificador
+	 * @return
+	 */
 	public DefaultTableModel getDatos(String categoria,String identificador) 
 	{
 		PreparedStatement pst = null;
@@ -418,7 +463,7 @@ public class ControlBase {
 					DT.addRow(fila);
 				}
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				//FALTA AGREGAR NOMBRES DE COLUMNAS
 				fila = new Object[9];
 				while(result.next()) 
@@ -449,6 +494,13 @@ public class ControlBase {
 		return DT;
 	}
 	
+	/**
+	 * consultarSede consulta una sede y retorna sus atributos 
+	 * @author Brian Moreno
+	 * @param idIngresado
+	 * @return
+	 * @throws SQLException
+	 */
 	public String consultarSede(String idIngresado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -466,7 +518,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("CÛdigo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C√≥digo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -490,7 +542,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("CÛdigo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C√≥digo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -500,6 +552,15 @@ public class ControlBase {
 		}
 	}
 	
+	/**
+	 * modificarSede actualiza informacion de una sede
+	 * @author Brian Moreno
+	 * @param nombreIngresado
+	 * @param direccionIngresada
+	 * @param idIngresado
+	 * @param estado
+	 * @throws SQLException
+	 */
 	public void modificarSede (String nombreIngresado, String direccionIngresada, String idIngresado, String estado) throws SQLException 
 	{
 		PreparedStatement pst = null;
@@ -545,7 +606,13 @@ public class ControlBase {
 		}
 	}
 	
-	
+	/**
+	 * selectSubtotal consulta el subtotal
+	 * @author Fabian Urrutia
+	 * @param idEnvio
+	 * @return subtotal
+	 * 
+	 */
 	public String selectSubtotal(int idEnvio) {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -565,6 +632,17 @@ public class ControlBase {
 		return null;
 	}
 	
+	/**
+	 * cardRegist registra una tarjeta ingresad por el usuario
+	 * @author David Izquierdo
+	 * @param numeroTarjeta
+	 * @param nombreTarjeta
+	 * @param codigoSeguridad
+	 * @param tipoDocumento
+	 * @param numeroDocumento
+	 * @param mesExpiracion
+	 * @param anioExpiracion
+	 */
 	  public void cardRegist(String numeroTarjeta, String nombreTarjeta, String codigoSeguridad, String tipoDocumento, String numeroDocumento, String mesExpiracion, String anioExpiracion) {
 	        PreparedStatement p = null;
 	        conectarme();
@@ -584,6 +662,12 @@ public class ControlBase {
 	        }
 	    }
 	
+	  /**
+	   * selectPreciototal consulta el costo total de un envio registrado
+	   * @author Fabian Urrutia
+	   * @param idEnvio
+	   * @return
+	   */
 	public String selectPreciototal(int idEnvio) {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -603,6 +687,17 @@ public class ControlBase {
 		return null;
 	}
 	
+	/**
+	 * CrearRemitente registra un remitente de un envio
+	 * @author Fabian Urrutia
+	 * @param nombre
+	 * @param apellido
+	 * @param id
+	 * @param direccion
+	 * @param telefono
+	 * @param email
+	 * @throws SQLException
+	 */
 	public void CrearRemitente(String nombre,String apellido,String id,String direccion,String telefono,String email) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -621,6 +716,13 @@ public class ControlBase {
 		}
 	}
 	
+	/**
+	 * crearEnvio registra un envio con el id del remitente y el destinatario
+	 * @param id_desti
+	 * @param id_remit
+	 * @return
+	 * @throws SQLException
+	 */
 	public String crearEnvio(String id_desti, String id_remit) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -643,13 +745,22 @@ public class ControlBase {
 	}
 	
 	
-	
+
+	/**
+	 * crearPaquete registra cada uno de los paquetes registrados en un envio
+	 * @author Fabian Urrutia
+	 * @param id_envio
+	 * @param peso
+	 * @param volumen
+	 * @throws SQLException
+	 */
 	public void crearPaquete(int id_envio, float peso, float volumen,String iduser) throws SQLException {
+
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen,id_	Usuario) VALUES (?,?,?,?)");
+			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen,id_usuario) VALUES (?,?,?,?)");
 			pst.setInt(1, id_envio);
 			pst.setFloat(2, peso);
 			pst.setFloat(3, volumen);
@@ -659,7 +770,16 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		}
 	}
-		
+	
+	/**
+	 * crearPrecio registra los datos de costos de un envio
+	 * @author Fabian Urrutia
+	 * @param preciototal
+	 * @param subtotal
+	 * @param seguro
+	 * @param id_envio
+	 * @throws SQLException
+	 */
 	public void crearPrecio(float preciototal, float subtotal, float seguro, int id_envio) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -675,7 +795,18 @@ public class ControlBase {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
 		}
 	}
-	 
+	
+	/**
+	 * CrearDestinatario registra el destinatario de un envio
+	 * @author Fabian Urrutia
+	 * @param nombre
+	 * @param apellido
+	 * @param id
+	 * @param direccion
+	 * @param telefono
+	 * @param email
+	 * @throws SQLException
+	 */
 	public void CrearDestinatario(String nombre,String apellido,String id,String direccion,String telefono,String email) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -694,13 +825,26 @@ public class ControlBase {
 		}
 	}
 	
-	
-	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseÒa, String id_Sede, String estado) {
+	/**
+	 * CrearUser registra un usuario en la base
+	 * @author Fabian Urrutia
+	 * @param nombre
+	 * @param apellido
+	 * @param id
+	 * @param direccion
+	 * @param telefono
+	 * @param email_u
+	 * @param cargo
+	 * @param contrase√±a
+	 * @param id_Sede
+	 * @param estado
+	 */
+	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contrase√±a, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
 			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"'"
-					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contraseÒa+"','"+id_Sede+"','"+estado+"')";                                      
+					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contrase√±a+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
 				
@@ -714,7 +858,20 @@ public class ControlBase {
 		}
 	}
 	
-	
+	/**
+	 * ModificarUsuario actualiza la informacion de un usuario
+	 * @author Fabian Urrutia
+	 * @param nombre
+	 * @param apellido
+	 * @param direccion
+	 * @param telefono
+	 * @param email_u
+	 * @param cargo
+	 * @param id_Sede
+	 * @param estado
+	 * @param id
+	 * @throws SQLException
+	 */
 
 	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
@@ -724,7 +881,7 @@ public class ControlBase {
 		try 
 		{
 			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,"
-					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaciÛn_u=?");
+					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaci√≥n_u=?");
 			pst.setString(1, nombre);
 			pst.setString(2, apellido);
 			pst.setString(3, direccion);
@@ -746,13 +903,21 @@ public class ControlBase {
 		}
 		
 	}
+	
+	/**
+	 * buscarUsuario consulta la informacion de un usuario
+	 * @author Fabian Urrutia
+	 * @param id
+	 * @return 
+	 * @throws SQLException
+	 */
 	public String[] buscarUsuario(String id) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try {
 			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,"
-					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaciÛn_u=?");
+					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaci√≥n_u=?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String[] usuarioInfo = new String[8];
@@ -774,6 +939,14 @@ public class ControlBase {
 		}
 		
 	}
+	
+	/**
+	 * buscarSede consulta de la informacion de una sede
+	 * @author Brian Moreno
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
 	public String[] buscarSede(String id) throws SQLException 
 	{
 		PreparedStatement pst = null;

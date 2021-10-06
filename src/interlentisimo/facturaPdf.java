@@ -31,6 +31,7 @@ public class facturaPdf
 	/**
 	 * Clase facturaPdf define el modelo de la factura, así como la generación de facturas respecto a
 	 * un envío en particular
+	 * @author Brian Moreno
 	 * @param datos	vector de strings con el id del envío, información del remitente, información del destinatario y costos 
 	 * @param datosPaqs	lista de vectores de strings con la información de cada paquete asociado a un envío
 	 */
@@ -73,18 +74,16 @@ public class facturaPdf
 	}
 	
 	/**
-	 * prueba factura
-	 
-	String[] remitente= {"1830990","brian","3158475","calle siempre viva","mroen@correo.co"};
-	String[] destinatario= {"1626819","fabian","346813","calle pis","fabia@correo.co"};
-	String[][] paq= {{"528","232"},
-					{"674","584"}};
-	String[] cost= {"15000.0","si","5000.0"};
-	facturaPdf.crearPDF("123456",remitente,destinatario,paq,cost);
-	/**
-	 * 
+	 * crearPDF Genera el fichero .pdf con el modelo de la factura y los datos insertados
+	 * @author Brian Moreno
+	 * @param idfactura
+	 * @param infoRemi
+	 * @param infoDest
+	 * @param infoPaq
+	 * @param infoCosto
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
 	 */
-	
 	public static void crearPDF(String idfactura,String[] infoRemi, String[] infoDest, String[][] infoPaq,String[] infoCosto) throws FileNotFoundException, DocumentException {
         // Se crea el documento
         Document documento = new Document();
@@ -143,7 +142,7 @@ public class facturaPdf
         for(int i=0;i<cantidadPaqs;i++) 
         {
         	strInfoPaq = strInfoPaq +
-        			"Paquete"+ i +"\n"+ 
+        			"Paquete"+ (i+1) +"\n"+ 
 					"Peso:"+infoPaq[i][0]+"kg \n"+
 					"Volumen:" + infoPaq[i][1]+"m3 \n\n";			
         }
@@ -157,7 +156,7 @@ public class facturaPdf
 				"Subtotal:"+infoCosto[0]+"\n"+
 				"Seguro:" + infoCosto[1]+"\n"+
 				"Iva:" + (Integer.parseInt(infoCosto[0])*0.19) +"\n"+
-				"TOTAL:" + (Float.parseFloat(infoCosto[0])+ Float.parseFloat(infoCosto[1]))+"\n";
+				"TOTAL:" + (Float.parseFloat(infoCosto[0])+ Float.parseFloat(infoCosto[1]) + (Integer.parseInt(infoCosto[0])*0.19))+"\n";
         Paragraph infoCostoPg = new Paragraph(strCosto);
         infoCostoPg.setAlignment(Element.ALIGN_LEFT);
         documento.add(infoCostoPg);
