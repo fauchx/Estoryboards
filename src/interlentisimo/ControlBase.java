@@ -561,15 +561,16 @@ public class ControlBase {
 	
 	
 	
-	public void crearPaquete(int id_envio, float peso, float volumen) throws SQLException {
+	public void crearPaquete(int id_envio, float peso, float volumen,String iduser) throws SQLException {
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen) VALUES (?,?,?)");
+			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen,id_	Usuario) VALUES (?,?,?,?)");
 			pst.setInt(1, id_envio);
 			pst.setFloat(2, peso);
 			pst.setFloat(3, volumen);
+			pst.setString(4, iduser);
 			pst.executeUpdate();
 		}finally {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
@@ -630,27 +631,8 @@ public class ControlBase {
 		}
 	}
 	
-
-	//public void cardRegist(String numeroTarjeta, String nombreTarjeta, String codigoSeguridad, String tipoDocumento, String numeroDocumento, String mesExpiracion, String anioExpiracion) {
-      //  PreparedStatement p = null;
-      //  conectarme();
-      //  try {
-        //    comprobarlogin = "INSERT INTO metodo_pago_tarjeta values ('"+numeroTarjeta+"','"+nombreTarjeta+"','"+codigoSeguridad+"','"+tipoDocumento+"'"
-          //          + ",'"+numeroDocumento+"','"+mesExpiracion+"','"+anioExpiracion+"')";
-         //   p = conexion.prepareStatement(comprobarlogin);
-          //  p.executeUpdate();
-        
-      //  } catch(Exception ex) {
-        //    JOptionPane.showMessageDialog(null, ex);
-      // }
-     //   finally
-      //  {
-       //     if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
-
-      //  }
-  //  }
 	
-	
+
 	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;

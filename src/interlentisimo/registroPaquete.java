@@ -3,6 +3,7 @@ package interlentisimo;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -13,10 +14,12 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
 import Classes.TextPrompt;
+import Classes.verification;
 
 import java.awt.Color;
 import javax.swing.JRadioButton;
@@ -46,7 +49,10 @@ public class registroPaquete {
 	private TextPrompt alto,ancho,largo;
 	private float vol1,subtotalprecio,peso1,precio_total;
 	private ControlBase control;
-	private String id_retorno_envio;
+	private String id_retorno_envio,usuario;
+	private verification ver;
+	private JLabel emptyFieldErrorLbl;
+
 	/**
 	 * Create the application.
 	 */
@@ -144,6 +150,7 @@ public class registroPaquete {
 		infoRemitente.add(direccion_r);
 		String getDireccion_r = direccion_r.getText();
 		
+		String usuario = idUser;
 		
 		JPanel infoDestinatario = new JPanel();
 		infoDestinatario.setLayout(null);
@@ -217,7 +224,7 @@ public class registroPaquete {
 		infoDestinatario.add(direccion_d);
 		
 		JPanel infoDestinatario_1 = new JPanel();
-		infoDestinatario_1.setBounds(30, 329, 725, 153);
+		infoDestinatario_1.setBounds(40, 329, 725, 153);
 		frame.getContentPane().add(infoDestinatario_1);
 		infoDestinatario_1.setLayout(null);
 		infoDestinatario_1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -277,7 +284,12 @@ public class registroPaquete {
 		frame.getContentPane().add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				registrar_remitente();
+				try {
+					registrar_remitente();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				registrar_destinatario();
 				registar_envio();
 				registrar_precio();
@@ -314,8 +326,15 @@ public class registroPaquete {
 			}
 		});
 		frame.getContentPane().add(volverBtn);
+		
+		emptyFieldErrorLbl = new JLabel("<html>Todos los campos deben de ser llenados</html>");
+		emptyFieldErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emptyFieldErrorLbl.setForeground(Color.red);
+		emptyFieldErrorLbl.setBounds(69, 389, 300, 30);
+		emptyFieldErrorLbl.setVisible(true);
+		infoDestinatario_1.add(emptyFieldErrorLbl);
 	}
-	public void registrar_remitente() {
+	public void registrar_remitente() throws SQLException {
 		String getNombre_r = nombre_r.getText();
 		String getApellidos_r = apellidos_r.getText();
 		String getIdentificacion_r =  identificacion_r.getText();
@@ -324,11 +343,36 @@ public class registroPaquete {
 		String getDireccion_r = direccion_r.getText();
 		
 		ControlBase control = new ControlBase();
+		
+		ArrayList <String> fields = new ArrayList <String>();
+		fields.add(getNombre_r);
+		fields.add(getApellidos_r);
+		fields.add(getIdentificacion_r);
+		fields.add(getEmail_r);
+		fields.add(getTelefono_r);
+		fields.add(getDireccion_r);
+		
+		boolean emptyFieldError = !ver.filledFields(fields);
+		if (emptyFieldError)
+		{
+			emptyFieldErrorLbl.setVisible(true);
+		}
+		
+		
+		boolean emailError = false;
+		if(!ver.emailSintax(ver.FORMATO_EMAIL, getEmail_r)) {
+			email_r.setText("");
+			TextPrompt emailph = new TextPrompt("Email mal escrito",email_r);
+			emailError = true;
+		}
+		
+		if(!(emailError)) {
 		try {
 			control.CrearRemitente(getNombre_r, getApellidos_r, getIdentificacion_r, getDireccion_r, getTelefono_r, getEmail_r);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 	}
 	
@@ -340,6 +384,7 @@ public class registroPaquete {
 		String getEmail_d = email_d.getText();
 		String getTelefono_d = telefono_d.getText();
 		String getDireccion_d = direccion_d.getText();
+		verification ver = new verification();
 		
 		ControlBase control = new ControlBase();
 		try {
@@ -372,7 +417,7 @@ public class registroPaquete {
 		vol1 = (Float.parseFloat(getAlto)*Float.parseFloat(getAncho)*Float.parseFloat(getLargo))/6000;
 		ControlBase control = new ControlBase();
 		try {
-			control.crearPaquete(Integer.parseInt(id_retorno_envio), peso1, vol1);
+			control.crearPaquete(Integer.parseInt(id_retorno_envio), peso1, vol1,usuario);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
