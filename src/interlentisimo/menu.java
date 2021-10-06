@@ -170,7 +170,7 @@ public class menu {
 			case "Secretaria":
 				this.paqueteBtn.setEnabled(false);
 				break;
-			case "OperadorOficina":
+			case "Operador de oficina":
 				this.informeBtn.setEnabled(false);
 				this.sedesBtn.setEnabled(false);
 				this.magEmpBtn.setEnabled(false);
@@ -180,7 +180,7 @@ public class menu {
 				this.magEmpBtn.setEnabled(false);
 				this.paqueteBtn.setEnabled(false);
 				break;
-			case "AuxOperacion":
+			case "AuxOperación":
 				this.sedesBtn.setEnabled(false);
 				this.magEmpBtn.setEnabled(false);
 				this.paqueteBtn.setEnabled(false);

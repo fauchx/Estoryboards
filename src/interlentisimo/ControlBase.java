@@ -48,7 +48,7 @@ public class ControlBase {
 			+ "join envio as E "
 			+ "on D.identificacion_d = E.id_destinatario "
 			+ "join remitente as R "
-			+ "on R.identificacion_r=E.id_remitente"
+			+ "on R.identificacion_r=E.id_remitente "
 			+ "where E.id_envio =?";
 	private String pass = "ziRtszHrvfZ8rEAaY_PVNQ2LpmUeQF50";
 	private String user = "qhqysnst";
