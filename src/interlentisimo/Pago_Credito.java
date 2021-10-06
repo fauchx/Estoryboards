@@ -141,6 +141,10 @@ public class Pago_Credito {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					validarcampos();
+					frmPagoConTarjeta.setVisible(false);
+					recibo pago_confirm = new recibo(Integer.toString(idEnvio));
+					pago_confirm.frmVerificacin.setVisible(true);
+					pago_confirm.frmVerificacin.setLocationRelativeTo(null);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -148,7 +152,6 @@ public class Pago_Credito {
 			}
 		});
 		
-	
 	}
 	
 	private void validarcampos() throws SQLException
@@ -232,7 +235,7 @@ public class Pago_Credito {
 				tfsec_code.setText("");
 				tfid_num.setText("");
 				JOptionPane.showMessageDialog(null, "Registro efectivo");
-				//lblNewLabel_2.setVisible(true);
+				
 		  }
 		
 			

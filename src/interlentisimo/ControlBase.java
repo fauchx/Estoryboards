@@ -34,7 +34,7 @@ public class ControlBase {
 			+ "join remitente as R "
 			+ "on R.identificacion_r=E.id_remitente";
 	private final String SQL_SELECT_SEDE_ID = "select * from sede where identificador_sede=?";
-	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaciÛn_u=?";
+	private final String SQL_SELECT_USERS_ID = "select * from usuarios where identificaci√≥n_u=?";
 	private final String SQL_SELECT_SHIPMENT_ID = "select E.id_envio, "
 			+ "R.identificacion_r, "
 			+ "R.nombres_r || R.apellidos_r as nombre_remitente, "
@@ -69,21 +69,21 @@ public class ControlBase {
 	 * buscarusuario consulta de verificacion de datos para el login
 	 * @author David Izquierdo
 	 * @param id
-	 * @param contraseÒa
+	 * @param contrase√±a
 	 * @return
 	 * @throws SQLException
 	 */
-	public  boolean buscarusuario(String id, String contraseÒa) throws SQLException {
+	public  boolean buscarusuario(String id, String contrase√±a) throws SQLException {
 		PreparedStatement p = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			comprobarlogin = "SELECT identificaciÛn_u,contraseÒa_u from usuarios where identificaciÛn_u = '"+id+"' and contraseÒa_u = '"+contraseÒa+"'";
+			comprobarlogin = "SELECT identificaci√≥n_u,contrase√±a_u from usuarios where identificaci√≥n_u = '"+id+"' and contrase√±a_u = '"+contrase√±a+"'";
 			p = conexion.prepareStatement(comprobarlogin);
 			result = p.executeQuery();
 			while(result.next()) {
-				id = result.getString("identificaciÛn_u");
-				contraseÒa = result.getString("contraseÒa_u");
+				id = result.getString("identificaci√≥n_u");
+				contrase√±a = result.getString("contrase√±a_u");
 				return true;
 			  }		
 			
@@ -107,7 +107,7 @@ public class ControlBase {
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaciÛn_u =?");
+			pst = conexion.prepareStatement("SELECT cargo_u FROM usuarios WHERE identificaci√≥n_u =?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String cargo = null;
@@ -170,7 +170,7 @@ public class ControlBase {
 		conectarme();
 		try 
 		{
-			pst = conexion.prepareStatement("SELECT identificaciÛn_u FROM usuarios WHERE identificaciÛn_u = ?",
+			pst = conexion.prepareStatement("SELECT identificaci√≥n_u FROM usuarios WHERE identificaci√≥n_u = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, 
                     ResultSet.CONCUR_UPDATABLE);
 			pst.setString(1, idIngresado);
@@ -229,11 +229,11 @@ public class ControlBase {
 			DT.addColumn("Nombres");
 			DT.addColumn("Apellidos");
 			DT.addColumn("Id");
-			DT.addColumn("DirecciÛn");
-			DT.addColumn("TelÈfono");
+			DT.addColumn("Direcci√≥n");
+			DT.addColumn("Tel√©fono");
 			DT.addColumn("Email");
 			DT.addColumn("Cargo");
-			DT.addColumn("ContraseÒa");
+			DT.addColumn("Contrase√±a");
 			DT.addColumn("Sede");
 			DT.addColumn("Estado");
 			break;
@@ -241,19 +241,19 @@ public class ControlBase {
 			DT.addColumn("Id");
 			DT.addColumn("Nombre");
 			DT.addColumn("Estado");
-			DT.addColumn("DirecciÛn");
+			DT.addColumn("Direcci√≥n");
 			break;
-		case "”rdenes":
+		case "√ìrdenes":
 			//FALTA AGREGAR NOMBRES DE COLUMNAS
-			DT.addColumn("ID_envÌo");
+			DT.addColumn("ID_env√≠o");
 			DT.addColumn("ID_Remitente");
 			DT.addColumn("Remitente");
-			DT.addColumn("TelÈfono R");
-			DT.addColumn("DirecciÛn_R");
+			DT.addColumn("Tel√©fono R");
+			DT.addColumn("Direcci√≥n_R");
 			DT.addColumn("ID_Destinatario");
 			DT.addColumn("Destinatario");
-			DT.addColumn("TelÈfono D");
-			DT.addColumn("DirecciÛn D");
+			DT.addColumn("Tel√©fono D");
+			DT.addColumn("Direcci√≥n D");
 			break;
 		}
 		return DT;
@@ -262,7 +262,7 @@ public class ControlBase {
 	/**
 	 * getDatosFactura
 	 * @author Brian Moreno 
-	 * @param idEnvio recibe el id del envÌo del cual se generar· la factura
+	 * @param idEnvio recibe el id del env√≠o del cual se generar√° la factura
 	 * @return datos los datos consultados en la base
 	 * @throws SQLException
 	 */ 
@@ -311,9 +311,9 @@ public class ControlBase {
 	}
 	
 	/**
-	 * getDatosPaqs Este mÈtodo lista todos los paquetes asociados a un id de un envÌo 
+	 * getDatosPaqs Este m√©todo lista todos los paquetes asociados a un id de un env√≠o 
 	 * @author Brian Moreno
-	 * @param idEnvio identificador del envÌo 
+	 * @param idEnvio identificador del env√≠o 
 	 * @return paquetes Retorna una lista de vectores de Strings
 	 */
 	
@@ -362,7 +362,7 @@ public class ControlBase {
 			case "Sedes":
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE);
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT);
 				break;
 			}
@@ -396,7 +396,7 @@ public class ControlBase {
 				pst = conexion.prepareStatement(SQL_SELECT_SEDE_ID);
 				pst.setString(1, identificador);
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				pst = conexion.prepareStatement(SQL_SELECT_SHIPMENT_ID);
 				pst.setString(1, identificador);
 				break;
@@ -463,7 +463,7 @@ public class ControlBase {
 					DT.addRow(fila);
 				}
 				break;
-			case "”rdenes":
+			case "√ìrdenes":
 				//FALTA AGREGAR NOMBRES DE COLUMNAS
 				fila = new Object[9];
 				while(result.next()) 
@@ -518,7 +518,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("CÛdigo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C√≥digo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -542,7 +542,7 @@ public class ControlBase {
 		} 
 		catch (SQLException sqle) 
 		{
-			System.out.println("CÛdigo de Error: " + sqle.getErrorCode() + "\n" +
+			System.out.println("C√≥digo de Error: " + sqle.getErrorCode() + "\n" +
 			  		   "SLQState: " + sqle.getSQLState() + "\n" +
 			  		   "Mensaje: " + sqle.getMessage() + "\n");
 		}
@@ -745,6 +745,7 @@ public class ControlBase {
 	}
 	
 	
+
 	/**
 	 * crearPaquete registra cada uno de los paquetes registrados en un envio
 	 * @author Fabian Urrutia
@@ -753,15 +754,17 @@ public class ControlBase {
 	 * @param volumen
 	 * @throws SQLException
 	 */
-	public void crearPaquete(int id_envio, float peso, float volumen) throws SQLException {
+	public void crearPaquete(int id_envio, float peso, float volumen,String iduser) throws SQLException {
+
 		PreparedStatement pst = null;
 		ResultSet result = null;
 		conectarme();
 		try {
-			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen) VALUES (?,?,?)");
+			pst = conexion.prepareStatement("INSERT INTO paquetes(id_envio,peso,volumen,id_usuario) VALUES (?,?,?,?)");
 			pst.setInt(1, id_envio);
 			pst.setFloat(2, peso);
 			pst.setFloat(3, volumen);
+			pst.setString(4, iduser);
 			pst.executeUpdate();
 		}finally {
 			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
@@ -832,16 +835,16 @@ public class ControlBase {
 	 * @param telefono
 	 * @param email_u
 	 * @param cargo
-	 * @param contraseÒa
+	 * @param contrase√±a
 	 * @param id_Sede
 	 * @param estado
 	 */
-	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contraseÒa, String id_Sede, String estado) {
+	public void CrearUser(String nombre,String apellido,String id,String direccion,String telefono,String email_u, String cargo, String contrase√±a, String id_Sede, String estado) {
 		PreparedStatement p = null;
 		conectarme();
 		try {
 			comprobarlogin = "INSERT INTO usuarios values ('"+nombre+"','"+apellido+"','"+id+"','"+direccion+"'"
-					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contraseÒa+"','"+id_Sede+"','"+estado+"')";                                      
+					+ ",'"+telefono+"','"+email_u+"','"+cargo+"','"+contrase√±a+"','"+id_Sede+"','"+estado+"')";                                      
 			p = conexion.prepareStatement(comprobarlogin);
 			p.executeUpdate();
 				
@@ -869,6 +872,7 @@ public class ControlBase {
 	 * @param id
 	 * @throws SQLException
 	 */
+
 	public void ModificarUsuario(String nombre,String apellido,String direccion,String telefono,String email_u,
 			String cargo, String id_Sede,String estado,String id) throws SQLException {
 		PreparedStatement pst = null;
@@ -877,7 +881,7 @@ public class ControlBase {
 		try 
 		{
 			pst = conexion.prepareStatement("UPDATE usuarios SET nombres_u=?,apellidos_u=?,"
-					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaciÛn_u=?");
+					+ "direccion_u=?,telefono_u=?,email_u=?,cargo_u=?,identificador_sede=?,estado_u=? where identificaci√≥n_u=?");
 			pst.setString(1, nombre);
 			pst.setString(2, apellido);
 			pst.setString(3, direccion);
@@ -913,7 +917,7 @@ public class ControlBase {
 		conectarme();
 		try {
 			pst = conexion.prepareStatement("Select nombres_u,apellidos_u,direccion_u,telefono_u,"
-					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaciÛn_u=?");
+					+ "email_u,cargo_u,identificador_sede,estado_u from usuarios where identificaci√≥n_u=?");
 			pst.setString(1, id);
 			result = pst.executeQuery();
 			String[] usuarioInfo = new String[8];
