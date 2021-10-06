@@ -47,7 +47,7 @@ public class recibo {
 				try {
 					String [] datos=control.getDatosFactura(idEnvio);
 					ArrayList <String[]> datosPaqs = control.getDatosPaqs(idEnvio);
-					facturaPdf recibo = new facturaPdf(datos);
+					facturaPdf recibo = new facturaPdf(datos,datosPaqs);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

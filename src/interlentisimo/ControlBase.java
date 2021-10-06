@@ -245,13 +245,14 @@ public class ControlBase {
 	 */ 
 	public String[] getDatosFactura(String idEnvio) throws SQLException 
 	{
+		int idE = Integer.parseInt(idEnvio);
 		String [] datos= new String[13];;
 		try {
 			PreparedStatement pst = null;
 			ResultSet result = null;
 			conectarme();
-			String queryConsulta = "select E.id_envio, R.identificacion_r, R.nombres_r || R.apellidos_r as nombre_r, R.telefono_r,R.direccion_R,R.email_r,"
-					+ "D.identificacion_d,D.nombres_d || D.apellidos_d as nombre_d, D.telefono_d,D.direccion_d,D.email_d,"
+			String queryConsulta = "select E.id_envio, R.identificacion_r, R.nombres_r || R.apellidos_r as nombre_r, R.telefono_r,R.direccion_R,R.email_r, "
+					+ "D.identificacion_d,D.nombres_d || D.apellidos_d as nombre_d, D.telefono_d,D.direccion_d,D.email_d, "
 					+ "P.subtotal,P.seguro "
 					+ "from envio as E "
 					+ "join remitente as R "
@@ -259,10 +260,10 @@ public class ControlBase {
 					+ "join destinatario as D "
 					+ "on E.id_destinatario=D.identificacion_d "
 					+ "join precio as P "
-					+ "on P.id_envio=E.id_envio"
+					+ "on P.id_envio= E.id_envio "
 					+ "where E.id_envio=?";
 			pst = conexion.prepareStatement(queryConsulta);
-			pst.setString(1, idEnvio);
+			pst.setInt(1, idE);
 			result = pst.executeQuery();
 			while(result.next()) {
 				datos[0]=result.getString(1);
@@ -294,15 +295,16 @@ public class ControlBase {
 	
 	public ArrayList <String[]> getDatosPaqs(String idEnvio) 
 	{
+		int idE = Integer.parseInt(idEnvio);
 		String [] datos= new String[2];;
 		ArrayList <String[]> paquetes = new ArrayList <String[]>(); 
  		try {
 			PreparedStatement pst = null;
 			ResultSet result = null;
 			conectarme();
-			String queryConsulta = "select peso,volumen from paquete where id_envio=?";
+			String queryConsulta = "select peso,volumen from paquetes where id_envio=?";
 			pst = conexion.prepareStatement(queryConsulta);
-			pst.setString(1, idEnvio);
+			pst.setInt(1, idE);
 			result = pst.executeQuery();
 			while(result.next()) {
 				datos[0]=result.getString(1);
