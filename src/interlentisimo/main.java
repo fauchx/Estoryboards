@@ -8,6 +8,7 @@
 package interlentisimo;
 import java.awt.EventQueue;
 
+
 /**
  * Launch the application
  * @author Brian Moreno
@@ -26,6 +27,7 @@ public class main
 					{
 						login window = new login();
 						window.frame.setVisible(true);
+						
 					} catch (Exception e) 
 					{
 						e.printStackTrace();

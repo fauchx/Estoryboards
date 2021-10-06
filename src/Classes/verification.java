@@ -14,7 +14,7 @@ import Classes.TextPrompt.Show;
 import interlentisimo.ControlBase;
 
 public class verification {
-	public static Pattern FORMATO_SEDE= Pattern.compile("^S"+"([0-9]{3,3})$");
+	public final Pattern FORMATO_SEDE= Pattern.compile("^S"+"([0-9]{3,3})$");
 	
 	public verification() 
 	{
