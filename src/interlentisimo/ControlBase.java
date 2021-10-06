@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
  //fauchx el bicho
@@ -283,6 +285,32 @@ public class ControlBase {
 		}
 		return datos;
 	}
+	
+	public ArrayList <String[]> getDatosPaqs(String idEnvio) 
+	{
+		String [] datos= new String[2];;
+		ArrayList <String[]> paquetes = new ArrayList <String[]>(); 
+ 		try {
+			PreparedStatement pst = null;
+			ResultSet result = null;
+			conectarme();
+			String queryConsulta = "select peso,volumen from paquete where id_envio=?";
+			pst = conexion.prepareStatement(queryConsulta);
+			pst.setString(1, idEnvio);
+			result = pst.executeQuery();
+			while(result.next()) {
+				datos[0]=result.getString(1);
+				datos[1]=result.getString(2);
+				paquetes.add(datos);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return paquetes;
+	}
+	
+	
 	
 	private PreparedStatement setQuery(PreparedStatement pst,String categoria)
 	{
