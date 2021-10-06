@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class recibo {
@@ -15,32 +16,16 @@ public class recibo {
 	private JFrame frmVerificacin;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					recibo window = new recibo();
-					window.frmVerificacin.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public recibo() {
-		initialize();
+	public recibo(String idEnvio) {
+		initialize(idEnvio);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String idEnvio) {
 		frmVerificacin = new JFrame();
 		frmVerificacin.setTitle("Verificaci\u00F3n");
 		frmVerificacin.setBounds(100, 100, 350, 240);
@@ -57,6 +42,14 @@ public class recibo {
 		JButton btnNewButton = new JButton("Generar recibo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ControlBase control = new ControlBase();
+				try {
+					String [] datos=control.getDatosFactura(idEnvio);
+					facturaPdf recibo = new facturaPdf(datos);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBackground(new Color(255, 69, 0));

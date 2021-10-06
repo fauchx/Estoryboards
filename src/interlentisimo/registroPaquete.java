@@ -285,7 +285,7 @@ public class registroPaquete {
 				JOptionPane.showMessageDialog(null, "total: "+precio_total);
 				frame.setVisible(false);
 				impuestoPaquete impuesto = new impuestoPaquete(idUser,Integer.parseInt(id_retorno_envio));
-				impuesto.frmCheckout.setLocationRelativeTo(null);
+				impuesto.frmCheckout.setLocationRelativeTo(frame);
 				impuesto.frmCheckout.setVisible(true);
 			}
 		});
@@ -354,18 +354,11 @@ public class registroPaquete {
 		subtotal();
 		preciototal();
 		ControlBase control = new ControlBase();
-		int id_envio;
-		float seguro = (float) (precio_total*0.35);
-		String preciototal = Float.toString(precio_total);
-		String S_subtotal = Float.toString(subtotalprecio);
-		String seguroString = Float.toString(seguro);
+		float seguro = (float) 0.0;
 		System.out.println("preciototal: "+precio_total);
-		System.out.println("seguro: "+seguro);
 		try {
-			//id_envio = control.darIdEnvio(identificacion_d.getText(), identificacion_r.getText());
 			control.crearPrecio(precio_total, subtotalprecio,seguro,Integer.parseInt(id_retorno_envio));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -375,7 +368,6 @@ public class registroPaquete {
 		String getLargo = textLargo.getText();
 		String getAlto = textAlto.getText();
 		String getPeso = txtpeso.getText();
-		int id_envio;
 		peso1 = Float.parseFloat(getPeso);
 		vol1 = (Float.parseFloat(getAlto)*Float.parseFloat(getAncho)*Float.parseFloat(getLargo))/6000;
 		ControlBase control = new ControlBase();
@@ -402,7 +394,7 @@ public class registroPaquete {
 
 	public void preciototal() {
 		subtotal();
-		precio_total = (float) ((subtotalprecio*0.19)+subtotalprecio+(subtotalprecio*0.35));
+		precio_total = (float) ((subtotalprecio*0.19)+subtotalprecio);
 	}
 	
 	public void subtotal() {

@@ -12,35 +12,23 @@ import java.awt.Color;
 
 public class MetodoDePago {
 
-	private JFrame frmSeleccionMetodoDe;
+	JFrame frmSeleccionMetodoDe;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MetodoDePago window = new MetodoDePago();
-					window.frmSeleccionMetodoDe.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public MetodoDePago() {
-		initialize();
+	public MetodoDePago(int idEnvio) {
+		initialize(idEnvio);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(int idEnvio) {
 		frmSeleccionMetodoDe = new JFrame();
 		frmSeleccionMetodoDe.setTitle("Seleccion Metodo de Pago\r\n");
 		frmSeleccionMetodoDe.setBounds(100, 100, 480, 300);
@@ -58,6 +46,9 @@ public class MetodoDePago {
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Pago_Credito pago = new Pago_Credito(idEnvio);
+				pago.frmPagoConTarjeta.setVisible(true);
+				pago.frmPagoConTarjeta.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton.setBounds(70, 112, 89, 23);

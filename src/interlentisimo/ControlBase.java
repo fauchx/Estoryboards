@@ -415,6 +415,30 @@ public class ControlBase {
 		
 	}
 	
+	
+	public void actualizarPrecio(float precio_total, float seguro,int id_envio) throws SQLException {
+		PreparedStatement pst = null;
+		ResultSet result = null;
+		conectarme();
+		try 
+		{
+			pst = conexion.prepareStatement("UPDATE precio SET precio_total=?,seguro=? WHERE id_envio=?");
+			pst.setFloat(1, precio_total);
+			pst.setFloat(2, seguro);
+			pst.setInt(3, id_envio);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+		
+		}
+	}
+	
+	
 	public String selectSubtotal(int idEnvio) {
 		PreparedStatement pst = null;
 		ResultSet result = null;
@@ -433,6 +457,25 @@ public class ControlBase {
 		}
 		return null;
 	}
+	
+	  public void cardRegist(String numeroTarjeta, String nombreTarjeta, String codigoSeguridad, String tipoDocumento, String numeroDocumento, String mesExpiracion, String anioExpiracion) {
+	        PreparedStatement p = null;
+	        conectarme();
+	        try {
+	            comprobarlogin = "INSERT INTO metodo_pago_tarjeta values ('"+numeroTarjeta+"','"+nombreTarjeta+"','"+codigoSeguridad+"','"+tipoDocumento+"'"
+	                    + ",'"+numeroDocumento+"','"+mesExpiracion+"','"+anioExpiracion+"')";
+	            p = conexion.prepareStatement(comprobarlogin);
+	            p.executeUpdate();
+	        
+	        } catch(Exception ex) {
+	            JOptionPane.showMessageDialog(null, ex);
+	        }
+	        finally
+	        {
+	            if (conexion != null) try { conexion.close(); } catch (SQLException logOrIgnore) {}
+
+	        }
+	    }
 	
 	public String selectPreciototal(int idEnvio) {
 		PreparedStatement pst = null;
